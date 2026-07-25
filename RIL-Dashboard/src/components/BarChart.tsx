@@ -1,11 +1,11 @@
 import { useMemo, useRef, useState, type CSSProperties } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
+import FloatingTooltip from './FloatingTooltip';
 import LiquidSurface, { type LiquidHandle } from './LiquidSurface';
 import { SEGMENTS, SEGMENT_MAX, SEGMENT_TOTAL, type Segment } from '../data/segments';
 import { SPRING } from '../lib/motion';
-import './BarChart.css';
 
 interface BarChartProps {
   /** Key of a segment hovered elsewhere (e.g. the pie) to soft-highlight. */
@@ -17,8 +17,8 @@ interface BarChartProps {
 
 interface TooltipState {
   index: number;
-  x: number;
-  y: number;
+  /** Hovered bar's rect, so the tooltip can sit safely below it. */
+  rect: { left: number; bottom: number; width: number };
 }
 
 const FILL_PCT = 86; // liquid level within each glass (%)
@@ -53,16 +53,16 @@ function Bar({
   datum,
   index,
   external,
+  filled,
   onEnter,
   onLeave,
-  onMove,
 }: {
   datum: Segment;
   index: number;
   external: boolean;
+  filled: boolean;
   onEnter: (i: number, e: React.MouseEvent) => void;
   onLeave: () => void;
-  onMove: (e: React.MouseEvent) => void;
 }) {
   const [ownHover, setOwnHover] = useState(false);
   const [ripples, setRipples] = useState<Ripple[]>([]);
@@ -108,7 +108,6 @@ function Bar({
     // strength from speed, swell biased to the cursor position. The surface
     // handles momentum, overshoot and decay.
     liquid.current?.impulse(vx, Math.abs(vx), fracX(e));
-    onMove(e);
   };
   const handleClick = (e: React.MouseEvent) => {
     const px = fracX(e);
@@ -169,8 +168,8 @@ function Bar({
             ref={liquid}
             from={datum.from}
             to={datum.to}
-            fill={FILL_PCT / 100}
-            fillDelay={280 + index * 90}
+            fill={filled ? FILL_PCT / 100 : 0}
+            fillDelay={160 + index * 130}
           />
 
           {bubbles.map((b, i) => (
@@ -242,13 +241,15 @@ function Bar({
 
 export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 'B' }: BarChartProps) {
   const [tip, setTip] = useState<TooltipState | null>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  // Bars fill only once the section scrolls into view.
+  const filled = useInView(wrapRef, { once: true, amount: 0.4 });
 
   const handleEnter = (index: number, e: React.MouseEvent) => {
-    setTip({ index, x: e.clientX, y: e.clientY });
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setTip({ index, rect: { left: r.left, bottom: r.bottom, width: r.width } });
     onHoverKey?.(SEGMENTS[index].key);
   };
-  const handleMove = (e: React.MouseEvent) =>
-    setTip((t) => (t ? { ...t, x: e.clientX, y: e.clientY } : t));
   const clear = () => {
     setTip(null);
     onHoverKey?.(null);
@@ -258,22 +259,26 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
 
   return (
     <>
-      <div className="bars-wrap" onMouseLeave={clear}>
+      <div
+        className="relative flex h-85 items-end justify-between gap-[clamp(12px,2.6vw,28px)] px-1 pt-2 max-[560px]:h-65"
+        ref={wrapRef}
+        onMouseLeave={clear}
+      >
         {SEGMENTS.map((d, i) => (
           <Bar
             key={d.key}
             datum={d}
             index={i}
             external={externalActiveKey === d.key}
+            filled={filled}
             onEnter={handleEnter}
             onLeave={clear}
-            onMove={handleMove}
           />
         ))}
       </div>
 
-      <div className="bars-baseline" />
-      <div className="bars-labels">
+      <div className="mx-1 mt-3.5 h-px bg-[linear-gradient(90deg,transparent,var(--border-hi),transparent)]" />
+      <div className="flex justify-between gap-[clamp(12px,2.6vw,28px)] px-1 pt-3">
         {SEGMENTS.map((d, i) => (
           <span
             key={d.key}
@@ -285,15 +290,9 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
         ))}
       </div>
 
-      <AnimatePresence>
-        {tip && active && (
-          <motion.div
-            className="chart-tooltip"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1, x: tip.x + 18, y: tip.y - 24 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ type: 'spring', stiffness: 420, damping: 32, mass: 0.6 }}
-          >
+      <FloatingTooltip open={!!(tip && active)} below={tip?.rect} gap={10}>
+        {active && (
+          <>
             <div className="tt-head">
               <span className="tt-dot" style={{ color: active.glow }} />
               <active.icon size={15} strokeWidth={2.2} />
@@ -317,9 +316,9 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
                 {active.trend.toFixed(1)}%
               </span>
             </div>
-          </motion.div>
+          </>
         )}
-      </AnimatePresence>
+      </FloatingTooltip>
     </>
   );
 }

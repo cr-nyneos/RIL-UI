@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap');
 
-/* ============================================================
-   RIL Dashboard — premium dark design system
-   Design tokens, resets, shared glass/tooltip primitives,
-   and the ambient keyframes shared by both charts.
-   ============================================================ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
 
 :root {
   /* Surfaces */
@@ -89,6 +87,9 @@ h3 {
 /* ---- Shared glass card ---------------------------------- */
 .glass-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4vw, 44px);
   border-radius: 28px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
@@ -140,6 +141,20 @@ h3 {
   font-size: 13px;
   color: var(--text-2);
   margin-top: 4px;
+}
+
+/* Reused unit pill in every card header */
+.unit-pill {
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-1);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
 }
 
 /* ---- Shared floating tooltip ---------------------------- */
@@ -225,9 +240,389 @@ h3 {
   to { transform: translateX(120%); }
 }
 
+
+.bar {
+  position: relative;
+  flex: 1 1 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+.bar-value {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--text-0);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease, filter 0.4s ease;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+.bar-value::before {
+  content: '';
+  position: absolute;
+  inset: -8px -14px;
+  border-radius: 12px;
+  background: radial-gradient(closest-side, var(--bar-glow), transparent 72%);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: -1;
+}
+.bar.is-hot .bar-value {
+  transform: translateY(-4px) scale(1.07);
+  filter: brightness(1.18);
+  text-shadow: 0 0 20px var(--bar-glow);
+}
+.bar.is-hot .bar-value::before {
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+.glass {
+  position: relative;
+  width: 100%;
+  max-width: 92px;
+  height: var(--glass-h, 76%);
+  border-radius: 10px 10px 8px 8px;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015) 40%, rgba(255, 255, 255, 0.05)),
+    rgba(255, 255, 255, 0.012);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 22px 38px -26px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+  transition: box-shadow 0.45s ease, border-color 0.45s ease;
+}
+.bar.is-hot .glass {
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 26px 46px -22px rgba(0, 0, 0, 0.85),
+    0 0 34px -6px var(--bar-glow);
+}
+
+.bar-glow {
+  position: absolute;
+  bottom: -6%;
+  left: 50%;
+  translate: -50% 0;
+  width: 150%;
+  height: 62%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--bar-glow), transparent 72%);
+  opacity: var(--glow-intensity, 0.4);
+  filter: blur(18px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, height 0.5s ease;
+}
+.bar.is-hot .bar-glow {
+  opacity: 1;
+  height: 92%;
+}
+
+.liquid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9px 9px 7px 7px;
+}
+.liquid-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bubble {
+  position: absolute;
+  bottom: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.12));
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+  animation: rise linear infinite;
+  animation-duration: var(--bubble-dur, 4s);
+  pointer-events: none;
+}
+.bar.is-hot .bubble {
+  animation-duration: var(--bubble-dur-hot, 2.2s);
+}
+
+.ripple {
+  position: absolute;
+  left: var(--rx, 50%);
+  top: var(--ry, 30%);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  translate: -50% -50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.splash {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--fill, 86%);
+  height: 0;
+  pointer-events: none;
+}
+.droplet {
+  position: absolute;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--liq-from));
+  box-shadow: 0 0 8px var(--liq-from);
+}
+.splash-ring {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 26px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  translate: -50% 50%;
+}
+
+.glass-shine {
+  position: absolute;
+  top: 5%;
+  left: 11%;
+  width: 20%;
+  height: 84%;
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  filter: blur(1.5px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.glass-reflections {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.glass-reflections::before,
+.glass-reflections::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 42%;
+  height: 160%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  transform: translateX(-180%) rotate(8deg);
+  opacity: 0;
+}
+.bar.is-hot .glass-reflections::before {
+  opacity: 1;
+  animation: reflect-sweep 2.4s ease-in-out infinite;
+}
+.bar.is-hot .glass-reflections::after {
+  opacity: 1;
+  animation: reflect-sweep 2.4s ease-in-out infinite 1.2s;
+}
+@keyframes reflect-sweep {
+  0% { transform: translateX(-180%) rotate(8deg); }
+  60%, 100% { transform: translateX(320%) rotate(8deg); }
+}
+
+/* Bar labels keep their active-state glow */
+.lbl {
+  flex: 1 1 0;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+.lbl.is-active {
+  color: var(--text-0);
+  text-shadow: 0 0 16px var(--bar-glow);
+}
+
+@media (max-width: 560px) {
+  .glass { max-width: 60px; }
+}
+
+/* ============================================================
+   PieChart — doughnut (breathing/interaction classes + typography).
+   Layout containers are Tailwind utilities in the component.
+   ============================================================ */
+.donut-spin {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+}
+.donut-breathe {
+  width: 100%;
+  height: 100%;
+  animation: breathe 7s ease-in-out infinite;
+  transform-origin: center;
+}
+.donut-slice {
+  cursor: pointer;
+  transform-origin: 120px 120px;
+  transition: filter 0.4s ease;
+}
+
+.dc-eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.dc-value {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(30px, 5vw, 40px);
+  line-height: 1;
+  color: var(--text-0);
+  margin: 6px 0 2px;
+  letter-spacing: -0.03em;
+}
+.dc-pct {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.dc-desc {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-2);
+  margin-top: 8px;
+  max-width: 150px;
+}
+.dc-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hi);
+  background: rgba(255, 255, 255, 0.04);
+}
+.dc-trend.up { color: var(--emerald); }
+.dc-trend.down { color: #fb7185; }
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+}
+.leg-item:hover,
+.leg-item.is-active {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: var(--border);
+}
+.leg-item.is-dim { opacity: 0.4; }
+
+.leg-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex: 0 0 auto;
+  box-shadow: 0 0 10px 0 var(--sw-glow);
+}
+.leg-name {
+  flex: 1 1 auto;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+.leg-val {
+  font-family: var(--display);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-0);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   LineChart — SVG presentation classes (reused across many grid
+   lines / ticks / months) + flow & glow keyframes. Layout wrappers
+   are Tailwind utilities in the component.
+   ============================================================ */
+.line-grid {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+.line-axis {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+}
+.line-tick {
+  fill: var(--text-2);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+}
+.line-month {
+  fill: var(--text-2);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  text-anchor: middle;
+  transition: fill 0.3s ease;
+}
+.line-month.is-active {
+  fill: var(--text-0);
+}
+
+/* Slow flowing liquid bands (clipped to the area under the line) */
+.flow {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+.flow.f1 { animation: flow-x 28s linear infinite; opacity: 0.5; }
+.flow.f2 { animation: flow-x 44s linear infinite reverse; opacity: 0.34; }
+.flow.f3 { animation: flow-x 60s linear infinite; opacity: 0.22; }
+@keyframes flow-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Breathing glow behind the stroke */
+.line-glow {
+  animation: line-breathe 6.5s ease-in-out infinite;
+}
+@keyframes line-breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.6; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
   }
+  .flow, .line-glow { animation: none; }
 }

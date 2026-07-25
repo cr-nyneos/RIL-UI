@@ -78,7 +78,7 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
   const slosh = useRef({ v: 0, vel: 0 }); // whole-body tilt + its velocity
   const drive = useRef(0); // sustained cursor force, decays over time
   const travelDir = useRef(1);
-  const fillCur = useRef(0);
+  const level = useRef({ v: 0, vel: 0 }); // liquid level as a spring → overshoot on pour
   const modes = useRef<Mode[]>([
     { k: 0.6, speed: 0.5, ambient: 0.8, boost: 2.0, amp: 0.8, phase: 0.4 },
     { k: 1.15, speed: 0.72, ambient: 0.45, boost: 1.3, amp: 0.45, phase: 2.3 },
@@ -110,7 +110,7 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
     const target = Math.max(0, Math.min(1, fill));
 
     if (prefersReduced) {
-      fillCur.current = target;
+      level.current.v = target;
       renderFrame();
       return;
     }
@@ -123,7 +123,15 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
       const dt = Math.min(0.045, (now - last) / 1000);
       last = now;
 
-      if (now >= startAt) fillCur.current += (target - fillCur.current) * Math.min(1, dt * 2.4);
+      // Liquid level rises on a slightly under-damped spring → the surface
+      // overshoots as it "pours in", then settles.
+      const lv = level.current;
+      if (now >= startAt) {
+        const lacc = -42 * (lv.v - target) - 8.4 * lv.vel;
+        lv.vel += lacc * dt;
+        lv.v += lv.vel * dt;
+        lv.v = Math.max(0, Math.min(1, lv.v));
+      }
 
       // Heavy, slow slosh spring driven by the sustained cursor force.
       const s = slosh.current;
@@ -133,13 +141,17 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
       s.v += s.vel * dt;
       s.v = Math.max(-12, Math.min(12, s.v));
 
+      // While pouring, the inflow agitates the surface (calms as it settles).
+      const pour = Math.min(1, Math.abs(lv.vel) * 1.4);
+
       let extra = 0;
       for (const m of modes.current) extra += m.amp - m.ambient;
       const energy = Math.min(1, extra / 5);
       const relax = Math.exp(-dt / 0.7); // slow amplitude decay
       for (const m of modes.current) {
         m.amp = m.ambient + (m.amp - m.ambient) * relax;
-        m.phase += m.speed * (0.4 + energy) * travelDir.current * dt;
+        if (pour > 0.01) m.amp = Math.min(m.ambient + 3.4, m.amp + pour * m.boost * dt * 5);
+        m.phase += m.speed * (0.4 + energy + pour * 0.6) * travelDir.current * dt;
       }
 
       renderFrame();
@@ -147,7 +159,7 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
     }
 
     function renderFrame() {
-      const yBase = H - fillCur.current * H;
+      const yBase = H - level.current.v * H;
       const tilt = slosh.current.v;
       const ms = modes.current;
       const pts: { x: number; y: number }[] = [];

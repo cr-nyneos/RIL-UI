@@ -1,10 +1,14 @@
-import { useMemo, useState, type CSSProperties } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useMemo, useRef, useState, type CSSProperties } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
+import FloatingTooltip from './FloatingTooltip';
 import { SEGMENTS, SEGMENT_TOTAL, type Segment } from '../data/segments';
-import { SPRING } from '../lib/motion';
-import './PieChart.css';
+import { SPRING, EASE_OUT } from '../lib/motion';
+
+const reduceMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 const CX = 120;
 const CY = 120;
@@ -47,6 +51,12 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
   const [tip, setTip] = useState<TooltipState | null>(null);
   const ownHover = tip?.index ?? null;
 
+  const donutRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(donutRef, { once: true, amount: 0.5 });
+  // Once the circumference finishes drawing we drop the reveal mask so hover
+  // explosions are never clipped, and let the center / legend fade in.
+  const [built, setBuilt] = useState(reduceMotion);
+
   const segments = useMemo<SliceGeom[]>(() => {
     const steps = SEGMENTS.map((d) => (d.value / SEGMENT_TOTAL) * Math.PI * 2);
     // Cumulative start angle for each slice, beginning at 12 o'clock.
@@ -87,11 +97,23 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
   const anyActive = ownHover !== null || extIndex >= 0;
 
   return (
-    <div className="donut-layout">
-      <div className="donut" onMouseLeave={clear}>
-        <div className="donut-breathe">
-          <svg viewBox="0 0 240 240" role="img" aria-label="Revenue by segment">
-            <defs>
+    <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,4vw,40px)]">
+      <div
+        className="relative aspect-square w-[clamp(240px,32vw,320px)] flex-none"
+        ref={donutRef}
+        onMouseLeave={clear}
+      >
+        {/* Scroll reveal: the whole ring rotates ~one revolution into place
+            with spring easing while the circumference draws itself. */}
+        <motion.div
+          className="donut-spin"
+          initial={{ rotate: reduceMotion ? 0 : -300 }}
+          animate={inView ? { rotate: 0 } : {}}
+          transition={{ type: 'spring', stiffness: 42, damping: 15, mass: 1.1 }}
+        >
+          <div className="donut-breathe">
+            <svg className="h-full w-full overflow-visible" viewBox="0 0 240 240" role="img" aria-label="Revenue by segment">
+              <defs>
               {/* userSpaceOnUse → every slice is lit along one shared axis
                   (top-left light, bottom-right shade) so the ring reads as a
                   single object under one light source. */}
@@ -120,8 +142,25 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
               <filter id="slice-shadow" x="-40%" y="-40%" width="180%" height="180%">
                 <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#000" floodOpacity="0.55" />
               </filter>
+              {/* Circumference reveal: a thick stroked circle whose length
+                  animates 0→1, uncovering the ring as if it were being drawn. */}
+              <mask id="reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+                <motion.circle
+                  cx="120"
+                  cy="120"
+                  r="82"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="72"
+                  initial={{ pathLength: reduceMotion ? 1 : 0 }}
+                  animate={inView ? { pathLength: 1 } : {}}
+                  transition={{ duration: 1.15, ease: EASE_OUT }}
+                  onAnimationComplete={() => setBuilt(true)}
+                />
+              </mask>
             </defs>
 
+            <g mask={built ? undefined : 'url(#reveal)'}>
             <g filter="url(#slice-shadow)">
               {segments.map((s) => {
                 const isOwn = ownHover === s.index;
@@ -143,45 +182,46 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                     strokeWidth={1}
                     strokeLinejoin="round"
                     style={{ filter: highlight ? `drop-shadow(0 0 14px ${s.glow})` : 'none' }}
-                    initial={{ opacity: 0, scale: 0.55 }}
+                    initial={false}
                     animate={{
                       opacity: isDim ? 0.5 : 1,
                       scale: isOwn ? 1.06 : isExt ? 1.03 : 1,
                       x: dx,
                       y: dy,
                     }}
-                    transition={{
-                      opacity: { duration: 0.5, delay: 0.15 + s.index * 0.09 },
-                      scale: SPRING,
-                      x: SPRING,
-                      y: SPRING,
-                    }}
+                    transition={{ scale: SPRING, x: SPRING, y: SPRING, opacity: { duration: 0.35 } }}
                     onMouseEnter={(e) => setHover(s.index, e)}
                     onMouseMove={moveHover}
                   />
                 );
               })}
-            </g>
+              </g>
 
-            {/* Continuous lighting overlays spanning the whole ring, not
-                per-slice: a specular highlight up top, soft shade at the base. */}
-            <path
-              d={segmentPath(Math.PI * 0.06, Math.PI * 0.94, R_OUT - 1, R_IN + 1)}
-              fill="url(#shade)"
-              opacity={0.9}
-              style={{ pointerEvents: 'none' }}
-            />
-            <path
-              d={segmentPath(-Math.PI * 0.92, -Math.PI * 0.08, R_OUT - 1, R_IN + 1)}
-              fill="url(#gloss)"
-              opacity={0.5}
-              style={{ pointerEvents: 'none', mixBlendMode: 'screen' }}
-            />
-          </svg>
-        </div>
+              {/* Continuous lighting overlays spanning the whole ring, not
+                  per-slice: a specular highlight up top, soft shade at the base. */}
+              <path
+                d={segmentPath(Math.PI * 0.06, Math.PI * 0.94, R_OUT - 1, R_IN + 1)}
+                fill="url(#shade)"
+                opacity={0.9}
+                style={{ pointerEvents: 'none' }}
+              />
+              <path
+                d={segmentPath(-Math.PI * 0.92, -Math.PI * 0.08, R_OUT - 1, R_IN + 1)}
+                fill="url(#gloss)"
+                opacity={0.5}
+                style={{ pointerEvents: 'none', mixBlendMode: 'screen' }}
+              />
+              </g>
+            </svg>
+          </div>
+        </motion.div>
 
-        {/* Morphing center panel */}
-        <div className="donut-center">
+        {/* Morphing center panel — fades in after the ring is built */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-[18%] text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: built ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: EASE_OUT }}>
           <AnimatePresence mode="wait">
             {center ? (
               <motion.div
@@ -223,11 +263,16 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Legend doubles as an interaction surface */}
-      <div className="donut-legend">
+      {/* Legend doubles as an interaction surface — fades in after the ring */}
+      <motion.div
+        className="flex min-w-[190px] flex-col gap-1"
+        initial={{ opacity: 0, y: 10 }}
+        animate={built ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: EASE_OUT }}
+      >
         {segments.map((s) => {
           const highlight = ownHover === s.index || extIndex === s.index;
           return (
@@ -250,17 +295,11 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
             </div>
           );
         })}
-      </div>
+      </motion.div>
 
-      <AnimatePresence>
-        {tip && ownHover !== null && (
-          <motion.div
-            className="chart-tooltip"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1, x: tip.x + 18, y: tip.y - 24 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ type: 'spring', stiffness: 420, damping: 32, mass: 0.6 }}
-          >
+      <FloatingTooltip open={tip !== null && ownHover !== null} cursor={tip ? { x: tip.x, y: tip.y } : undefined}>
+        {ownHover !== null && (
+          <>
             <div className="tt-head">
               <span className="tt-dot" style={{ color: segments[ownHover].glow }} />
               {segments[ownHover].fullLabel}
@@ -281,9 +320,9 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 {segments[ownHover].trend.toFixed(1)}%
               </span>
             </div>
-          </motion.div>
+          </>
         )}
-      </AnimatePresence>
+      </FloatingTooltip>
     </div>
   );
 }
