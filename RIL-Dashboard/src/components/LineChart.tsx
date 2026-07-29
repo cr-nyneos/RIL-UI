@@ -12,6 +12,16 @@ export interface LinePoint {
 interface LineChartProps {
   data?: LinePoint[];
   unit?: string;
+  /** Optional second series (e.g. "Planned"), rendered as a muted dashed line for comparison. */
+  secondaryData?: LinePoint[];
+  primaryLabel?: string;
+  secondaryLabel?: string;
+  ariaLabel?: string;
+  valuePrefix?: string;
+  periodLabel?: string;
+  changeLabel?: string;
+  /** Stretch to fill a fixed-height parent instead of sizing from the viewBox aspect ratio. */
+  fillHeight?: boolean;
 }
 
 const DEFAULT_DATA: LinePoint[] = [
@@ -93,7 +103,18 @@ function flowAnimProps(reverse: boolean, duration: number) {
   };
 }
 
-export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChartProps) {
+export default function LineChart({
+  data = DEFAULT_DATA,
+  unit = 'B',
+  secondaryData,
+  primaryLabel = 'Actual',
+  secondaryLabel = 'Planned',
+  ariaLabel = 'Monthly revenue flow',
+  valuePrefix = '$',
+  periodLabel = 'FY24',
+  changeLabel = 'MoM change',
+  fillHeight = false,
+}: LineChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -107,14 +128,14 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
   const sampleRef = useRef<{ x: number; y: number }[]>([]);
 
   const { min, max } = useMemo(() => {
-    const vals = data.map((d) => d.value);
+    const vals = data.map((d) => d.value).concat(secondaryData?.map((d) => d.value) ?? []);
     return { min: Math.min(...vals), max: Math.max(...vals) };
-  }, [data]);
+  }, [data, secondaryData]);
 
   const points = useMemo(() => {
     const span = max - min || 1;
     // pad the value range so the line never touches the top/bottom edges
-    const lo = min - span * 0.18;
+    const lo = Math.max(0, min - span * 0.18);
     const hi = max + span * 0.18;
     return data.map((d, i) => {
       const x = PAD.l + (data.length === 1 ? 0.5 : i / (data.length - 1)) * PLOT_W;
@@ -125,6 +146,20 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
     });
   }, [data, min, max]);
 
+  const secondaryPoints = useMemo(() => {
+    if (!secondaryData) return null;
+    const span = max - min || 1;
+    const lo = Math.max(0, min - span * 0.18);
+    const hi = max + span * 0.18;
+    return secondaryData.map((d, i) => ({
+      ...d,
+      x: PAD.l + (secondaryData.length === 1 ? 0.5 : i / (secondaryData.length - 1)) * PLOT_W,
+      y: PAD.t + (1 - (d.value - lo) / (hi - lo)) * PLOT_H,
+    }));
+  }, [secondaryData, min, max]);
+
+  const secondaryPath = useMemo(() => (secondaryPoints ? smoothLine(secondaryPoints) : null), [secondaryPoints]);
+
   const linePath = useMemo(() => smoothLine(points), [points]);
   const areaPath = useMemo(
     () => `${linePath} L${points[points.length - 1].x},${PAD.t + PLOT_H} L${points[0].x},${PAD.t + PLOT_H} Z`,
@@ -133,11 +168,11 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
 
   const yTicks = useMemo(() => {
     const span = max - min || 1;
-    const lo = min - span * 0.18;
+    const lo = Math.max(0, min - span * 0.18);
     const hi = max + span * 0.18;
     return [0, 0.25, 0.5, 0.75, 1].map((f) => ({
       y: PAD.t + f * PLOT_H,
-      value: Math.round(hi - f * (hi - lo)),
+      value: Math.max(0, Math.round(hi - f * (hi - lo))),
     }));
   }, [min, max]);
 
@@ -228,13 +263,14 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
   const active = hover ? points[hover.index] : null;
 
   return (
-    <div className="relative w-full" ref={wrapRef}>
+    <div className={`relative w-full ${fillHeight ? 'h-full' : ''}`} ref={wrapRef}>
       <svg
         ref={svgRef}
-        className="block h-auto w-full cursor-crosshair overflow-visible"
+        className={`block cursor-crosshair overflow-visible ${fillHeight ? 'h-full w-full' : 'h-auto w-full'}`}
         viewBox={`0 0 ${VBW} ${VBH}`}
+        preserveAspectRatio="xMidYMid meet"
         role="img"
-        aria-label="Monthly revenue flow"
+        aria-label={ariaLabel}
         onMouseMove={handleMove}
         onMouseLeave={() => setHover(null)}
       >
@@ -341,6 +377,21 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
             </AnimatePresence>
           </g>
         </g>
+
+        {/* Secondary comparison series (e.g. Planned) — muted, dashed, no glow */}
+        {secondaryPath && (
+          <motion.path
+            d={secondaryPath}
+            fill="none"
+            stroke="#98A2B3"
+            strokeWidth={2}
+            strokeDasharray="5 5"
+            strokeLinecap="round"
+            initial={{ pathLength: reduceMotion ? 1 : 0, opacity: reduceMotion ? 0.7 : 0 }}
+            animate={inView ? { pathLength: 1, opacity: 0.7 } : {}}
+            transition={{ duration: DRAW, ease: EASE_OUT, delay: 0.2 }}
+          />
+        )}
 
         {/* Glow underlay + the line itself, drawn progressively */}
         <motion.path
@@ -460,14 +511,26 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
           <>
             <div className={TT_HEAD}>
               <span className={TT_DOT} style={{ color: '#2a78d6' }} />
-              {active.month} · FY24
+              {active.month} · {periodLabel}
             </div>
             <div className={TT_VALUE}>
-              ${active.value}
+              {valuePrefix}
+              {active.value}
               {unit}
+              {secondaryData && <span className="ml-1.5 text-xs font-medium text-text-2">{primaryLabel}</span>}
             </div>
+            {secondaryData?.[hover!.index] && (
+              <div className={TT_ROW}>
+                <span>{secondaryLabel}</span>
+                <span className="text-text-1">
+                  {valuePrefix}
+                  {secondaryData[hover!.index].value}
+                  {unit}
+                </span>
+              </div>
+            )}
             <div className={TT_ROW}>
-              <span>MoM change</span>
+              <span>{changeLabel}</span>
               <span className={`${TT_TREND} ${trendColor(active.pct)}`}>
                 {active.pct >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                 {active.pct >= 0 ? '+' : ''}

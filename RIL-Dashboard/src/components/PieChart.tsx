@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
 import FloatingTooltip, { TT_HEAD, TT_DOT, TT_VALUE, TT_ROW, TT_TREND, trendColor } from './FloatingTooltip';
-import { SEGMENTS, SEGMENT_TOTAL, type Segment } from '../data/segments';
+import { SEGMENTS, type Segment } from '../data/segments';
 import { SPRING, EASE_OUT } from '../lib/motion';
 
 const reduceMotion =
@@ -48,9 +48,32 @@ interface PieChartProps {
   externalActiveKey?: string | null;
   onHoverKey?: (key: string | null) => void;
   unit?: string;
+  /** Custom dataset; defaults to the demo SEGMENTS so existing usages are unaffected. */
+  data?: Segment[];
+  valuePrefix?: string;
+  shareLabel?: string;
+  trendLabel?: string;
+  totalLabel?: string;
+  shareUnitLabel?: string;
+  idleHint?: string;
+  showTrend?: boolean;
+  ariaLabel?: string;
 }
 
-export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 'B' }: PieChartProps) {
+export default function PieChart({
+  externalActiveKey = null,
+  onHoverKey,
+  unit = 'B',
+  data = SEGMENTS,
+  valuePrefix = '$',
+  shareLabel = 'Share',
+  trendLabel = 'YoY trend',
+  totalLabel = 'Total Revenue',
+  shareUnitLabel = 'of revenue',
+  idleHint = 'Hover a segment for the breakdown',
+  showTrend = true,
+  ariaLabel = 'Revenue by segment',
+}: PieChartProps) {
   const [tip, setTip] = useState<TooltipState | null>(null);
   const ownHover = tip?.index ?? null;
 
@@ -60,26 +83,28 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
   // explosions are never clipped, and let the center / legend fade in.
   const [built, setBuilt] = useState(reduceMotion);
 
+  const total = useMemo(() => data.reduce((s, d) => s + d.value, 0), [data]);
+
   const segments = useMemo<SliceGeom[]>(() => {
-    const steps = SEGMENTS.map((d) => (d.value / SEGMENT_TOTAL) * Math.PI * 2);
+    const steps = data.map((d) => (d.value / total) * Math.PI * 2);
     // Cumulative start angle for each slice, beginning at 12 o'clock.
     const starts = steps.reduce<number[]>((arr, _, i) => {
       arr.push(i === 0 ? -Math.PI / 2 : arr[i - 1] + steps[i - 1]);
       return arr;
     }, []);
-    return SEGMENTS.map((d, index) => {
+    return data.map((d, index) => {
       const start = starts[index] + GAP / 2;
       const end = starts[index] + steps[index] - GAP / 2;
       const mid = (start + end) / 2;
       return {
         ...d,
         index,
-        pct: (d.value / SEGMENT_TOTAL) * 100,
+        pct: (d.value / total) * 100,
         mid,
         path: segmentPath(start, end, R_OUT, R_IN),
       };
     });
-  }, []);
+  }, [data, total]);
 
   const extIndex = externalActiveKey ? segments.findIndex((s) => s.key === externalActiveKey) : -1;
   // The center panel follows a direct hover first, then any external highlight.
@@ -119,7 +144,7 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
             animate={reduceMotion ? undefined : { scale: [1, 1.012, 1] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <svg className="h-full w-full overflow-visible" viewBox="0 0 240 240" role="img" aria-label="Revenue by segment">
+            <svg className="h-full w-full overflow-visible" viewBox="0 0 240 240" role="img" aria-label={ariaLabel}>
               <defs>
               {/* userSpaceOnUse → every slice is lit along one shared axis
                   (top-left light, bottom-right shade) so the ring reads as a
@@ -245,20 +270,23 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                   {center.fullLabel}
                 </div>
                 <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
-                  ${center.value}
+                  {valuePrefix}
+                  {center.value}
                   {unit}
                 </div>
                 <div className="font-display text-sm font-semibold" style={{ color: center.glow }}>
-                  {center.pct.toFixed(1)}% of revenue
+                  {center.pct.toFixed(1)}% {shareUnitLabel}
                 </div>
                 <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">
                   {center.description}
                 </div>
-                <span className={`${DC_TREND} ${trendColor(center.trend)}`}>
-                  {center.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
-                  {center.trend >= 0 ? '+' : ''}
-                  {center.trend.toFixed(1)}%
-                </span>
+                {showTrend && (
+                  <span className={`${DC_TREND} ${trendColor(center.trend)}`}>
+                    {center.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
+                    {center.trend >= 0 ? '+' : ''}
+                    {center.trend.toFixed(1)}%
+                  </span>
+                )}
               </motion.div>
             ) : (
               <motion.div
@@ -269,15 +297,14 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 transition={SPRING}
               >
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-text-2">
-                  Total Revenue
+                  {totalLabel}
                 </div>
                 <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
-                  $<AnimatedNumber value={SEGMENT_TOTAL} />
+                  {valuePrefix}
+                  <AnimatedNumber value={total} />
                   {unit}
                 </div>
-                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">
-                  Hover a segment for the breakdown
-                </div>
+                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">{idleHint}</div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -325,21 +352,24 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
               {segments[ownHover].fullLabel}
             </div>
             <div className={TT_VALUE}>
-              ${segments[ownHover].value}
+              {valuePrefix}
+              {segments[ownHover].value}
               {unit}
             </div>
             <div className={TT_ROW}>
-              <span>Share</span>
+              <span>{shareLabel}</span>
               <span className="text-text-1">{segments[ownHover].pct.toFixed(1)}%</span>
             </div>
-            <div className={TT_ROW}>
-              <span>YoY trend</span>
-              <span className={`${TT_TREND} ${trendColor(segments[ownHover].trend)}`}>
-                {segments[ownHover].trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
-                {segments[ownHover].trend >= 0 ? '+' : ''}
-                {segments[ownHover].trend.toFixed(1)}%
-              </span>
-            </div>
+            {showTrend && (
+              <div className={TT_ROW}>
+                <span>{trendLabel}</span>
+                <span className={`${TT_TREND} ${trendColor(segments[ownHover].trend)}`}>
+                  {segments[ownHover].trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
+                  {segments[ownHover].trend >= 0 ? '+' : ''}
+                  {segments[ownHover].trend.toFixed(1)}%
+                </span>
+              </div>
+            )}
           </>
         )}
       </FloatingTooltip>

@@ -4,7 +4,7 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
 import FloatingTooltip, { TT_HEAD, TT_DOT, TT_VALUE, TT_ROW, TT_TREND, trendColor } from './FloatingTooltip';
 import LiquidSurface, { type LiquidHandle } from './LiquidSurface';
-import { SEGMENTS, SEGMENT_MAX, SEGMENT_TOTAL, type Segment } from '../data/segments';
+import { SEGMENTS, type Segment } from '../data/segments';
 import { SPRING } from '../lib/motion';
 
 interface BarChartProps {
@@ -13,6 +13,12 @@ interface BarChartProps {
   /** Reports the key the user is hovering here, for cross-chart linking. */
   onHoverKey?: (key: string | null) => void;
   unit?: string;
+  /** Custom dataset; defaults to the demo SEGMENTS so existing usages are unaffected. */
+  data?: Segment[];
+  valuePrefix?: string;
+  shareLabel?: string;
+  trendLabel?: string;
+  showTrend?: boolean;
 }
 
 interface TooltipState {
@@ -56,6 +62,9 @@ function Bar({
   filled,
   onEnter,
   onLeave,
+  max,
+  valuePrefix,
+  unit,
 }: {
   datum: Segment;
   index: number;
@@ -63,6 +72,9 @@ function Bar({
   filled: boolean;
   onEnter: (i: number, e: React.MouseEvent) => void;
   onLeave: () => void;
+  max: number;
+  valuePrefix: string;
+  unit: string;
 }) {
   const [ownHover, setOwnHover] = useState(false);
   const [ripples, setRipples] = useState<Ripple[]>([]);
@@ -73,7 +85,7 @@ function Bar({
 
   const hot = ownHover || external;
 
-  const ratio = datum.value / SEGMENT_MAX;
+  const ratio = datum.value / max;
   const glassPct = 34 + ratio * 66; // bar height encodes value → reads as a bar chart
   const intensity = 0.26 + ratio * 0.5;
 
@@ -162,7 +174,7 @@ function Bar({
           animate={{ opacity: hot ? 0.5 : 0, scale: hot ? 1 : 0.7 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
         />
-        <AnimatedNumber value={datum.value} prefix="$" suffix="B" delay={0.3 + index * 0.08} />
+        <AnimatedNumber value={datum.value} prefix={valuePrefix} suffix={unit} delay={0.3 + index * 0.08} />
       </motion.div>
 
       <div
@@ -272,23 +284,35 @@ function Bar({
   );
 }
 
-export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 'B' }: BarChartProps) {
+export default function BarChart({
+  externalActiveKey = null,
+  onHoverKey,
+  unit = 'B',
+  data = SEGMENTS,
+  valuePrefix = '$',
+  shareLabel = 'Share of revenue',
+  trendLabel = 'YoY trend',
+  showTrend = true,
+}: BarChartProps) {
   const [tip, setTip] = useState<TooltipState | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   // Bars fill only once the section scrolls into view.
   const filled = useInView(wrapRef, { once: true, amount: 0.4 });
 
+  const max = useMemo(() => Math.max(...data.map((d) => d.value)), [data]);
+  const total = useMemo(() => data.reduce((s, d) => s + d.value, 0), [data]);
+
   const handleEnter = (index: number, e: React.MouseEvent) => {
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     setTip({ index, rect: { left: r.left, bottom: r.bottom, width: r.width } });
-    onHoverKey?.(SEGMENTS[index].key);
+    onHoverKey?.(data[index].key);
   };
   const clear = () => {
     setTip(null);
     onHoverKey?.(null);
   };
 
-  const active = tip ? SEGMENTS[tip.index] : null;
+  const active = tip ? data[tip.index] : null;
 
   return (
     <>
@@ -297,7 +321,7 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
         ref={wrapRef}
         onMouseLeave={clear}
       >
-        {SEGMENTS.map((d, i) => (
+        {data.map((d, i) => (
           <Bar
             key={d.key}
             datum={d}
@@ -306,13 +330,16 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
             filled={filled}
             onEnter={handleEnter}
             onLeave={clear}
+            max={max}
+            valuePrefix={valuePrefix}
+            unit={unit}
           />
         ))}
       </div>
 
       <div className="mx-1 mt-3.5 h-px bg-[linear-gradient(90deg,transparent,var(--color-border-hi),transparent)]" />
       <div className="flex justify-between gap-[clamp(12px,2.6vw,28px)] px-1 pt-3">
-        {SEGMENTS.map((d, i) => {
+        {data.map((d, i) => {
           const isActive = tip?.index === i || externalActiveKey === d.key;
           return (
             <span
@@ -335,21 +362,24 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
               {active.fullLabel}
             </div>
             <div className={TT_VALUE}>
-              ${active.value}
+              {valuePrefix}
+              {active.value}
               {unit}
             </div>
             <div className={TT_ROW}>
-              <span>Share of revenue</span>
-              <span className="text-text-1">{((active.value / SEGMENT_TOTAL) * 100).toFixed(1)}%</span>
+              <span>{shareLabel}</span>
+              <span className="text-text-1">{((active.value / total) * 100).toFixed(1)}%</span>
             </div>
-            <div className={TT_ROW}>
-              <span>YoY trend</span>
-              <span className={`${TT_TREND} ${trendColor(active.trend)}`}>
-                {active.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
-                {active.trend >= 0 ? '+' : ''}
-                {active.trend.toFixed(1)}%
-              </span>
-            </div>
+            {showTrend && (
+              <div className={TT_ROW}>
+                <span>{trendLabel}</span>
+                <span className={`${TT_TREND} ${trendColor(active.trend)}`}>
+                  {active.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
+                  {active.trend >= 0 ? '+' : ''}
+                  {active.trend.toFixed(1)}%
+                </span>
+              </div>
+            )}
           </>
         )}
       </FloatingTooltip>
