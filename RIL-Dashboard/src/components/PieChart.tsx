@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
-import FloatingTooltip from './FloatingTooltip';
+import FloatingTooltip, { TT_HEAD, TT_DOT, TT_VALUE, TT_ROW, TT_TREND, trendColor } from './FloatingTooltip';
 import { SEGMENTS, SEGMENT_TOTAL, type Segment } from '../data/segments';
 import { SPRING, EASE_OUT } from '../lib/motion';
 
@@ -15,6 +15,9 @@ const CY = 120;
 const R_OUT = 100;
 const R_IN = 64;
 const GAP = 0; // slices touch: the ring reads as one continuous object
+
+const DC_TREND =
+  'mt-2 inline-flex items-center gap-1 rounded-full border border-border-hi bg-[#0b0b0b0a] px-[9px] py-[3px] text-xs font-semibold [font-variant-numeric:tabular-nums]';
 
 const polar = (r: number, a: number) => [CX + r * Math.cos(a), CY + r * Math.sin(a)] as const;
 
@@ -106,12 +109,16 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
         {/* Scroll reveal: the whole ring rotates ~one revolution into place
             with spring easing while the circumference draws itself. */}
         <motion.div
-          className="donut-spin"
+          className="h-full w-full origin-center"
           initial={{ rotate: reduceMotion ? 0 : -300 }}
           animate={inView ? { rotate: 0 } : {}}
           transition={{ type: 'spring', stiffness: 42, damping: 15, mass: 1.1 }}
         >
-          <div className="donut-breathe">
+          <motion.div
+            className="h-full w-full origin-center"
+            animate={reduceMotion ? undefined : { scale: [1, 1.012, 1] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          >
             <svg className="h-full w-full overflow-visible" viewBox="0 0 240 240" role="img" aria-label="Revenue by segment">
               <defs>
               {/* userSpaceOnUse → every slice is lit along one shared axis
@@ -140,7 +147,7 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 <stop offset="100%" stopColor="rgba(0,0,0,0.42)" />
               </linearGradient>
               <filter id="slice-shadow" x="-40%" y="-40%" width="180%" height="180%">
-                <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#000" floodOpacity="0.55" />
+                <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#000" floodOpacity="0.35" />
               </filter>
               {/* Circumference reveal: a thick stroked circle whose length
                   animates 0→1, uncovering the ring as if it were being drawn. */}
@@ -173,7 +180,7 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 return (
                   <motion.path
                     key={s.index}
-                    className="donut-slice"
+                    className="cursor-pointer transition-[filter] duration-400"
                     d={s.path}
                     fill={`url(#slice-${s.index})`}
                     /* Stroke matches the fill so touching edges seam invisibly
@@ -181,7 +188,10 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                     stroke={`url(#slice-${s.index})`}
                     strokeWidth={1}
                     strokeLinejoin="round"
-                    style={{ filter: highlight ? `drop-shadow(0 0 14px ${s.glow})` : 'none' }}
+                    style={{
+                      filter: highlight ? `drop-shadow(0 0 14px ${s.glow})` : 'none',
+                      transformOrigin: '120px 120px',
+                    }}
                     initial={false}
                     animate={{
                       opacity: isDim ? 0.5 : 1,
@@ -213,7 +223,7 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
               />
               </g>
             </svg>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Morphing center panel — fades in after the ring is built */}
@@ -231,16 +241,20 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 exit={{ opacity: 0, y: -8, scale: 0.94 }}
                 transition={SPRING}
               >
-                <div className="dc-eyebrow">{center.fullLabel}</div>
-                <div className="dc-value">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-text-2">
+                  {center.fullLabel}
+                </div>
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
                   ${center.value}
                   {unit}
                 </div>
-                <div className="dc-pct" style={{ color: center.glow }}>
+                <div className="font-display text-sm font-semibold" style={{ color: center.glow }}>
                   {center.pct.toFixed(1)}% of revenue
                 </div>
-                <div className="dc-desc">{center.description}</div>
-                <span className={`dc-trend ${center.trend >= 0 ? 'up' : 'down'}`}>
+                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">
+                  {center.description}
+                </div>
+                <span className={`${DC_TREND} ${trendColor(center.trend)}`}>
                   {center.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                   {center.trend >= 0 ? '+' : ''}
                   {center.trend.toFixed(1)}%
@@ -254,12 +268,16 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
                 exit={{ opacity: 0, scale: 0.94 }}
                 transition={SPRING}
               >
-                <div className="dc-eyebrow">Total Revenue</div>
-                <div className="dc-value">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-text-2">
+                  Total Revenue
+                </div>
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
                   $<AnimatedNumber value={SEGMENT_TOTAL} />
                   {unit}
                 </div>
-                <div className="dc-desc">Hover a segment for the breakdown</div>
+                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">
+                  Hover a segment for the breakdown
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -268,30 +286,32 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
 
       {/* Legend doubles as an interaction surface — fades in after the ring */}
       <motion.div
-        className="flex min-w-[190px] flex-col gap-1"
+        className="flex min-w-47.5 flex-col gap-1"
         initial={{ opacity: 0, y: 10 }}
         animate={built ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, ease: EASE_OUT }}
       >
         {segments.map((s) => {
           const highlight = ownHover === s.index || extIndex === s.index;
+          const dim = anyActive && !highlight;
           return (
             <div
               key={s.index}
-              className={`leg-item${highlight ? ' is-active' : ''}${
-                anyActive && !highlight ? ' is-dim' : ''
-              }`}
-              style={{ '--sw-glow': s.glow } as CSSProperties}
+              className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-3 py-2.5 transition-[background-color,border-color,opacity] duration-350 ${
+                highlight ? 'border-border bg-[#0b0b0b0c]' : 'border-transparent hover:border-border hover:bg-[#0b0b0b0c]'
+              } ${dim ? 'opacity-40' : ''}`}
               onMouseEnter={(e) => setHover(s.index, e)}
               onMouseMove={moveHover}
               onMouseLeave={clear}
             >
               <span
-                className="leg-swatch"
-                style={{ background: `linear-gradient(135deg, ${s.from}, ${s.to})` }}
+                className="h-3 w-3 flex-none rounded"
+                style={{ background: `linear-gradient(135deg, ${s.from}, ${s.to})`, boxShadow: `0 0 10px 0 ${s.glow}` }}
               />
-              <span className="leg-name">{s.fullLabel}</span>
-              <span className="leg-val">{s.pct.toFixed(0)}%</span>
+              <span className="flex-1 text-[13.5px] font-medium text-text-1">{s.fullLabel}</span>
+              <span className="font-display text-[13.5px] font-semibold text-text-0 [font-variant-numeric:tabular-nums]">
+                {s.pct.toFixed(0)}%
+              </span>
             </div>
           );
         })}
@@ -300,21 +320,21 @@ export default function PieChart({ externalActiveKey = null, onHoverKey, unit = 
       <FloatingTooltip open={tip !== null && ownHover !== null} cursor={tip ? { x: tip.x, y: tip.y } : undefined}>
         {ownHover !== null && (
           <>
-            <div className="tt-head">
-              <span className="tt-dot" style={{ color: segments[ownHover].glow }} />
+            <div className={TT_HEAD}>
+              <span className={TT_DOT} style={{ color: segments[ownHover].glow }} />
               {segments[ownHover].fullLabel}
             </div>
-            <div className="tt-value">
+            <div className={TT_VALUE}>
               ${segments[ownHover].value}
               {unit}
             </div>
-            <div className="tt-row">
+            <div className={TT_ROW}>
               <span>Share</span>
-              <span style={{ color: 'var(--text-1)' }}>{segments[ownHover].pct.toFixed(1)}%</span>
+              <span className="text-text-1">{segments[ownHover].pct.toFixed(1)}%</span>
             </div>
-            <div className="tt-row">
+            <div className={TT_ROW}>
               <span>YoY trend</span>
-              <span className={`tt-trend ${segments[ownHover].trend >= 0 ? 'up' : 'down'}`}>
+              <span className={`${TT_TREND} ${trendColor(segments[ownHover].trend)}`}>
                 {segments[ownHover].trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                 {segments[ownHover].trend >= 0 ? '+' : ''}
                 {segments[ownHover].trend.toFixed(1)}%

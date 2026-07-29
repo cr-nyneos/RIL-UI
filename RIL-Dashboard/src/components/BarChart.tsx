@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
-import FloatingTooltip from './FloatingTooltip';
+import FloatingTooltip, { TT_HEAD, TT_DOT, TT_VALUE, TT_ROW, TT_TREND, trendColor } from './FloatingTooltip';
 import LiquidSurface, { type LiquidHandle } from './LiquidSurface';
 import { SEGMENTS, SEGMENT_MAX, SEGMENT_TOTAL, type Segment } from '../data/segments';
 import { SPRING } from '../lib/motion';
@@ -136,19 +136,13 @@ function Bar({
     }));
   }, [index]);
 
-  const style = {
-    '--liq-from': datum.from,
-    '--liq-to': datum.to,
-    '--bar-glow': datum.glow,
-    '--glow-intensity': intensity,
-    '--glass-h': `${glassPct}%`,
-    '--fill': `${FILL_PCT}%`,
-  } as CSSProperties;
+  const glassShadow = hot
+    ? `0 1px 0 #ffffffe6 inset, 0 0 0 1px #ffffff0a inset, 0 26px 46px -22px #0b0b0b59, 0 0 34px -6px ${datum.glow}`
+    : '0 1px 0 #ffffffcc inset, 0 0 0 1px #ffffff05 inset, 0 22px 38px -26px #0b0b0b40';
 
   return (
     <motion.div
-      className={`bar${hot ? ' is-hot' : ''}`}
-      style={style}
+      className="relative flex h-full flex-1 origin-bottom cursor-pointer flex-col items-center justify-end will-change-transform"
       animate={{ scale: ownHover ? 1.05 : external ? 1.02 : 1, y: hot ? -6 : 0 }}
       transition={SPRING}
       onMouseEnter={handleEnter}
@@ -156,14 +150,33 @@ function Bar({
       onMouseMove={handleMove}
       onClick={handleClick}
     >
-      <div className="bar-value">
+      <motion.div
+        className="relative mb-3 font-display text-[clamp(15px,2vw,19px)] font-bold tracking-[-0.02em] text-text-0"
+        animate={{ y: hot ? -4 : 0, scale: hot ? 1.07 : 1, filter: hot ? 'brightness(1.18)' : 'brightness(1)' }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        style={{ textShadow: hot ? `0 0 20px ${datum.glow}` : '0 0 12px #00000066' }}
+      >
+        <motion.span
+          className="pointer-events-none absolute -inset-x-3.5 -inset-y-2 -z-10 rounded-xl"
+          style={{ background: `radial-gradient(closest-side, ${datum.glow}, transparent 72%)` }}
+          animate={{ opacity: hot ? 0.5 : 0, scale: hot ? 1 : 0.7 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        />
         <AnimatedNumber value={datum.value} prefix="$" suffix="B" delay={0.3 + index * 0.08} />
-      </div>
+      </motion.div>
 
-      <div className="glass">
-        <span className="bar-glow" />
+      <div
+        className="relative mx-auto w-full max-w-[92px] overflow-hidden rounded-t-[10px] rounded-b-[8px] border bg-[linear-gradient(100deg,#ffffffb3,#ffffff0d_40%,#ffffff80)] backdrop-blur-[2px] transition-[border-color,box-shadow] duration-450 max-[560px]:max-w-[60px]"
+        style={{ height: `${glassPct}%`, borderColor: hot ? '#0b0b0b33' : '#0b0b0b1f', boxShadow: glassShadow }}
+      >
+        <motion.span
+          className="pointer-events-none absolute -bottom-[6%] left-1/2 h-[62%] w-[150%] -translate-x-1/2 rounded-full blur-[18px]"
+          style={{ background: `radial-gradient(closest-side, ${datum.glow}, transparent 72%)` }}
+          animate={{ opacity: hot ? 1 : intensity, height: hot ? '92%' : '62%' }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        />
 
-        <div className="liquid">
+        <div className="absolute inset-0 overflow-hidden rounded-t-[9px] rounded-b-[7px]">
           <LiquidSurface
             ref={liquid}
             from={datum.from}
@@ -173,19 +186,18 @@ function Bar({
           />
 
           {bubbles.map((b, i) => (
-            <span
+            <motion.span
               key={i}
-              className="bubble"
-              style={
-                {
-                  left: `${b.left}%`,
-                  width: b.size,
-                  height: b.size,
-                  '--bubble-dur': `${b.dur}s`,
-                  '--bubble-dur-hot': `${b.durHot}s`,
-                  animationDelay: `${b.delay}s`,
-                } as CSSProperties
-              }
+              className="pointer-events-none absolute bottom-1 rounded-full bg-[radial-gradient(circle_at_35%_30%,#ffffffe6,#ffffff1f)] shadow-[0_0_6px_#ffffff66]"
+              style={{ left: `${b.left}%`, width: b.size, height: b.size }}
+              animate={{ y: [0, -160], opacity: [0, 0.9, 0.9, 0] }}
+              transition={{
+                duration: hot ? b.durHot : b.dur,
+                repeat: Infinity,
+                ease: 'linear',
+                delay: b.delay,
+                times: [0, 0.15, 0.85, 1],
+              }}
             />
           ))}
 
@@ -193,8 +205,8 @@ function Bar({
             {ripples.map((r) => (
               <motion.span
                 key={r.id}
-                className="ripple"
-                style={{ '--rx': `${r.x}%`, '--ry': `${r.y}%` } as CSSProperties}
+                className="pointer-events-none absolute h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-white/60 [mix-blend-mode:screen]"
+                style={{ left: `${r.x}%`, top: `${r.y}%` }}
                 initial={{ scale: 0, opacity: 0.55 }}
                 animate={{ scale: r.scale, opacity: 0 }}
                 exit={{ opacity: 0 }}
@@ -206,12 +218,12 @@ function Bar({
         </div>
 
         {/* Splash crown at the waterline, retriggered on each cursor entry */}
-        <div className="splash">
+        <div className="pointer-events-none absolute inset-x-0 bottom-[86%] h-0">
           <AnimatePresence>
             {ownHover && (
               <motion.div key={splashKey} style={{ position: 'absolute', left: 0, right: 0, bottom: 0 }}>
                 <motion.span
-                  className="splash-ring"
+                  className="absolute bottom-0 left-1/2 h-2 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white/85"
                   initial={{ scale: 0.3, opacity: 0.9 }}
                   animate={{ scale: 2.4, opacity: 0 }}
                   transition={{ duration: 0.55, ease: 'easeOut' }}
@@ -219,8 +231,12 @@ function Bar({
                 {droplets.map((d, i) => (
                   <motion.span
                     key={i}
-                    className="droplet"
-                    style={{ left: '50%' }}
+                    className="absolute bottom-0 h-[5px] w-[5px] rounded-full"
+                    style={{
+                      left: '50%',
+                      background: `radial-gradient(circle at 35% 30%, #fff, ${datum.from})`,
+                      boxShadow: `0 0 8px ${datum.from}`,
+                    }}
                     initial={{ x: 0, y: 0, opacity: 0.95, scale: 1 }}
                     animate={{ x: d.dx, y: [0, d.dy, 4], opacity: [0.95, 1, 0], scale: [1, 0.9, 0.5] }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -231,13 +247,30 @@ function Bar({
           </AnimatePresence>
         </div>
 
-        <span className="glass-shine" />
-        <span className="glass-reflections" />
+        <span className="pointer-events-none absolute top-[5%] left-[11%] h-[84%] w-1/5 rounded-[30px] bg-[linear-gradient(180deg,#ffffff80,transparent)] opacity-45 blur-[1.5px]" />
+
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
+          {hot && (
+            <>
+              <motion.span
+                className="absolute -top-[30%] left-0 h-[160%] w-[42%] rotate-[8deg] bg-[linear-gradient(105deg,transparent,#ffffff29,transparent)]"
+                initial={{ x: '-180%' }}
+                animate={{ x: ['-180%', '320%', '320%'] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', times: [0, 0.6, 1] }}
+              />
+              <motion.span
+                className="absolute -top-[30%] left-0 h-[160%] w-[42%] rotate-[8deg] bg-[linear-gradient(105deg,transparent,#ffffff29,transparent)]"
+                initial={{ x: '-180%' }}
+                animate={{ x: ['-180%', '320%', '320%'] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', times: [0, 0.6, 1], delay: 1.2 }}
+              />
+            </>
+          )}
+        </div>
       </div>
     </motion.div>
   );
 }
-
 
 export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 'B' }: BarChartProps) {
   const [tip, setTip] = useState<TooltipState | null>(null);
@@ -277,40 +310,41 @@ export default function BarChart({ externalActiveKey = null, onHoverKey, unit = 
         ))}
       </div>
 
-      <div className="mx-1 mt-3.5 h-px bg-[linear-gradient(90deg,transparent,var(--border-hi),transparent)]" />
+      <div className="mx-1 mt-3.5 h-px bg-[linear-gradient(90deg,transparent,var(--color-border-hi),transparent)]" />
       <div className="flex justify-between gap-[clamp(12px,2.6vw,28px)] px-1 pt-3">
-        {SEGMENTS.map((d, i) => (
-          <span
-            key={d.key}
-            className={`lbl${tip?.index === i || externalActiveKey === d.key ? ' is-active' : ''}`}
-            style={{ '--bar-glow': d.glow } as CSSProperties}
-          >
-            {d.label}
-          </span>
-        ))}
+        {SEGMENTS.map((d, i) => {
+          const isActive = tip?.index === i || externalActiveKey === d.key;
+          return (
+            <span
+              key={d.key}
+              className={`flex-1 text-center text-[12.5px] font-medium transition-[color,text-shadow] duration-400 ${isActive ? 'text-text-0' : 'text-text-2'}`}
+              style={isActive ? { textShadow: `0 0 16px ${d.glow}` } : undefined}
+            >
+              {d.label}
+            </span>
+          );
+        })}
       </div>
 
       <FloatingTooltip open={!!(tip && active)} below={tip?.rect} gap={10}>
         {active && (
           <>
-            <div className="tt-head">
-              <span className="tt-dot" style={{ color: active.glow }} />
+            <div className={TT_HEAD}>
+              <span className={TT_DOT} style={{ color: active.glow }} />
               <active.icon size={15} strokeWidth={2.2} />
               {active.fullLabel}
             </div>
-            <div className="tt-value">
+            <div className={TT_VALUE}>
               ${active.value}
               {unit}
             </div>
-            <div className="tt-row">
+            <div className={TT_ROW}>
               <span>Share of revenue</span>
-              <span style={{ color: 'var(--text-1)' }}>
-                {((active.value / SEGMENT_TOTAL) * 100).toFixed(1)}%
-              </span>
+              <span className="text-text-1">{((active.value / SEGMENT_TOTAL) * 100).toFixed(1)}%</span>
             </div>
-            <div className="tt-row">
+            <div className={TT_ROW}>
               <span>YoY trend</span>
-              <span className={`tt-trend ${active.trend >= 0 ? 'up' : 'down'}`}>
+              <span className={`${TT_TREND} ${trendColor(active.trend)}`}>
                 {active.trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                 {active.trend >= 0 ? '+' : ''}
                 {active.trend.toFixed(1)}%

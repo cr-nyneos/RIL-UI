@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
-import FloatingTooltip from './FloatingTooltip';
+import FloatingTooltip, { TT_HEAD, TT_DOT, TT_VALUE, TT_ROW, TT_TREND, trendColor } from './FloatingTooltip';
 import { EASE_OUT } from '../lib/motion';
 
 export interface LinePoint {
@@ -60,7 +60,7 @@ function smoothLine(pts: { x: number; y: number }[]) {
 
 /** A wide, gently undulating band used as flowing liquid (tiles horizontally). */
 function flowBand(baseY: number, amp: number, periods: number) {
-  const width = VBW * 2; // 2× so a -25% translate loops seamlessly
+  const width = VBW * 2; // 2× so a -50% translate loops seamlessly
   const steps = periods * 8;
   const pts: { x: number; y: number }[] = [];
   for (let i = 0; i <= steps; i++) {
@@ -82,6 +82,15 @@ interface HoverState {
   onY: number;
   cx: number; // client coords for the tooltip
   cy: number;
+}
+
+/** Perpetual flowing-band motion, replacing the old CSS flow-x keyframe. */
+function flowAnimProps(reverse: boolean, duration: number) {
+  if (reduceMotion) return {};
+  return {
+    animate: { x: reverse ? ['0%', '50%'] : ['0%', '-50%'] },
+    transition: { duration, repeat: Infinity, ease: 'linear' as const },
+  };
 }
 
 export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChartProps) {
@@ -232,22 +241,22 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
         <defs>
           <linearGradient id="line-stroke" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#22d3ee" />
-            <stop offset="55%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="55%" stopColor="#2a78d6" />
+            <stop offset="100%" stopColor="#7c3aed" />
           </linearGradient>
           <linearGradient id="line-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(34,211,238,0.42)" />
-            <stop offset="55%" stopColor="rgba(59,130,246,0.18)" />
-            <stop offset="100%" stopColor="rgba(59,130,246,0.02)" />
+            <stop offset="0%" stopColor="rgba(34,211,238,0.35)" />
+            <stop offset="55%" stopColor="rgba(42,120,214,0.16)" />
+            <stop offset="100%" stopColor="rgba(42,120,214,0.02)" />
           </linearGradient>
           <linearGradient id="flow-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(125,211,252,0.5)" />
-            <stop offset="100%" stopColor="rgba(59,130,246,0)" />
+            <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+            <stop offset="100%" stopColor="rgba(42,120,214,0)" />
           </linearGradient>
           <radialGradient id="ripple-grad">
             <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="70%" stopColor="rgba(186,230,253,0.35)" />
-            <stop offset="100%" stopColor="rgba(186,230,253,0)" />
+            <stop offset="70%" stopColor="rgba(255,255,255,0.55)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
           </radialGradient>
           <clipPath id="area-clip">
             <path d={areaPath} />
@@ -275,9 +284,9 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
           transition={{ duration: 0.5 }}
         >
           {yTicks.map((t, i) => (
-            <line key={i} className="line-grid" x1={PAD.l} y1={t.y} x2={VBW - PAD.r} y2={t.y} />
+            <line key={i} className="stroke-grid" strokeWidth={1} x1={PAD.l} y1={t.y} x2={VBW - PAD.r} y2={t.y} />
           ))}
-          <line className="line-axis" x1={PAD.l} y1={PAD.t + PLOT_H} x2={VBW - PAD.r} y2={PAD.t + PLOT_H} />
+          <line className="stroke-axis" strokeWidth={1} x1={PAD.l} y1={PAD.t + PLOT_H} x2={VBW - PAD.r} y2={PAD.t + PLOT_H} />
         </motion.g>
 
         {/* Liquid area: gradient + slow flowing bands, clipped to the shape and
@@ -285,9 +294,30 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
         <g clipPath="url(#reveal-clip)">
           <g clipPath="url(#area-clip)">
             <path d={areaPath} fill="url(#line-area)" />
-            <path className="flow f1" d={flowBand(PAD.t + PLOT_H * 0.5, 12, 4)} fill="url(#flow-grad)" filter="url(#line-blur)" />
-            <path className="flow f2" d={flowBand(PAD.t + PLOT_H * 0.62, 16, 2)} fill="url(#flow-grad)" filter="url(#line-blur)" />
-            <path className="flow f3" d={flowBand(PAD.t + PLOT_H * 0.4, 9, 6)} fill="url(#flow-grad)" filter="url(#line-blur)" />
+            <motion.path
+              className="opacity-[0.5]"
+              style={{ transformBox: 'fill-box' }}
+              d={flowBand(PAD.t + PLOT_H * 0.5, 12, 4)}
+              fill="url(#flow-grad)"
+              filter="url(#line-blur)"
+              {...flowAnimProps(false, 28)}
+            />
+            <motion.path
+              className="opacity-[0.34]"
+              style={{ transformBox: 'fill-box' }}
+              d={flowBand(PAD.t + PLOT_H * 0.62, 16, 2)}
+              fill="url(#flow-grad)"
+              filter="url(#line-blur)"
+              {...flowAnimProps(true, 44)}
+            />
+            <motion.path
+              className="opacity-[0.22]"
+              style={{ transformBox: 'fill-box' }}
+              d={flowBand(PAD.t + PLOT_H * 0.4, 9, 6)}
+              fill="url(#flow-grad)"
+              filter="url(#line-blur)"
+              {...flowAnimProps(false, 60)}
+            />
 
             {/* cursor ripples, clipped so they live inside the liquid only */}
             <AnimatePresence>
@@ -314,16 +344,22 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
 
         {/* Glow underlay + the line itself, drawn progressively */}
         <motion.path
-          className="line-glow"
           d={linePath}
           fill="none"
           stroke="url(#line-stroke)"
           strokeWidth={7}
           strokeLinecap="round"
           filter="url(#line-blur)"
-          initial={{ pathLength: reduceMotion ? 1 : 0 }}
-          animate={inView ? { pathLength: 1 } : {}}
-          transition={{ duration: DRAW, ease: EASE_OUT, delay: 0.2 }}
+          initial={{ pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }}
+          animate={
+            reduceMotion
+              ? { pathLength: 1 }
+              : { pathLength: inView ? 1 : 0, opacity: [0.35, 0.6, 0.35] }
+          }
+          transition={{
+            pathLength: { duration: DRAW, ease: EASE_OUT, delay: 0.2 },
+            opacity: { duration: 6.5, repeat: Infinity, ease: 'easeInOut' },
+          }}
         />
         <motion.path
           ref={lineRef}
@@ -343,10 +379,10 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
         {hover && (
           <motion.circle
             r={5}
-            fill="#e0f2fe"
+            fill="#2a78d6"
             animate={{ cx: hover.onX, cy: hover.onY }}
             transition={{ type: 'spring', stiffness: 350, damping: 26 }}
-            style={{ filter: 'drop-shadow(0 0 8px rgba(224,242,254,0.9))' }}
+            style={{ filter: 'drop-shadow(0 0 8px rgba(42,120,214,0.75))' }}
           />
         )}
 
@@ -372,7 +408,7 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
                   cy={p.y}
                   r={7}
                   fill="none"
-                  stroke={'rgba(224,242,254,0.6)'}
+                  stroke="rgba(42,120,214,0.5)"
                   strokeWidth={1.5}
                   initial={{ scale: 0.6, opacity: 0.8 }}
                   animate={{ scale: 2.2, opacity: 0 }}
@@ -383,12 +419,12 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
               <motion.circle
                 cx={p.x}
                 r={isActive ? 5.5 : 3.2}
-                fill="#0b0d15"
+                fill="#fcfcfb"
                 stroke="url(#line-stroke)"
                 strokeWidth={isActive ? 2.4 : 1.8}
                 animate={{ cy: isActive ? p.y - 3 : p.y }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                style={{ filter: isActive ? 'drop-shadow(0 0 9px rgba(59,130,246,0.9))' : 'none' }}
+                style={{ filter: isActive ? 'drop-shadow(0 0 9px rgba(42,120,214,0.6))' : 'none' }}
               />
             </motion.g>
           );
@@ -401,16 +437,17 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
           transition={{ duration: 0.6, ease: EASE_OUT }}
         >
           {yTicks.map((t, i) => (
-            <text key={i} className="line-tick" x={PAD.l - 12} y={t.y + 4} textAnchor="end">
+            <text key={i} className="fill-text-2 font-sans text-[11px] font-medium" x={PAD.l - 12} y={t.y + 4} textAnchor="end">
               {t.value}
             </text>
           ))}
           {points.map((p, i) => (
             <text
               key={p.month}
-              className={`line-month${hover?.index === i ? ' is-active' : ''}`}
+              className={`font-sans text-[11px] font-medium transition-[fill] duration-300 ${hover?.index === i ? 'fill-text-0' : 'fill-text-2'}`}
               x={p.x}
               y={PAD.t + PLOT_H + 22}
+              textAnchor="middle"
             >
               {p.month}
             </text>
@@ -421,17 +458,17 @@ export default function LineChart({ data = DEFAULT_DATA, unit = 'B' }: LineChart
       <FloatingTooltip open={!!(hover && active)} cursor={hover ? { x: hover.cx, y: hover.cy } : undefined}>
         {active && (
           <>
-            <div className="tt-head">
-              <span className="tt-dot" style={{ color: '#3b82f6' }} />
+            <div className={TT_HEAD}>
+              <span className={TT_DOT} style={{ color: '#2a78d6' }} />
               {active.month} · FY24
             </div>
-            <div className="tt-value">
+            <div className={TT_VALUE}>
               ${active.value}
               {unit}
             </div>
-            <div className="tt-row">
+            <div className={TT_ROW}>
               <span>MoM change</span>
-              <span className={`tt-trend ${active.pct >= 0 ? 'up' : 'down'}`}>
+              <span className={`${TT_TREND} ${trendColor(active.pct)}`}>
                 {active.pct >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                 {active.pct >= 0 ? '+' : ''}
                 {active.pct.toFixed(1)}%

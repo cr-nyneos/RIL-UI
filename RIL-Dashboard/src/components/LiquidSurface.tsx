@@ -183,7 +183,12 @@ const LiquidSurface = forwardRef<LiquidHandle, LiquidSurfaceProps>(function Liqu
   const gradId = `liq-${from.replace('#', '')}-${to.replace('#', '')}`;
 
   return (
-    <svg className="liquid-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+    <svg
+      className="absolute inset-0 block h-full w-full"
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
       <defs>
         <linearGradient id={gradId} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2={H}>
           <stop offset="0%" stopColor={from} />
