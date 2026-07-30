@@ -21,7 +21,7 @@ export default function StakeholderPicker({ role, selected, onSelect }: Stakehol
   });
 
   return (
-    <GlassCard interactive bloom={selected ? 'success' : 'neutral'} className="p-5">
+    <GlassCard interactive className="p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-body-strong">{role}</div>
@@ -38,11 +38,11 @@ export default function StakeholderPicker({ role, selected, onSelect }: Stakehol
               key={stakeholder.id}
               type="button"
               onClick={() => onSelect(stakeholder)}
-              className={`glass-inset flex w-full cursor-pointer items-center gap-3 rounded-2xl p-3 text-left transition-all duration-200 hover:-translate-y-px hover:bg-[var(--wash-brand-hover)] ${
+              className={`glass-inset flex w-full cursor-pointer items-center gap-3 rounded-2xl p-3 text-left transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)] ${
                 active ? 'ring-2 ring-[var(--color-brand-600)]' : ''
               }`}
             >
-              <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-[12px] font-bold text-[var(--color-canvas-mist)]">
+              <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-bold text-white">
                 {initials(stakeholder.name)}
               </span>
               <span className="min-w-0 flex-1">

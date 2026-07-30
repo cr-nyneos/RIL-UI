@@ -22,22 +22,19 @@ export default function Select<T extends string>({
       <SelectPrimitive.Trigger
         aria-label={ariaLabel}
         className={`cursor-pointer
-          inline-flex h-11 items-center justify-between gap-3
-          rounded-2xl
+          inline-flex h-10 items-center justify-between gap-3
+          rounded-[var(--radius-md)]
           focus-bloom
-          border border-[var(--color-glass-hairline-deep)]
+          border border-[var(--color-border)]
           bg-white
-          px-5
-          text-[15px]
+          px-3.5
+          text-[14px]
           font-semibold
           text-ink-900
-          shadow-[0_8px_24px_-12px_rgba(15,23,42,0.12)]
-          transition-all
-          duration-200
-          hover:border-[rgba(79,70,229,0.18)]
-          hover:shadow-[0_12px_32px_-12px_rgba(79,70,229,0.18)]
-          data-[state=open]:border-[rgba(79,70,229,0.30)]
-          data-[state=open]:shadow-[0_16px_40px_-16px_rgba(79,70,229,0.25)]
+          transition-colors
+          duration-150
+          hover:border-[var(--color-border-strong)]
+          data-[state=open]:border-brand-600
           ${className}
         `}
       >
@@ -59,17 +56,15 @@ export default function Select<T extends string>({
           className="
             z-50
             overflow-hidden
-            rounded-2xl
-            border border-[rgba(15,23,42,0.08)]
+            rounded-[var(--radius-md)]
+            border border-[var(--color-border)]
             bg-white
-            shadow-[0_24px_60px_-20px_rgba(15,23,42,0.25)]
-            backdrop-blur-xl
+            shadow-[0_8px_20px_-8px_rgba(16,24,40,0.16)]
             animate-in
             fade-in
-            zoom-in-95
           "
         >
-          <SelectPrimitive.Viewport className="p-2">
+          <SelectPrimitive.Viewport className="p-1">
             {options.map((option) => (
               <SelectPrimitive.Item
                 key={option.value}
@@ -77,21 +72,21 @@ export default function Select<T extends string>({
                 className="
                   relative
                   flex
-                  h-10
+                  h-9
                   cursor-pointer
                   select-none
                   items-center
-                  rounded-xl
-                  px-10
-                  text-[15px]
+                  rounded-[var(--radius-sm)]
+                  px-9
+                  text-[14px]
                   font-medium
                   text-ink-800
                   outline-none
-                  transition-all
+                  transition-colors
                   duration-150
-                  hover:bg-[rgba(79,70,229,0.08)]
-                  focus:bg-[rgba(79,70,229,0.08)]
-                  data-[state=checked]:bg-[rgba(79,70,229,0.10)]
+                  hover:bg-[var(--color-surface-subtle)]
+                  focus:bg-[var(--color-surface-subtle)]
+                  data-[state=checked]:bg-[var(--wash-brand-active)]
                   data-[state=checked]:font-semibold
                   data-[state=checked]:text-brand-700
                 "

@@ -13,9 +13,9 @@ interface DocumentsTabProps {
 
 export default function DocumentsTab({ documents, setDocuments, meaningfulChange }: DocumentsTabProps) {
   return (
-    <GlassCard key="documents" bloom="neutral" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="documents" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={CloudUpload} {...STEP_COPY.documents} />
-      <label className="glass-inset mb-5 flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-3xl border border-dashed border-[var(--color-glass-hairline-deep)] p-8 text-center transition-all duration-200 hover:-translate-y-px hover:bg-[var(--wash-brand-hover)]">
+      <label className="glass-inset mb-5 flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--color-glass-hairline-deep)] p-8 text-center transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)]">
         <input
           type="file"
           multiple
@@ -41,7 +41,7 @@ export default function DocumentsTab({ documents, setDocuments, meaningfulChange
                 setDocuments((current) => ({ ...current, [document]: !current[document] }));
                 meaningfulChange();
               }}
-              className="glass-inset flex min-h-[118px] cursor-pointer flex-col items-start justify-between p-5 text-left transition-all duration-200 hover:-translate-y-px hover:bg-[var(--wash-brand-hover)]"
+              className="glass-inset flex min-h-[118px] cursor-pointer flex-col items-start justify-between p-5 text-left transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)]"
             >
               <span className="flex w-full items-center justify-between gap-3">
                 <FileText size={18} strokeWidth={2.2} className="text-brand-700" />

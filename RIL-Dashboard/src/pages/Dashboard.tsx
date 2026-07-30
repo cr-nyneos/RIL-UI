@@ -6,6 +6,7 @@ import KpiRow from '../components/dashboard/KpiRow';
 import OrderStatusCard from '../components/dashboard/OrderStatusCard';
 import PlantLoadCard from '../components/dashboard/PlantLoadCard';
 import DeliveryTrendCard from '../components/dashboard/DeliveryTrendCard';
+import Section from '../components/ui/Section';
 import { MONTHLY_DELIVERIES_ACTUAL, MONTHLY_DELIVERIES_PLANNED } from '../lib/mockData/dashboard';
 import {  computeFilteredTotals,  computeFilteredStatusDistribution, computeFilteredPlantSegments,
   type PlantFilter,
@@ -33,37 +34,58 @@ export default function Dashboard() {
   );
 
   return (
-    <>
     <AppShell>
-      <div className="flex flex-col gap-8">
-        <GreetingHero /> 
-        <DashboardFilters
-          plant={plant}
-          onPlantChange={setPlant}
-          contractType={contractType}
-          onContractTypeChange={setContractType}
-          period={period}
-          onPeriodChange={setPeriod}
-        />
+      <div className="flex flex-col gap-4">
+        <div className="animate-rise" style={{ animationDelay: '0ms' }}>
+          <GreetingHero />
+        </div>
 
-        <KpiRow totals={totals} />
+        <Section
+          title="Global Overview"
+          description="Portfolio position across the selected plant, contract type and period."
+          toolbar={
+            <DashboardFilters
+              plant={plant}
+              onPlantChange={setPlant}
+              contractType={contractType}
+              onContractTypeChange={setContractType}
+              period={period}
+              onPeriodChange={setPeriod}
+            />
+          }
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '60ms' }}
+        >
+          <KpiRow totals={totals} />
+        </Section>
 
-        <div className="grid grid-cols-1">
-          <div className="animate-rise h-[30rem] w-full" style={{ animationDelay: '520ms' }}>
+        <Section
+          title="Delivery Trends"
+          description="Planned against actual deliveries over the selected period."
+          actions={<span className="text-pill">{period === '3m' ? 'LAST 3 MONTHS' : 'LAST 6 MONTHS'}</span>}
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '120ms' }}
+        >
+          <div className="h-[27rem] w-full">
             <DeliveryTrendCard actual={actual} planned={planned} />
           </div>
-        </div>
+        </Section>
 
-        <div className="grid grid-cols-1 items-stretch gap-6 xl:grid-cols-2">
-          <div className="animate-rise" style={{ animationDelay: '600ms' }}>
+        <Section
+          title="Portfolio Analytics"
+          description="Pipeline composition and site level load."
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '180ms' }}
+        >
+          <div className="grid grid-cols-1 items-stretch divide-y divide-[var(--color-border)] xl:grid-cols-2 xl:divide-x xl:divide-y-0">
             <OrderStatusCard data={statusData} activeCount={totals.activeOrders} />
-          </div>
-          <div className="animate-rise" style={{ animationDelay: '680ms' }}>
             <PlantLoadCard data={plantData} />
           </div>
-        </div>
+        </Section>
       </div>
     </AppShell>
-    </>
   );
 }

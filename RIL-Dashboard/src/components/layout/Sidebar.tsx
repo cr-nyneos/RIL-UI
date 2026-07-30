@@ -37,12 +37,16 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
-      <div className={`flex items-center pt-5 pb-4 ${collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'}`}>
-        <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-sm font-extrabold text-white">
-          <Warehouse size={20} strokeWidth={2.2} />
+      <div
+        className={`flex h-16 flex-none items-center border-b border-[var(--color-border)] ${
+          collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'
+        }`}
+      >
+        <div className="flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] bg-brand-600 text-sm font-bold text-white">
+          <Warehouse size={18} strokeWidth={2.2} />
         </div>
         {!collapsed && (
-          <span className="truncate text-[17px] font-extrabold tracking-tight text-ink-900">NyneOS</span>
+          <span className="truncate text-[16px] font-bold tracking-tight text-ink-900">NyneOS</span>
         )}
         <Button
           variant="ghost"
@@ -55,7 +59,12 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </Button>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-2.5">
+      <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden px-2.5 py-3">
+        {!collapsed && (
+          <span className="mb-1.5 px-3 text-[11px] font-bold tracking-[0.08em] text-sidebar-group-label uppercase">
+            Operations
+          </span>
+        )}
         {PRIMARY_NAV.map((item) =>
           item.children ? (
             <SidebarGroup
@@ -71,23 +80,21 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           ),
         )}
 
-        <div className={`mt-7 mb-2.5 px-3 ${collapsed ? 'text-center' : ''}`}>
-          {!collapsed && (
-            <span className="text-[11px] font-bold tracking-[0.14em] text-sidebar-group-label uppercase">
-              Phase 2
-            </span>
-          )}
-        </div>
+        <div className="surface-divider mt-4 mb-3 h-px flex-none" />
+
+        {!collapsed && (
+          <span className="mb-1.5 px-3 text-[11px] font-bold tracking-[0.08em] text-sidebar-group-label uppercase">
+            Phase 2
+          </span>
+        )}
         {PHASE_2_NAV.map((item) => (
           <SidebarItem key={item.label} icon={item.icon} label={item.label} collapsed={collapsed} soon />
         ))}
-
-       
       </nav>
 
-      <div className="border-t border-glass-hairline px-2.5 py-3">
-        <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
+      <div className="flex-none border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-2.5 py-2.5">
         <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled />
+        <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
       </div>
     </aside>
   );

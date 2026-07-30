@@ -42,10 +42,10 @@ export default function ReviewTab({
   setActiveStep,
 }: ReviewTabProps) {
   return (
-    <GlassCard key="review" bloom="success" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="review" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={ClipboardCheck} {...STEP_COPY.review} pill={allValid ? 'READY' : 'PENDING'} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <GlassCard bloom="info" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Commercial Details</div>
             <Button variant="icon" size="sm" aria-label="Edit details" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('details')} />
@@ -58,7 +58,7 @@ export default function ReviewTab({
           <SummaryRow label="Completion Date" value={completionDate} />
           <SummaryRow label="Priority" value={priority} />
         </GlassCard>
-        <GlassCard bloom="cyan" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Workflow Summary</div>
             <Button variant="icon" size="sm" aria-label="Edit workflow" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('workflow')} />
@@ -68,7 +68,7 @@ export default function ReviewTab({
           <SummaryRow label="Duration" value={`${totalDuration} days`} />
           <SummaryRow label="Owner Rules" value="Mapped" />
         </GlassCard>
-        <GlassCard bloom="violet" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Stakeholders</div>
             <Button variant="icon" size="sm" aria-label="Edit team" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('team')} />
@@ -77,7 +77,7 @@ export default function ReviewTab({
             <SummaryRow key={role} label={role} value={stakeholders[role]?.name ?? ''} />
           ))}
         </GlassCard>
-        <GlassCard bloom="neutral" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Uploaded Documents</div>
             <Button variant="icon" size="sm" aria-label="Edit documents" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('documents')} />

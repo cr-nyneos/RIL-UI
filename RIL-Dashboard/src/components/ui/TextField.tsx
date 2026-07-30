@@ -27,42 +27,42 @@ export default function TextField({
   type = 'text',
   ...props
 }: TextFieldProps) {
-  const height = size === 'lg' ? 'h-14' : 'h-11';
-  const inputPadding = `${leadingIcon ? 'pl-10' : 'pl-4'} ${trailingAction || (clearable && value) ? 'pr-11' : 'pr-4'}`;
+  const height = size === 'lg' ? 'h-12' : 'h-10';
+  const inputPadding = `${leadingIcon ? 'pl-9.5' : 'pl-3.5'} ${trailingAction || (clearable && value) ? 'pr-10' : 'pr-3.5'}`;
   const inputId = id ?? props.name;
 
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={inputId} className="mb-2.5 block text-[16px] font-semibold text-ink-900">
+        <label htmlFor={inputId} className="mb-1.5 block text-[13px] font-semibold text-ink-700">
           {label}
         </label>
       )}
       <div
         className={`focus-bloom relative flex ${height} items-center rounded-[var(--radius-md)] border bg-white ${
-          error ? 'border-danger/40' : 'border-[var(--color-glass-hairline-deep)]'
+          error ? 'border-danger' : 'border-[var(--color-border)]'
         }`}
       >
-        {leadingIcon && <span className="pointer-events-none absolute left-3.5 text-ink-400">{leadingIcon}</span>}
+        {leadingIcon && <span className="pointer-events-none absolute left-3 text-ink-400">{leadingIcon}</span>}
         <input
           id={inputId}
           type={type}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          className={`h-full w-full rounded-[var(--radius-md)] bg-transparent ${inputPadding} text-[16px] font-medium text-ink-900 outline-none placeholder:font-medium placeholder:text-ink-400 ${
-            size === 'md' ? 'text-[15px] font-semibold text-ink-800' : ''
+          className={`h-full w-full rounded-[var(--radius-md)] bg-transparent ${inputPadding} text-[14px] font-medium text-ink-900 outline-none placeholder:font-medium placeholder:text-ink-400 ${
+            size === 'md' ? 'font-semibold text-ink-800' : ''
           }`}
           {...props}
         />
         {trailingAction && <span className="absolute right-3 flex items-center">{trailingAction}</span>}
         {clearable && value && !trailingAction && (
-          <Button variant="icon" size="sm" aria-label="Clear field" onClick={() => onChange('')} className="absolute right-2 h-7 w-7">
+          <Button variant="icon" size="sm" aria-label="Clear field" onClick={() => onChange('')} className="absolute right-1.5 h-7 w-7">
             <X size={15} strokeWidth={2.4} />
           </Button>
         )}
       </div>
-      {typeof error === 'string' && error && <p className="mt-1.5 text-[12px] font-semibold text-kpi-danger-text">{error}</p>}
+      {typeof error === 'string' && error && <p className="mt-1 text-[12px] font-semibold text-danger">{error}</p>}
     </div>
   );
 }

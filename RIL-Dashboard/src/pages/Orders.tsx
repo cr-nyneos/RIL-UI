@@ -11,6 +11,7 @@ import Tabs from '../components/ui/Tabs';
 import DataTable, { type Column, type SortState } from '../components/ui/DataTable';
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
+import Section from '../components/ui/Section';
 import StatusBadge from '../components/ui/StatusBadge';
 import TypeBadge from '../components/ui/TypeBadge';
 import ProgressMeter from '../components/ui/ProgressMeter';
@@ -170,7 +171,7 @@ export default function Orders() {
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
-          <div className="truncate text-[15px] leading-5 font-bold text-ink-900">{order.id}</div>
+          <div className="truncate text-[14px] leading-5 font-bold text-ink-900">{order.id}</div>
           <div className="text-meta truncate">{order.po}</div>
         </div>
       ),
@@ -181,7 +182,7 @@ export default function Orders() {
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
-          <div className="truncate text-[15px] leading-5 font-semibold text-ink-800" title={order.vendor}>
+          <div className="truncate text-[14px] leading-5 font-semibold text-ink-800" title={order.vendor}>
             {order.vendor}
           </div>
           <div className="text-meta truncate">{order.plant}</div>
@@ -229,10 +230,10 @@ export default function Orders() {
         const expected = formatExpected(order.expected, order.progress >= 100);
         return (
           <div className="min-w-0">
-            <div className="truncate text-[15px] leading-5 font-semibold text-ink-800">{expected.label}</div>
+            <div className="truncate text-[14px] leading-5 font-semibold text-ink-800">{expected.label}</div>
             <div
-              className="truncate text-[13px] leading-[18px] font-medium"
-              style={{ color: expected.overdue ? '#BE123C' : 'var(--color-ink-500)' }}
+              className="truncate text-[12px] leading-[18px] font-medium"
+              style={{ color: expected.overdue ? 'var(--color-danger)' : 'var(--color-ink-500)' }}
             >
               {expected.relative}
             </div>
@@ -258,7 +259,7 @@ export default function Orders() {
       align: 'right',
       sortable: true,
       render: (order) => (
-        <span className="text-[15px] leading-5 font-bold tabular-nums text-ink-800">
+        <span className="text-[14px] leading-5 font-bold tabular-nums text-ink-800">
           {formatValue(order.valueCr)}
         </span>
       ),
@@ -267,38 +268,12 @@ export default function Orders() {
 
   return (
     <AppShell>
-      <div className="space-y-6">
+      <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
             title="Orders"
             actions={
               <>
-                <SearchInput
-                  value={query}
-                  onChange={(value) => {
-                    interact();
-                    setQuery(value);
-                  }}
-                  placeholder="Search order, PO, or vendor"
-                  className="w-[260px]"
-                />
-                <Select
-                  ariaLabel="Filter by plant"
-                  value={plant}
-                  options={PLANT_OPTIONS}
-                  onChange={(value) => {
-                    interact();
-                    setPlant(value);
-                  }}
-                />
-                <Button
-                  variant="primary"
-                  icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
-                  className="cursor-pointer"
-                  onClick={() => navigate('/orders/create')}
-                >
-                  Create Order
-                </Button>
                 <Button
                   variant="secondary"
                   icon={<Download size={16} strokeWidth={2.2} />}
@@ -310,41 +285,77 @@ export default function Orders() {
                 >
                   Export
                 </Button>
+                <Button
+                  variant="primary"
+                  icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
+                  className="cursor-pointer"
+                  onClick={() => navigate('/orders/create')}
+                >
+                  Create Order
+                </Button>
               </>
             }
           />
         </div>
 
-        <div className="animate-rise" style={{ animationDelay: '90ms' }}>
-          <SummaryStrip
-            onSelect={(key) => applyFilter(key === 'total' ? 'all' : (key as OrderFilter))}
-            items={[
-              { key: 'total', label: 'Total', value: counts.total, active: filter === 'all' },
-              { key: 'execution', label: 'In Execution', value: counts.execution, active: filter === 'execution' },
-              { key: 'delayed', label: 'Delayed', value: counts.delayed, tone: 'danger', active: filter === 'delayed' },
-              { key: 'blocked', label: 'Blocked', value: counts.blocked, tone: 'danger', active: filter === 'blocked' },
-              { key: 'completed', label: 'Completed', value: counts.completed, active: filter === 'completed' },
-            ]}
-          />
-        </div>
+        <Section
+          title="Order Register"
+          description={`${rows.length} of ${counts.total} orders in the current scope.`}
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '60ms' }}
+          toolbar={
+            <>
+              <SearchInput
+                value={query}
+                onChange={(value) => {
+                  interact();
+                  setQuery(value);
+                }}
+                placeholder="Search order, PO, or vendor"
+                className="w-[260px]"
+              />
+              <Select
+                ariaLabel="Filter by plant"
+                value={plant}
+                options={PLANT_OPTIONS}
+                onChange={(value) => {
+                  interact();
+                  setPlant(value);
+                }}
+              />
+              <Tabs
+                className="ml-auto"
+                active={filter}
+                onChange={(key) => applyFilter(key as OrderFilter)}
+                size="sm"
+                toggleOff
+                tabs={[
+                  { key: 'all', label: 'All', count: counts.total },
+                  { key: 'manufactured', label: 'Manufactured', count: counts.manufactured },
+                  { key: 'material', label: 'Material', count: counts.material },
+                  { key: 'delayed', label: 'Delayed', count: counts.delayed },
+                  { key: 'completed', label: 'Completed', count: counts.completed },
+                ]}
+              />
+            </>
+          }
+        >
+          <div className="border-b border-[var(--color-border)]">
+            <SummaryStrip
+              onSelect={(key) => applyFilter(key === 'total' ? 'all' : (key as OrderFilter))}
+              items={[
+                { key: 'total', label: 'Total', value: counts.total, active: filter === 'all' },
+                { key: 'execution', label: 'In Execution', value: counts.execution, active: filter === 'execution' },
+                { key: 'delayed', label: 'Delayed', value: counts.delayed, tone: 'danger', active: filter === 'delayed' },
+                { key: 'blocked', label: 'Blocked', value: counts.blocked, tone: 'danger', active: filter === 'blocked' },
+                { key: 'completed', label: 'Completed', value: counts.completed, active: filter === 'completed' },
+              ]}
+            />
+          </div>
 
-        <div className="animate-rise" style={{ animationDelay: '160ms' }}>
-          <Tabs
-            active={filter}
-            onChange={(key) => applyFilter(key as OrderFilter)}
-            toggleOff
-            tabs={[
-              { key: 'all', label: 'All', count: counts.total },
-              { key: 'manufactured', label: 'Manufactured', count: counts.manufactured },
-              { key: 'material', label: 'Material', count: counts.material },
-              { key: 'delayed', label: 'Delayed', count: counts.delayed },
-              { key: 'completed', label: 'Completed', count: counts.completed },
-            ]}
-          />
-        </div>
-
-        <div className="animate-rise" style={{ animationDelay: '230ms' }}>
           <DataTable
+            surface={false}
             columns={columns}
             rows={pageRows}
             rowKey={(order) => order.id}
@@ -377,7 +388,7 @@ export default function Orders() {
               />
             }
           />
-        </div>
+        </Section>
       </div>
 
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}

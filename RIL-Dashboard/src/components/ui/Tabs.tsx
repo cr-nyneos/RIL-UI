@@ -59,13 +59,13 @@ export default function Tabs({
 
   return (
     <div
-      className={`glass-inset relative inline-flex ${variant === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-lg)]'} p-1 ${className}`}
+      className={`glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`}
       role="tablist"
     >
       {variant === 'pill' && (
         <span
           aria-hidden
-          className="tab-pill absolute top-1 bottom-1 left-0 rounded-full bg-white/85 shadow-[0_1px_1px_rgba(16,24,40,0.04),0_8px_20px_-10px_rgba(79,70,229,0.35)]"
+          className="tab-pill absolute top-1 bottom-1 left-0 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white"
           style={{
             transform: `translateX(${pill?.left ?? 0}px)`,
             width: pill?.width ?? 0,
@@ -87,12 +87,12 @@ export default function Tabs({
             tabIndex={isActive ? 0 : -1}
             onClick={() => handleChange(tab.key)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap transition-colors duration-200 ${
-              variant === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-sm)]'
-            } ${size === 'sm' ? 'px-3 py-1.5 text-[15px]' : 'px-4 py-2 text-[15px]'} ${
+            className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-sm)] transition-colors duration-150 ${
+              size === 'sm' ? 'px-3 py-1.5 text-[13px]' : 'px-3.5 py-1.5 text-[14px]'
+            } ${
               isActive
-                ? `${variant === 'segmented' ? 'bg-brand-600 text-white shadow-[0_10px_26px_-14px_rgba(79,70,229,0.65)]' : 'text-brand-700'} font-bold`
-                : 'font-semibold text-ink-600 hover:text-ink-800'
+                ? `${variant === 'segmented' ? 'bg-brand-600 text-white' : 'text-brand-700'} font-bold`
+                : 'font-semibold text-ink-600 hover:text-ink-900'
             }`}
           >
             <span>{tab.label}</span>

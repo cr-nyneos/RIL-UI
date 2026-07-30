@@ -21,7 +21,7 @@ interface WorkflowTabProps {
 
 export default function WorkflowTab({ contractType, workflow, totalDuration, workflowAccepted, setWorkflowAccepted, meaningfulChange }: WorkflowTabProps) {
   return (
-    <GlassCard key="workflow" bloom="cyan" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="workflow" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={Route} {...STEP_COPY.workflow} pill={<TypeBadge type={contractType} />} />
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-body-strong tabular-nums">{workflow.length} milestones, {totalDuration} planned days</div>
@@ -38,7 +38,7 @@ export default function WorkflowTab({ contractType, workflow, totalDuration, wor
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {workflow.map((milestone, index) => (
-          <GlassCard key={milestone.label} bloom="neutral" interactive className="min-h-[164px] p-5">
+          <GlassCard key={milestone.label} interactive className="min-h-[164px] p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--wash-brand-active)] text-body-strong text-brand-700 tabular-nums">
                 {index + 1}

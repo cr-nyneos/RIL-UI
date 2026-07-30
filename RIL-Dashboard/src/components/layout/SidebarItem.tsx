@@ -16,8 +16,8 @@ interface SidebarItemProps {
 export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled, soon, nested, end, onClick }: SidebarItemProps) {
   const content = (isActive: boolean) => (
     <div
-      className={`group relative flex items-center gap-3 rounded-xl py-2.5 text-[15px] transition-colors duration-180 ${
-        nested ? 'pr-3.5 pl-4' : 'px-3.5'
+      className={`group relative flex items-center gap-3 rounded-[var(--radius-md)] py-2 text-[14px] transition-colors duration-150 ${
+        nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
         collapsed ? 'justify-center' : ''
       } ${
@@ -30,10 +30,10 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
               : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
       }`}
     >
-      {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-0.75 rounded-full" />}
+      {isActive && <span className="sidebar-item-indicator absolute top-1 bottom-1 left-0 w-0.5 rounded-[var(--radius-sm)]" />}
       {Icon ? (
         <Icon
-          size={20}
+          size={18}
           strokeWidth={2.1}
           className={`flex-none transition-colors duration-180 ${
             isActive
@@ -52,12 +52,12 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       )}
       {!collapsed && <span className="truncate">{label}</span>}
       {soon && !collapsed && (
-        <span className="ml-auto flex-none rounded-md bg-chip-neutral px-1.5 py-0.5 text-[10px] font-bold text-ink-500">
+        <span className="ml-auto flex-none rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-chip-neutral px-1.5 py-0.5 text-[10px] font-semibold text-ink-500">
           Soon
         </span>
       )}
       {collapsed && (
-        <span className="pointer-events-none absolute left-full ml-3 rounded-lg bg-ink-900 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100">
+        <span className="pointer-events-none absolute left-full z-40 ml-3 rounded-[var(--radius-sm)] bg-ink-900 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100">
           {label}
         </span>
       )}

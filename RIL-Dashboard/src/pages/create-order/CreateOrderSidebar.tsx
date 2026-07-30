@@ -51,9 +51,9 @@ export default function CreateOrderSidebar({
   documents,
 }: CreateOrderSidebarProps) {
   return (
-    <aside className="space-y-6 xl:sticky xl:top-8">
+    <aside className="space-y-4 xl:sticky xl:top-8">
       {activeStep === 'details' && (
-        <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+        <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
           <CardHeader eyebrow="Order" icon={PackageCheck} title="Order Summary" subtitle="Current commercial values." />
           <SummaryRow label="Vendor" value={vendor} />
           <SummaryRow label="Plant" value={plant} />
@@ -65,7 +65,7 @@ export default function CreateOrderSidebar({
 
       {activeStep === 'workflow' && (
         <>
-          <GlassCard bloom="cyan" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Route" icon={ShieldCheck} title="Workflow Preview" subtitle="Milestones that will be created." pill={`${workflow.length}`} />
             <div className="space-y-3">
               {workflow.map((milestone) => (
@@ -79,7 +79,7 @@ export default function CreateOrderSidebar({
               ))}
             </div>
           </GlassCard>
-          <GlassCard bloom="neutral" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Milestones" icon={Route} title="Milestone Summary" subtitle="Duration and ownership coverage." />
             <SummaryRow label="Stages" value={`${workflow.length}`} />
             <SummaryRow label="Duration" value={`${totalDuration} days`} />
@@ -90,14 +90,14 @@ export default function CreateOrderSidebar({
 
       {activeStep === 'team' && (
         <>
-          <GlassCard bloom="violet" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Owners" icon={Users} title="Assigned Owners" subtitle="Current role coverage." />
             <div className="space-y-3">
               {ROLE_ORDER.map((role) => {
                 const owner = stakeholders[role];
                 return (
                   <div key={role} className="glass-inset flex items-center gap-3 p-3">
-                    <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-[12px] font-bold text-[var(--color-canvas-mist)]">
+                    <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-bold text-white">
                       {owner ? initials(owner.name) : role.slice(0, 2).toUpperCase()}
                     </span>
                     <span className="min-w-0 flex-1">
@@ -110,7 +110,7 @@ export default function CreateOrderSidebar({
               })}
             </div>
           </GlassCard>
-          <GlassCard bloom="neutral" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Coverage" icon={UserRoundCheck} title="Role Coverage" subtitle="Required ownership before review." />
             <SummaryRow label="Assigned" value={`${assignedCount} of ${ROLE_ORDER.length}`} />
             <SummaryRow label="Open Roles" value={`${ROLE_ORDER.length - assignedCount}`} />
@@ -121,14 +121,14 @@ export default function CreateOrderSidebar({
 
       {activeStep === 'documents' && (
         <>
-          <GlassCard bloom="neutral" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Files" icon={CloudUpload} title="Uploaded Files" subtitle="Files selected for this order." />
             <SummaryRow label="Uploaded" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
             {REQUIRED_DOCUMENTS.map((document) => (
               <CheckRow key={document} label={document} done={documents[document]} waiting={!documents[document]} />
             ))}
           </GlassCard>
-          <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Documents" icon={FileCheck2} title="Required Documents" subtitle="Mandatory execution package." />
             <div className="space-y-3">
               {REQUIRED_DOCUMENTS.map((document) => (
@@ -144,20 +144,20 @@ export default function CreateOrderSidebar({
 
       {activeStep === 'review' && (
         <>
-          <GlassCard bloom="success" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Complete" icon={PackageCheck} title="Complete Order Summary" subtitle="Order creation readiness." />
             <SummaryRow label="Vendor" value={vendor} />
             <SummaryRow label="Plant" value={plant} />
             <SummaryRow label="Value" value={orderValue ? `Rs ${orderValue}` : ''} />
             <SummaryRow label="Completion" value={completionDate} />
           </GlassCard>
-          <GlassCard bloom="cyan" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Route" icon={Route} title="Workflow Summary" subtitle="Confirmed milestone plan." />
             <SummaryRow label="Contract Type" value={contractType} />
             <SummaryRow label="Milestones" value={`${workflow.length}`} />
             <SummaryRow label="Duration" value={`${totalDuration} days`} />
           </GlassCard>
-          <GlassCard bloom="violet" className="animate-rise p-6" style={{ animationDelay: '200ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '200ms' }}>
             <CardHeader eyebrow="Owners" icon={Users} title="Assigned Team" subtitle="Required roles assigned." />
             <SummaryRow label="Assigned" value={`${assignedCount} of ${ROLE_ORDER.length}`} />
             <SummaryRow label="Documents" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
@@ -165,7 +165,7 @@ export default function CreateOrderSidebar({
         </>
       )}
 
-      <GlassCard bloom={completed[activeStep] ? 'success' : 'warning'} className="animate-rise p-6" style={{ animationDelay: '240ms' }}>
+      <GlassCard className="animate-rise p-5" style={{ animationDelay: '240ms' }}>
         <CardHeader
           eyebrow="Checks"
           icon={UserRoundCheck}

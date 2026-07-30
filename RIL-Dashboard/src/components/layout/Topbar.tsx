@@ -20,7 +20,7 @@ export default function Topbar() {
           <Bell size={16} strokeWidth={2.1} />
           <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-brand-600" />
         </Button>
-        <div className="glass-ring flex h-9 w-9 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-brand-700))] text-xs font-semibold text-white">
+        <div className="glass-ring flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white">
           RS
         </div>
       </div>

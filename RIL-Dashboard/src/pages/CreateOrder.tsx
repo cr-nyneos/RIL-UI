@@ -7,6 +7,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import GlassCard from '../components/ui/GlassCard';
 import PageHeader from '../components/ui/PageHeader';
+import Section from '../components/ui/Section';
 import StepNavigation from '../components/ui/StepNavigation';
 import Toast from '../components/ui/Toast';
 import { upsertWorkspaceOrder } from '../lib/orderStore';
@@ -291,7 +292,7 @@ export default function CreateOrder() {
 
   return (
     <AppShell>
-      <div className="space-y-8 pb-24">
+      <div className="flex flex-col gap-4 pb-24">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
             title="Create Order"
@@ -305,25 +306,24 @@ export default function CreateOrder() {
           />
         </div>
 
-        <GlassCard bloom="info" className="animate-rise p-5" style={{ animationDelay: '60ms' }}>
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <div className="text-section-title">Create Order Progress</div>
-              <div className="mt-1 text-meta">{completedCount} of {STEPS.length} steps completed.</div>
-            </div>
-            <div className="flex min-w-[240px] items-center gap-3">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--color-chip-neutral)]">
+        <Section
+          title="Order Creation Workflow"
+          description={`${completedCount} of ${STEPS.length} steps completed.`}
+          actions={
+            <div className="flex min-w-[220px] items-center gap-3">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-[var(--radius-sm)] bg-[var(--color-chip-neutral)]">
                 <div
-                  className="h-full rounded-full bg-[linear-gradient(90deg,var(--color-brand-600),var(--color-aqua-400))] transition-all duration-300"
+                  className="h-full rounded-[var(--radius-sm)] bg-brand-600 transition-[width] duration-300"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
               <span className="text-body-strong tabular-nums">{progressPercent}%</span>
             </div>
-          </div>
-        </GlassCard>
-
-        <div className="animate-rise" style={{ animationDelay: '110ms' }}>
+          }
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '60ms' }}
+        >
           <StepNavigation
             steps={STEPS}
             activeStep={activeStep}
@@ -331,9 +331,9 @@ export default function CreateOrder() {
             completed={completed}
             onStepChange={goToStep}
           />
-        </div>
+        </Section>
 
-        <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,7fr)_minmax(320px,3fr)]">
+        <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(320px,3fr)]">
           <div className="min-w-0">{renderActiveTab()}</div>
           <CreateOrderSidebar
             activeStep={activeStep}
@@ -356,7 +356,7 @@ export default function CreateOrder() {
       </div>
 
       <div className="sticky bottom-4 z-20">
-        <GlassCard className="p-4">
+        <GlassCard className="p-3 shadow-[0_-2px_8px_-4px_rgba(16,24,40,0.12)]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <Button
               variant="secondary"
@@ -400,8 +400,8 @@ export default function CreateOrder() {
       </div>
 
       {showLeaveDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(10,14,26,0.20)] p-6 backdrop-blur-sm">
-          <GlassCard bloom="warning" className="w-full max-w-[460px] p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(16,24,40,0.40)] p-6">
+          <GlassCard className="w-full max-w-[460px] p-5 shadow-[0_12px_32px_-8px_rgba(16,24,40,0.24)]">
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
                 <div className="text-section-title">Unsaved changes detected.</div>

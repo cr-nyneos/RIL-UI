@@ -68,19 +68,6 @@ function smoothLine(pts: { x: number; y: number }[]) {
   return d;
 }
 
-/** A wide, gently undulating band used as flowing liquid (tiles horizontally). */
-function flowBand(baseY: number, amp: number, periods: number) {
-  const width = VBW * 2; // 2× so a -50% translate loops seamlessly
-  const steps = periods * 8;
-  const pts: { x: number; y: number }[] = [];
-  for (let i = 0; i <= steps; i++) {
-    const x = (i / steps) * width;
-    const y = baseY + Math.sin((i / steps) * periods * Math.PI * 2) * amp;
-    pts.push({ x, y });
-  }
-  return `${smoothLine(pts)} L${width},${VBH} L0,${VBH} Z`;
-}
-
 interface Ripple {
   id: number;
   cx: number;
@@ -92,15 +79,6 @@ interface HoverState {
   onY: number;
   cx: number; // client coords for the tooltip
   cy: number;
-}
-
-/** Perpetual flowing-band motion, replacing the old CSS flow-x keyframe. */
-function flowAnimProps(reverse: boolean, duration: number) {
-  if (reduceMotion) return {};
-  return {
-    animate: { x: reverse ? ['0%', '50%'] : ['0%', '-50%'] },
-    transition: { duration, repeat: Infinity, ease: 'linear' as const },
-  };
 }
 
 export default function LineChart({
@@ -276,14 +254,12 @@ export default function LineChart({
       >
         <defs>
           <linearGradient id="line-stroke" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#22d3ee" />
-            <stop offset="55%" stopColor="#2a78d6" />
-            <stop offset="100%" stopColor="#7c3aed" />
+            <stop offset="0%" stopColor="#4F46E5" />
+            <stop offset="100%" stopColor="#4F46E5" />
           </linearGradient>
           <linearGradient id="line-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(34,211,238,0.35)" />
-            <stop offset="55%" stopColor="rgba(42,120,214,0.16)" />
-            <stop offset="100%" stopColor="rgba(42,120,214,0.02)" />
+            <stop offset="0%" stopColor="rgba(79,70,229,0.14)" />
+            <stop offset="100%" stopColor="rgba(79,70,229,0.01)" />
           </linearGradient>
           <linearGradient id="flow-grad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
@@ -320,9 +296,9 @@ export default function LineChart({
           transition={{ duration: 0.5 }}
         >
           {yTicks.map((t, i) => (
-            <line key={i} className="stroke-grid" strokeWidth={1} x1={PAD.l} y1={t.y} x2={VBW - PAD.r} y2={t.y} />
+            <line key={i} stroke="var(--color-glass-hairline)" strokeWidth={1} x1={PAD.l} y1={t.y} x2={VBW - PAD.r} y2={t.y} />
           ))}
-          <line className="stroke-axis" strokeWidth={1} x1={PAD.l} y1={PAD.t + PLOT_H} x2={VBW - PAD.r} y2={PAD.t + PLOT_H} />
+          <line stroke="var(--color-border-strong)" strokeWidth={1} x1={PAD.l} y1={PAD.t + PLOT_H} x2={VBW - PAD.r} y2={PAD.t + PLOT_H} />
         </motion.g>
 
         {/* Liquid area: gradient + slow flowing bands, clipped to the shape and
@@ -330,30 +306,6 @@ export default function LineChart({
         <g clipPath="url(#reveal-clip)">
           <g clipPath="url(#area-clip)">
             <path d={areaPath} fill="url(#line-area)" />
-            <motion.path
-              className="opacity-[0.5]"
-              style={{ transformBox: 'fill-box' }}
-              d={flowBand(PAD.t + PLOT_H * 0.5, 12, 4)}
-              fill="url(#flow-grad)"
-              filter="url(#line-blur)"
-              {...flowAnimProps(false, 28)}
-            />
-            <motion.path
-              className="opacity-[0.34]"
-              style={{ transformBox: 'fill-box' }}
-              d={flowBand(PAD.t + PLOT_H * 0.62, 16, 2)}
-              fill="url(#flow-grad)"
-              filter="url(#line-blur)"
-              {...flowAnimProps(true, 44)}
-            />
-            <motion.path
-              className="opacity-[0.22]"
-              style={{ transformBox: 'fill-box' }}
-              d={flowBand(PAD.t + PLOT_H * 0.4, 9, 6)}
-              fill="url(#flow-grad)"
-              filter="url(#line-blur)"
-              {...flowAnimProps(false, 60)}
-            />
 
             {/* cursor ripples, clipped so they live inside the liquid only */}
             <AnimatePresence>
@@ -393,25 +345,7 @@ export default function LineChart({
           />
         )}
 
-        {/* Glow underlay + the line itself, drawn progressively */}
-        <motion.path
-          d={linePath}
-          fill="none"
-          stroke="url(#line-stroke)"
-          strokeWidth={7}
-          strokeLinecap="round"
-          filter="url(#line-blur)"
-          initial={{ pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }}
-          animate={
-            reduceMotion
-              ? { pathLength: 1 }
-              : { pathLength: inView ? 1 : 0, opacity: [0.35, 0.6, 0.35] }
-          }
-          transition={{
-            pathLength: { duration: DRAW, ease: EASE_OUT, delay: 0.2 },
-            opacity: { duration: 6.5, repeat: Infinity, ease: 'easeInOut' },
-          }}
-        />
+        {/* The line itself, drawn progressively */}
         <motion.path
           ref={lineRef}
           d={linePath}
@@ -517,12 +451,12 @@ export default function LineChart({
               {valuePrefix}
               {active.value}
               {unit}
-              {secondaryData && <span className="ml-1.5 text-xs font-medium text-text-2">{primaryLabel}</span>}
+              {secondaryData && <span className="ml-1.5 text-xs font-medium text-ink-500">{primaryLabel}</span>}
             </div>
             {secondaryData?.[hover!.index] && (
               <div className={TT_ROW}>
                 <span>{secondaryLabel}</span>
-                <span className="text-text-1">
+                <span className="text-ink-700">
                   {valuePrefix}
                   {secondaryData[hover!.index].value}
                   {unit}

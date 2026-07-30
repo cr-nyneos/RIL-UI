@@ -17,7 +17,7 @@ const R_IN = 64;
 const GAP = 0; 
 
 const DC_TREND =
-  'mt-2 inline-flex items-center gap-1 rounded-full border border-border-hi bg-[#0b0b0b0a] px-[9px] py-[3px] text-xs font-semibold [font-variant-numeric:tabular-nums]';
+  'mt-2 inline-flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-2 py-0.5 text-[11px] font-semibold [font-variant-numeric:tabular-nums]';
 
 const polar = (r: number, a: number) => [CX + r * Math.cos(a), CY + r * Math.sin(a)] as const;
 
@@ -212,10 +212,7 @@ export default function PieChart({
                     stroke={`url(#slice-${s.index})`}
                     strokeWidth={1}
                     strokeLinejoin="round"
-                    style={{
-                      filter: highlight ? `drop-shadow(0 0 14px ${s.glow})` : 'none',
-                      transformOrigin: '120px 120px',
-                    }}
+                    style={{ transformOrigin: '120px 120px' }}
                     initial={false}
                     animate={{
                       opacity: isDim ? 0.5 : 1,
@@ -265,10 +262,10 @@ export default function PieChart({
                 exit={{ opacity: 0, y: -8, scale: 0.94 }}
                 transition={SPRING}
               >
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-text-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-500">
                   {center.fullLabel}
                 </div>
-                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-ink-900">
                   {valuePrefix}
                   {center.value}
                   {unit}
@@ -276,7 +273,7 @@ export default function PieChart({
                 <div className="font-display text-sm font-semibold" style={{ color: center.glow }}>
                   {center.pct.toFixed(1)}% {shareUnitLabel}
                 </div>
-                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">
+                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-ink-500">
                   {center.description}
                 </div>
                 {showTrend && (
@@ -295,15 +292,15 @@ export default function PieChart({
                 exit={{ opacity: 0, scale: 0.94 }}
                 transition={SPRING}
               >
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-text-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-500">
                   {totalLabel}
                 </div>
-                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-text-0">
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-ink-900">
                   {valuePrefix}
                   <AnimatedNumber value={total} />
                   {unit}
                 </div>
-                {/* <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">{idleHint}</div> */}
+                {/* <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-ink-500">{idleHint}</div> */}
               </motion.div>
             )}
           </AnimatePresence>
@@ -323,19 +320,21 @@ export default function PieChart({
           return (
             <div
               key={s.index}
-              className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-3 py-2.5 transition-[background-color,border-color,opacity] duration-350 ${
-                highlight ? 'border-border bg-[#0b0b0b0c]' : 'border-transparent hover:border-border hover:bg-[#0b0b0b0c]'
-              } ${dim ? 'opacity-40' : ''}`}
+              className={`flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3 py-2 transition-[background-color,border-color,opacity] duration-200 ${
+                highlight
+                  ? 'border-[var(--color-border)] bg-[var(--color-surface-subtle)]'
+                  : 'border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-surface-subtle)]'
+              } ${dim ? 'opacity-45' : ''}`}
               onMouseEnter={(e) => setHover(s.index, e)}
               onMouseMove={moveHover}
               onMouseLeave={clear}
             >
               <span
                 className="h-3 w-3 flex-none rounded"
-                style={{ background: `linear-gradient(135deg, ${s.from}, ${s.to})`, boxShadow: `0 0 10px 0 ${s.glow}` }}
+                style={{ background: s.to }}
               />
-              <span className="flex-1 text-[13.5px] font-medium text-text-1">{s.fullLabel}</span>
-              <span className="font-display text-[13.5px] font-semibold text-text-0 [font-variant-numeric:tabular-nums]">
+              <span className="flex-1 text-[13.5px] font-medium text-ink-700">{s.fullLabel}</span>
+              <span className="font-display text-[13.5px] font-semibold text-ink-900 [font-variant-numeric:tabular-nums]">
                 {s.pct.toFixed(0)}%
               </span>
             </div>
@@ -357,7 +356,7 @@ export default function PieChart({
             </div>
             <div className={TT_ROW}>
               <span>{shareLabel}</span>
-              <span className="text-text-1">{segments[ownHover].pct.toFixed(1)}%</span>
+              <span className="text-ink-700">{segments[ownHover].pct.toFixed(1)}%</span>
             </div>
             {showTrend && (
               <div className={TT_ROW}>

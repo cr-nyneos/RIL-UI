@@ -77,10 +77,10 @@ export default function DispatchWorkspaceSidebar({
   const expected = order ? formatExpected(order.expected, order.progress >= 100) : undefined;
 
   return (
-    <aside className="space-y-6 xl:sticky xl:top-8">
+    <aside className="space-y-4 xl:sticky xl:top-8">
       {activeStep === 'order' && (
         <>
-          <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Order" icon={PackageCheck} title="Order Summary" subtitle="Order this dispatch travels against." pill={order?.id} />
             <SummaryRow label="PO Number" value={order?.po ?? ''} />
             <SummaryRow label="Vendor" value={order?.vendor ?? ''} />
@@ -89,7 +89,7 @@ export default function DispatchWorkspaceSidebar({
             <SummaryRow label="Expected Delivery" value={expected?.label ?? ''} />
             <SummaryRow label="Order Value" value={order ? formatValue(order.valueCr) : ''} />
           </GlassCard>
-          <GlassCard bloom="neutral" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Status" icon={ShieldCheck} title="Current Status" subtitle="Gate position before dispatch." />
             {order ? (
               <div className="space-y-4">
@@ -105,14 +105,14 @@ export default function DispatchWorkspaceSidebar({
 
       {activeStep === 'shipment' && (
         <>
-          <GlassCard bloom="cyan" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Dispatch" icon={Truck} title="Dispatch Summary" subtitle="Live dispatch profile." />
             <SummaryRow label="Carrier" value={carrier} />
             <SummaryRow label="Shipment Type" value={shipmentType} />
             <SummaryRow label="Packages" value={packages} />
             <SummaryRow label="Weight" value={weight} />
           </GlassCard>
-          <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Schedule" icon={CalendarDays} title="Delivery Timeline" subtitle="Dispatch to plant arrival." />
             <SummaryRow label="Dispatch" value={dispatchDate} />
             <SummaryRow label="Expected Arrival" value={expectedArrival} />
@@ -123,14 +123,14 @@ export default function DispatchWorkspaceSidebar({
 
       {activeStep === 'vehicle' && (
         <>
-          <GlassCard bloom="violet" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Vehicle" icon={Radar} title="Vehicle Card" subtitle="Live vehicle and driver record." pill={transportMode} />
             <SummaryRow label="Vehicle Number" value={vehicleNumber} />
             <SummaryRow label="Driver" value={driverName} />
             <SummaryRow label="Driver Contact" value={driverContact} />
             <SummaryRow label="LR Number" value={lrNumber} />
           </GlassCard>
-          <GlassCard bloom="cyan" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Tracking" icon={MapPin} title="Tracking Preview" subtitle="Carrier ETA against this route." />
             <SummaryRow label="Tracking Number" value={trackingNumber} />
             <SummaryRow label="Carrier" value={carrier} />
@@ -142,14 +142,14 @@ export default function DispatchWorkspaceSidebar({
 
       {activeStep === 'documents' && (
         <>
-          <GlassCard bloom="neutral" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Files" icon={CloudUpload} title="Uploaded Documents" subtitle="Files attached to this dispatch." />
             <SummaryRow label="Uploaded" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
             {REQUIRED_DOCUMENTS.map((document) => (
               <CheckRow key={document} label={document} done={documents[document]} waiting={!documents[document]} />
             ))}
           </GlassCard>
-          <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Documents" icon={FileCheck2} title="Required Documents" subtitle="Mandatory dispatch package." />
             <div className="space-y-3">
               {REQUIRED_DOCUMENTS.map((document) => (
@@ -165,7 +165,7 @@ export default function DispatchWorkspaceSidebar({
 
       {activeStep === 'review' && (
         <>
-          <GlassCard bloom="success" className="animate-rise p-6" style={{ animationDelay: '120ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
             <CardHeader eyebrow="Complete" icon={PackageCheck} title="Final Dispatch Summary" subtitle="Dispatch readiness." pill={shipmentId} />
             <SummaryRow label="Order" value={order?.id ?? ''} />
             <SummaryRow label="Carrier" value={carrier} />
@@ -173,11 +173,11 @@ export default function DispatchWorkspaceSidebar({
             <SummaryRow label="Tracking" value={trackingNumber} />
             <SummaryRow label="Documents" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
           </GlassCard>
-          <GlassCard bloom="cyan" className="animate-rise p-6" style={{ animationDelay: '160ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
             <CardHeader eyebrow="Route" icon={Route} title="Dispatch Timeline" subtitle="Dispatch is the active milestone." />
             <DispatchTimeline />
           </GlassCard>
-          <GlassCard bloom="info" className="animate-rise p-6" style={{ animationDelay: '200ms' }}>
+          <GlassCard className="animate-rise p-5" style={{ animationDelay: '200ms' }}>
             <CardHeader eyebrow="Schedule" icon={Gauge} title="Delivery Schedule" subtitle="Planned arrival at destination plant." />
             <SummaryRow label="Dispatch" value={dispatchDate} />
             <SummaryRow label="Expected Arrival" value={expectedArrival} />
@@ -187,7 +187,7 @@ export default function DispatchWorkspaceSidebar({
         </>
       )}
 
-      <GlassCard bloom={completed[activeStep] ? 'success' : 'warning'} className="animate-rise p-6" style={{ animationDelay: '240ms' }}>
+      <GlassCard className="animate-rise p-5" style={{ animationDelay: '240ms' }}>
         <CardHeader
           eyebrow="Checks"
           icon={UserRoundCheck}

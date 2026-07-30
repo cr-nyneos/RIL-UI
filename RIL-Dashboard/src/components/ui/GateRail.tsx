@@ -20,10 +20,10 @@ const STATE_LABEL: Record<GateState, string> = {
   locked: 'Locked',
 };
 
-const DONE_FILL = 'linear-gradient(90deg, #4F46E5, #6D28D9)';
-const CURRENT_FILL = 'linear-gradient(90deg, #22D3EE, #4F46E5)';
-const BLOCKED_FILL = 'linear-gradient(90deg, #F43F5E, #BE123C)';
-const LOCKED_FILL = 'rgba(15,23,42,0.09)';
+const DONE_FILL = 'var(--color-brand-600)';
+const CURRENT_FILL = 'var(--color-brand-500)';
+const BLOCKED_FILL = 'var(--color-danger)';
+const LOCKED_FILL = 'var(--color-ink-300)';
 
 export default function GateRail({ gates, compact = true, blocked = false }: GateRailProps) {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export default function GateRail({ gates, compact = true, blocked = false }: Gat
           return (
             <div key={gate.key} className="relative">
               <div
-                className={`${size} rounded-full ${
+                className={`${size} rounded-[var(--radius-sm)] ${
                   isCurrent ? (blocked ? 'gate-pulse-danger' : 'gate-pulse') : ''
                 }`}
                 style={{ background }}
@@ -57,8 +57,8 @@ export default function GateRail({ gates, compact = true, blocked = false }: Gat
               />
               {hovered === gate.key && (
                 <div className="glass-tooltip pointer-events-none absolute bottom-full left-1/2 z-[60] mb-2 -translate-x-1/2 whitespace-nowrap px-2.5 py-1.5">
-                  <div className="text-[12px] font-bold text-ink-800">{gate.label}</div>
-                  <div className="text-[11px] font-medium text-ink-500">
+                  <div className="text-[12px] font-bold text-white">{gate.label}</div>
+                  <div className="text-[11px] font-medium text-ink-300">
                     {blocked && isCurrent ? 'Blocked' : STATE_LABEL[gate.state]}
                   </div>
                 </div>
@@ -67,7 +67,7 @@ export default function GateRail({ gates, compact = true, blocked = false }: Gat
           );
         })}
       </div>
-      <div className="mt-1.5 truncate text-[13px] font-semibold text-ink-700" title={current?.label}>
+      <div className="mt-1.5 truncate text-[12px] font-semibold text-ink-700" title={current?.label}>
         {current ? current.label : 'All gates cleared'}
       </div>
     </div>

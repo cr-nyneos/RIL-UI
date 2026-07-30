@@ -36,17 +36,17 @@ export default function SidebarGroup({ to, icon: Icon, label, items, collapsed }
         className="w-full text-left"
       >
         <div
-          className={`group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[15px] transition-colors duration-180 ${
+          className={`group relative flex items-center gap-3 rounded-[var(--radius-md)] px-3 py-2 text-[14px] transition-colors duration-150 ${
             inGroup && !open
               ? 'sidebar-item-active font-bold text-brand-800'
               : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
           }`}
         >
           {inGroup && !open && (
-            <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-0.75 rounded-full" />
+            <span className="sidebar-item-indicator absolute top-1 bottom-1 left-0 w-0.5 rounded-[var(--radius-sm)]" />
           )}
           <Icon
-            size={20}
+            size={18}
             strokeWidth={2.1}
             className={`flex-none transition-colors duration-180 ${
               inGroup && !open ? 'text-brand-600' : 'text-sidebar-icon group-hover:text-brand-600'
@@ -69,7 +69,7 @@ export default function SidebarGroup({ to, icon: Icon, label, items, collapsed }
         }`}
       >
         <div className="overflow-hidden">
-          <div className="relative mt-1 ml-6 flex flex-col gap-1 border-l border-glass-hairline pl-1.5">
+          <div className="relative mt-0.5 ml-5 flex flex-col gap-0.5 border-l border-[var(--color-border)] pl-2">
             {items.map((item) => (
               <SidebarItem key={item.to} to={item.to} label={item.label} collapsed={false} end />
             ))}

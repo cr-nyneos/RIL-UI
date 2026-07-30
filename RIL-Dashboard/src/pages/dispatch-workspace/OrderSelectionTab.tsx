@@ -19,7 +19,7 @@ interface OrderSelectionTabProps {
 
 export default function OrderSelectionTab({ query, setQuery, orders, selectedOrderId, onSelect }: OrderSelectionTabProps) {
   return (
-    <GlassCard key="order" bloom="info" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="order" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={Search} {...STEP_COPY.order} pill={`${orders.length}`} />
       <SearchInput
         value={query}
@@ -43,7 +43,7 @@ export default function OrderSelectionTab({ query, setQuery, orders, selectedOrd
                 key={order.id}
                 type="button"
                 onClick={() => onSelect(order)}
-                className={`glass-inset flex min-h-[136px] cursor-pointer flex-col justify-between p-5 text-left transition-all duration-200 hover:-translate-y-px hover:bg-[var(--wash-brand-hover)] ${
+                className={`glass-inset flex min-h-[136px] cursor-pointer flex-col justify-between p-5 text-left transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)] ${
                   selected ? 'bg-[var(--wash-brand-active)] shadow-[inset_0_0_0_1px_var(--color-glass-hairline-deep)]' : ''
                 }`}
               >

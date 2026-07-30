@@ -6,11 +6,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="app-canvas">
-      <div className="mx-auto flex max-w-[1600px] gap-6 px-4 py-4 sm:px-6">
+      <div className="mx-auto flex max-w-[1600px] gap-4 px-4 py-4 sm:px-6">
         <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} />
         <div className="min-w-0 flex-1">
           {/* <Topbar /> */}
-          <main className="mt-4 pb-10">{children}</main>
+          <main className="pb-10">{children}</main>
         </div>
       </div>
     </div>

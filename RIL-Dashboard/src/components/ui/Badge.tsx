@@ -15,9 +15,9 @@ interface BadgeProps {
 }
 
 const SIZE: Record<NonNullable<BadgeProps['size']>, string> = {
-  xs: 'px-2 py-0.5 text-[11px] leading-[14px]',
-  sm: 'px-2.5 py-0.5 text-[12px] leading-4',
-  md: 'px-3 py-1 text-[13px] leading-[18px]',
+  xs: 'px-1.5 py-0.5 text-[11px] leading-[14px]',
+  sm: 'px-2 py-0.5 text-[11px] leading-4',
+  md: 'px-2.5 py-0.5 text-[12px] leading-[18px]',
 };
 
 export default function Badge({
@@ -34,14 +34,14 @@ export default function Badge({
   const tokens = toneToken(tone);
   const style = {
     color: tokens.text,
-    background: variant === 'outline' ? 'transparent' : variant === 'glass' ? 'var(--color-glass-fill-deep)' : tokens.soft,
-    borderColor: variant === 'glass' ? 'var(--color-glass-edge)' : tokens.border,
+    background: variant === 'outline' ? 'transparent' : variant === 'glass' ? 'var(--color-surface-subtle)' : tokens.soft,
+    borderColor: variant === 'glass' ? 'var(--color-border)' : tokens.border,
   } as CSSProperties;
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 border font-bold tabular-nums ${
-        shape === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-sm)]'
+      className={`inline-flex items-center gap-1.5 border font-semibold tabular-nums ${
+        shape === 'pill' ? 'rounded-[var(--radius-md)]' : 'rounded-[var(--radius-sm)]'
       } ${wrap ? 'whitespace-normal text-center' : 'whitespace-nowrap'} ${SIZE[size]} ${className}`}
       style={style}
     >

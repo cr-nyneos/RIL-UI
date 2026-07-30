@@ -15,7 +15,7 @@ interface TeamTabProps {
 
 export default function TeamTab({ stakeholders, setStakeholders, meaningfulChange }: TeamTabProps) {
   return (
-    <GlassCard key="team" bloom="violet" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="team" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={Users} {...STEP_COPY.team} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {ROLE_ORDER.map((role) => (

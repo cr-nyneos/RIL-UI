@@ -19,24 +19,24 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const SIZE: Record<ButtonSize, string> = {
-  sm: 'h-9 px-3.5 text-[14px]',
-  md: 'h-11 px-4 text-[15px]',
-  lg: 'h-13 px-6 text-[15px]',
+  sm: 'h-9 px-3 text-[13px]',
+  md: 'h-10 px-3.5 text-[14px]',
+  lg: 'h-11 px-5 text-[14px]',
 };
 
 const ICON_SIZE: Record<ButtonSize, string> = {
-  sm: 'h-[34px] w-[34px]',
-  md: 'h-[38px] w-[38px]',
+  sm: 'h-9 w-9',
+  md: 'h-10 w-10',
   lg: 'h-11 w-11',
 };
 
 const VARIANT: Record<ButtonVariant, string> = {
   primary:
-    'button-specular button-sweep overflow-hidden bg-[linear-gradient(135deg,var(--color-brand-600)_0%,var(--color-violet)_100%)] text-white shadow-[0_1px_1px_rgba(16,24,40,0.06),0_12px_26px_-10px_rgba(79,70,229,0.45),inset_0_1px_0_rgba(255,255,255,0.25)] hover:-translate-y-0.5 hover:shadow-[0_2px_2px_rgba(16,24,40,0.07),0_20px_40px_-12px_rgba(79,70,229,0.55),inset_0_1px_0_rgba(255,255,255,0.35)] active:translate-y-0',
+    'border-brand-600 bg-brand-600 text-white hover:border-brand-700 hover:bg-brand-700 active:bg-brand-800',
   secondary:
-    'button-specular glass-inset text-ink-700 hover:-translate-y-px hover:border-[rgba(79,70,229,0.22)] hover:bg-[var(--wash-brand-hover)] hover:text-ink-900',
-  ghost: 'bg-transparent text-ink-600 hover:bg-[var(--wash-brand-hover)] hover:text-brand-700',
-  icon: 'glass-inset justify-center text-ink-600 hover:-translate-y-px hover:bg-[var(--wash-brand-hover)] hover:text-brand-600',
+    'border-[var(--color-border)] bg-white text-ink-700 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-subtle)] hover:text-ink-900',
+  ghost: 'bg-transparent text-ink-600 hover:bg-[var(--color-surface-subtle)] hover:text-ink-900',
+  icon: 'justify-center border-[var(--color-border)] bg-white text-ink-600 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-subtle)] hover:text-ink-900',
   link: 'h-auto bg-transparent px-0 text-brand-700 hover:underline hover:underline-offset-[3px]',
 };
 
@@ -57,9 +57,8 @@ export default function Button({
   const isIcon = variant === 'icon';
   const contentIcon = loading ? <Loader2 size={16} className="animate-spin" /> : icon;
   const classes = [
-    'relative inline-flex items-center gap-2 whitespace-nowrap rounded-[var(--radius-md)] border border-transparent font-semibold outline-none transition-[transform,box-shadow,background,color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0',
-    variant === 'primary' ? 'font-bold' : '',
-    isIcon ? `${ICON_SIZE[size]} rounded-[var(--radius-sm)] p-0` : SIZE[size],
+    'relative inline-flex items-center gap-2 whitespace-nowrap rounded-[var(--radius-md)] border border-transparent font-semibold outline-none transition-[background,color,border-color] duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-55',
+    isIcon ? `${ICON_SIZE[size]} rounded-[var(--radius-md)] p-0` : SIZE[size],
     fullWidth ? 'w-full justify-center' : '',
     loading && variant === 'primary' ? 'is-loading' : '',
     VARIANT[variant],

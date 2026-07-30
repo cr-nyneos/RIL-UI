@@ -52,7 +52,7 @@ export default function VehicleTab({
   const eta = liveEta(expectedArrival);
 
   return (
-    <GlassCard key="vehicle" bloom="violet" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="vehicle" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={Route} {...STEP_COPY.vehicle} pill={transportMode} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <TextField label="Vehicle Number" value={vehicleNumber} onChange={setField('vehicleNumber', setVehicleNumber)} error={touched.vehicleNumber && !required(vehicleNumber) ? 'Required' : false} placeholder="GJ-01-KA-4472" leadingIcon={<Radar size={17} strokeWidth={2.2} />} />

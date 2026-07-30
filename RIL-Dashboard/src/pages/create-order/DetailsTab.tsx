@@ -59,7 +59,7 @@ export default function DetailsTab({
   meaningfulChange,
 }: DetailsTabProps) {
   return (
-    <GlassCard key="details" bloom="info" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="details" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={ClipboardList} {...STEP_COPY.details} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <div>

@@ -22,12 +22,12 @@ interface FloatingTooltipProps {
 const MARGIN = 12; // keep at least this far from the viewport edges
 
 /** Shared tooltip-content classes so every chart's tooltip body matches. */
-export const TT_HEAD = 'flex items-center gap-2 font-display text-sm font-semibold text-text-0';
-export const TT_DOT = 'h-[9px] w-[9px] rounded-full shadow-[0_0_10px_currentColor]';
-export const TT_VALUE = 'mt-2 font-display text-2xl leading-[1.1] font-bold text-text-0';
-export const TT_ROW = 'mt-2 flex items-center justify-between gap-4 text-[12.5px] text-text-2';
+export const TT_HEAD = 'flex items-center gap-2 text-[13px] font-semibold text-ink-900';
+export const TT_DOT = 'h-2 w-2 rounded-[var(--radius-sm)] bg-current';
+export const TT_VALUE = 'mt-1.5 text-[20px] leading-[1.15] font-bold tabular-nums text-ink-900';
+export const TT_ROW = 'mt-1.5 flex items-center justify-between gap-4 text-[12px] text-ink-500';
 export const TT_TREND = 'inline-flex items-center gap-1 font-semibold [font-variant-numeric:tabular-nums]';
-export const trendColor = (trend: number) => (trend >= 0 ? 'text-good' : 'text-critical');
+export const trendColor = (trend: number) => (trend >= 0 ? 'text-success' : 'text-danger');
 
 /**
  * Shared premium tooltip. It measures itself and clamps its position so it can
@@ -72,11 +72,11 @@ export default function FloatingTooltip({ open, children, cursor, below, gap = 1
       {open && (
         <motion.div
           ref={ref}
-          className="fixed top-0 left-0 z-60 min-w-42 rounded-2xl border border-border-hi bg-[linear-gradient(180deg,#ffffffeb,#f3f3efeb)] px-3.5 py-3 pointer-events-none shadow-[0_1px_0_#0b0b0b14_inset,0_20px_40px_-18px_#0b0b0b33] backdrop-blur-[18px] backdrop-saturate-150"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: ready ? 1 : 0, scale: 1, x: left, y: top }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ type: 'spring', stiffness: 420, damping: 32, mass: 0.6 }}
+          className="fixed top-0 left-0 z-60 min-w-42 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-3.5 py-3 pointer-events-none shadow-[0_8px_20px_-8px_rgba(16,24,40,0.20)]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: ready ? 1 : 0, x: left, y: top }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.14, ease: 'easeOut' }}
         >
           {children}
         </motion.div>

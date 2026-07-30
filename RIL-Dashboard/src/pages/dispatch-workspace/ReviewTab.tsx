@@ -54,10 +54,10 @@ export default function ReviewTab({
   setActiveStep,
 }: ReviewTabProps) {
   return (
-    <GlassCard key="review" bloom="success" className="animate-rise p-7" style={{ animationDelay: '80ms' }}>
+    <GlassCard key="review" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={ClipboardCheck} {...STEP_COPY.review} pill={allValid ? 'READY' : 'PENDING'} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <GlassCard bloom="info" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Order Information</div>
             <Button variant="icon" size="sm" aria-label="Edit order selection" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('order')} />
@@ -69,7 +69,7 @@ export default function ReviewTab({
           <SummaryRow label="Contract Type" value={order?.type ?? ''} />
           <SummaryRow label="Order Value" value={order ? formatValue(order.valueCr) : ''} />
         </GlassCard>
-        <GlassCard bloom="cyan" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Dispatch Information</div>
             <Button variant="icon" size="sm" aria-label="Edit dispatch details" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('shipment')} />
@@ -83,7 +83,7 @@ export default function ReviewTab({
           <SummaryRow label="Description" value={packageDescription} />
           <SummaryRow label="Special Handling" value={specialHandling} />
         </GlassCard>
-        <GlassCard bloom="violet" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Vehicle Information</div>
             <Button variant="icon" size="sm" aria-label="Edit vehicle details" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('vehicle')} />
@@ -97,7 +97,7 @@ export default function ReviewTab({
           <SummaryRow label="Transport Mode" value={transportMode} />
           <SummaryRow label="Live ETA" value={liveEta(expectedArrival)} />
         </GlassCard>
-        <GlassCard bloom="neutral" className="p-5">
+        <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="text-section-title">Uploaded Documents</div>
             <Button variant="icon" size="sm" aria-label="Edit documents" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('documents')} />

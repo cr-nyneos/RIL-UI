@@ -1,5 +1,4 @@
 import { Waves } from 'lucide-react';
-import GlassCard from '../ui/GlassCard';
 import CardHeader from '../ui/CardHeader';
 import BarChart from '../BarChart';
 import type { Segment } from '../../data/segments';
@@ -10,7 +9,7 @@ interface PlantLoadCardProps {
 
 export default function PlantLoadCard({ data }: PlantLoadCardProps) {
   return (
-    <GlassCard bloom="neutral" className="flex h-full flex-col p-6">
+    <div className="flex h-full flex-col p-5">
       <CardHeader
         eyebrow="Site Load"
         icon={Waves}
@@ -21,6 +20,6 @@ export default function PlantLoadCard({ data }: PlantLoadCardProps) {
       <div className="min-h-75 flex-1">
         <BarChart data={data} unit="" valuePrefix="" shareLabel="Share of active orders" showTrend={false} />
       </div>
-    </GlassCard>
+    </div>
   );
 }

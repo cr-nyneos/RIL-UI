@@ -1,5 +1,4 @@
 import { PieChart as PieIcon } from 'lucide-react';
-import GlassCard from '../ui/GlassCard';
 import CardHeader from '../ui/CardHeader';
 import PieChart from '../PieChart';
 import type { Segment } from '../../data/segments';
@@ -11,7 +10,7 @@ interface OrderStatusCardProps {
 
 export default function OrderStatusCard({ data, activeCount }: OrderStatusCardProps) {
   return (
-    <GlassCard bloom="info" className="flex h-full flex-col p-6">
+    <div className="flex h-full flex-col p-5">
       <CardHeader
         eyebrow="Order Pipeline"
         icon={PieIcon}
@@ -32,6 +31,6 @@ export default function OrderStatusCard({ data, activeCount }: OrderStatusCardPr
           ariaLabel="Order status distribution"
         />
       </div>
-    </GlassCard>
+    </div>
   );
 }

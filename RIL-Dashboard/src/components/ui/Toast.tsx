@@ -16,8 +16,7 @@ export default function Toast({ message, onDismiss, duration = 3200 }: ToastProp
   return (
     <div
       role="status"
-      className="animate-rise glass-raised fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-2xl px-5 py-3.5"
-      style={{ ['--bloom' as never]: 'rgba(99,102,241,0.08)' }}
+      className="animate-rise glass-raised fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 px-4 py-3 shadow-[0_4px_12px_-4px_rgba(16,24,40,0.16)]"
     >
       <span className="text-body-strong">{message}</span>
       <button

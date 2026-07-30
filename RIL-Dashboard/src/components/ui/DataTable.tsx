@@ -26,7 +26,8 @@ interface DataTableProps<T> {
   stagger?: boolean;
   density?: 'default' | 'compact';
   footer?: ReactNode;
-  bloom?: string;
+  /** False when the table already lives inside a section container. */
+  surface?: boolean;
   /** Change this to crossfade the body (filter / sort / page change) without replaying the page entrance. */
   bodyKey?: string;
   /** Must be at least the sum of the fixed column widths, or flexible columns collapse. */
@@ -58,7 +59,7 @@ export default function DataTable<T>({
   stagger = false,
   density = 'default',
   footer,
-  bloom = 'rgba(99,102,241,0.06)',
+  surface = true,
   bodyKey,
   minWidth = '1320px',
 }: DataTableProps<T>) {
@@ -80,7 +81,7 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="glass-raised overflow-hidden" style={{ ['--bloom' as string]: bloom }}>
+    <div className={surface ? 'glass-raised overflow-hidden' : 'overflow-hidden'}>
       <div className="overflow-x-auto overflow-y-visible">
         <div role="table" style={{ minWidth }}>
           <div
