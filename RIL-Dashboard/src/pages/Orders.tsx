@@ -33,7 +33,7 @@ import {
 } from '../lib/orderFilters';
 import Select from '../components/ui/Select';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 5;
 
 const PLANT_OPTIONS = [
   { value: 'all', label: 'All Plants' },

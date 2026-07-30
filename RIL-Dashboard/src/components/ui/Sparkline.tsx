@@ -32,24 +32,15 @@ export default function Sparkline({ data, uid, fill, text, className = '' }: Spa
   const areaPath = `${linePath} L${VBW},${VBH} L0,${VBH} Z`;
   const [lastX, lastY] = points[points.length - 1];
 
-  const bubbles = [0.18, 0.4, 0.62, 0.84].map((fx, i) => {
-    const idx = Math.min(data.length - 1, Math.round(fx * (data.length - 1)));
-    const py = points[idx][1];
-    const stagger = hashStagger(uid, i);
-    return {
-      x: fx * VBW,
-      y: Math.min(VBH - 8, py + 10 + stagger * 14),
-      r: 1.6 + stagger * 1.2,
-      delay: -stagger * 3,
-      dur: 2.6 + stagger * 1.8,
-    };
-  });
+  // Offsets the wave phase per card so five hovered cards never beat in sync.
+  const phase = hashStagger(uid, 0);
 
   return (
     <svg
       viewBox={`0 0 ${VBW} ${VBH}`}
       preserveAspectRatio="none"
       className={`block w-full ${className}`}
+      style={{ ['--wave-phase' as string]: `${-phase * 0.9}s` }}
       aria-hidden="true"
     >
       <defs>
@@ -72,7 +63,7 @@ export default function Sparkline({ data, uid, fill, text, className = '' }: Spa
       </defs>
 
       {/* 1. liquid body */}
-      <path d={areaPath} fill={`url(#${uid}-liquid)`} />
+      <path d={areaPath} fill={`url(#${uid}-liquid)`} className="kpi-liquid" />
 
       {/* 2. meniscus highlight — 1px white line just under the surface */}
       <path
@@ -82,35 +73,32 @@ export default function Sparkline({ data, uid, fill, text, className = '' }: Spa
         strokeWidth="1.25"
         transform="translate(0, 2.2)"
         strokeLinecap="round"
+        className="kpi-meniscus"
       />
 
-      {/* 3. the surface itself — glowing gradient stroke */}
+      {/* 3. the surface itself */}
       <path
         d={linePath}
         fill="none"
         stroke={`url(#${uid}-surface)`}
         strokeWidth="2.6"
         strokeLinecap="round"
-        filter={`url(#${uid}-glow)`}
         className="kpi-surface"
       />
 
-      {/* 4. bubbles — staggered per card so they never sync */}
-      {bubbles.map((b, i) => (
-        <circle
-          key={i}
-          cx={b.x}
-          cy={b.y}
-          r={b.r}
-          fill="rgba(255,255,255,0.55)"
-          className="kpi-bubble"
-          style={{ animationDelay: `${b.delay}s`, animationDuration: `${b.dur}s` }}
-        />
-      ))}
+      {/* 4. travelling crest — a short lit segment that runs the surface on hover */}
+      <path
+        d={linePath}
+        fill="none"
+        stroke={text}
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        className="kpi-crest"
+        pathLength={300}
+      />
 
-      {/* 5. end node — halo, dot, white ring */}
-      <circle cx={lastX} cy={lastY} r="7" fill={fill} opacity="0.22" className="kpi-halo" />
-      <circle cx={lastX} cy={lastY} r="3.4" fill={text} />
+      {/* 5. end node */}
+      <circle cx={lastX} cy={lastY} r="3.4" fill={text} className="kpi-node" />
       <circle cx={lastX} cy={lastY} r="3.4" fill="none" stroke="#fff" strokeWidth="1.4" />
     </svg>
   );

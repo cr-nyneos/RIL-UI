@@ -54,21 +54,24 @@ export default function Dashboard() {
             />
           }
           padded={false}
+          bodyClassName="p-4"
           className="animate-rise"
           style={{ animationDelay: '60ms' }}
         >
           <KpiRow totals={totals} />
-        </Section>
 
-        <Section
-          title="Delivery Trends"
-          description="Planned against actual deliveries over the selected period."
-          actions={<span className="text-pill">{period === '3m' ? 'LAST 3 MONTHS' : 'LAST 6 MONTHS'}</span>}
-          padded={false}
-          className="animate-rise"
-          style={{ animationDelay: '120ms' }}
-        >
-          <div className="h-[27rem] w-full">
+          {/* Delivery trend lives in the same container as the KPI row — the
+              headline numbers and the curve behind them are one reading. */}
+          <div className="mt-1 flex flex-wrap items-center justify-between gap-3 px-1 pt-4">
+            <div className="min-w-0">
+              <h3 className="text-section-title truncate">Delivery Trends</h3>
+              <p className="text-meta mt-0.5 truncate">
+                Planned against actual deliveries over the selected period.
+              </p>
+            </div>
+            <span className="text-pill">{period === '3m' ? 'LAST 3 MONTHS' : 'LAST 6 MONTHS'}</span>
+          </div>
+          <div className="h-[25rem] w-full">
             <DeliveryTrendCard actual={actual} planned={planned} />
           </div>
         </Section>

@@ -18,7 +18,7 @@ function trendDirection(series: number[]): 'up' | 'down' {
 
 export default function KpiRow({ totals }: KpiRowProps) {
   return (
-    <div className="grid grid-cols-2 items-stretch divide-x divide-y divide-[var(--color-border)] lg:grid-cols-5 lg:divide-y-0">
+    <div className="grid grid-cols-2 items-stretch gap-3 lg:grid-cols-5">
       <StatCard
         icon={Package}
         label="Active Orders"

@@ -7,7 +7,7 @@ interface DeliveryTrendCardProps {
 
 export default function DeliveryTrendCard({ actual, planned }: DeliveryTrendCardProps) {
   return (
-    <div className="flex h-full flex-col p-5">
+    <div className="flex h-full flex-col pt-3">
       <div className="min-h-85 flex-1 max-[560px]:min-h-65">
         <LineChart
           data={actual}

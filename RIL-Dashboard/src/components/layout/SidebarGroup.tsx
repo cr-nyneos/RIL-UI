@@ -33,10 +33,10 @@ export default function SidebarGroup({ to, icon: Icon, label, items, collapsed }
         type="button"
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
-        className="w-full text-left"
+        className="w-full cursor-pointer text-left"
       >
         <div
-          className={`group relative flex items-center gap-3 rounded-[var(--radius-md)] px-3 py-2 text-[14px] transition-colors duration-150 ${
+          className={`group relative flex cursor-pointer items-center gap-3 rounded-[var(--radius-md)] px-3 py-2 text-[14px] transition-colors duration-150 ${
             inGroup && !open
               ? 'sidebar-item-active font-bold text-brand-800'
               : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'

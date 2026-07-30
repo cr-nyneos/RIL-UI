@@ -36,8 +36,8 @@ export default function StatCard({
   delay = 0,
 }: StatCardProps) {
   const content = (
-    <div className="relative flex h-[152px] flex-col p-4 transition-colors duration-150 hover:bg-[var(--color-surface-subtle)]">
-      <div className="flex items-center gap-2">
+    <div className="glass-raised kpi-card relative flex h-[152px] flex-col p-4">
+      <div className="kpi-head flex items-center gap-2">
         <span className="flex-none" style={{ color: accentIcon } as CSSProperties}>
           <Icon size={16} strokeWidth={2.2} />
         </span>
@@ -46,7 +46,7 @@ export default function StatCard({
 
       <div key={value} className="animate-fade mt-2 flex items-baseline gap-2">
         <span
-          className="text-[24px] leading-8 font-bold tabular-nums tracking-tight"
+          className="kpi-value text-[24px] leading-8 font-bold tabular-nums tracking-tight"
           style={{ color: accentText } as CSSProperties}
         >
           {value}
@@ -60,7 +60,7 @@ export default function StatCard({
           uid={accentId}
           fill={accentFill}
           text={accentIcon}
-          className="absolute inset-x-0 bottom-0 h-[38%] w-full"
+          className="kpi-spark absolute inset-x-0 bottom-0 h-[38%] w-full"
         />
       )}
     </div>

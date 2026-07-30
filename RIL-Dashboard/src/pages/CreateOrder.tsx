@@ -334,8 +334,11 @@ export default function CreateOrder() {
         </Section>
 
         <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(320px,3fr)]">
-          <div className="min-w-0">{renderActiveTab()}</div>
+          <div key={activeStep} className="animate-panel min-w-0">
+            {renderActiveTab()}
+          </div>
           <CreateOrderSidebar
+            key={`${activeStep}-summary`}
             activeStep={activeStep}
             completed={completed}
             activeValidation={activeValidation}

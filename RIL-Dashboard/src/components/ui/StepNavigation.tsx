@@ -65,9 +65,11 @@ export default function StepNavigation<K extends string>({
               >
                 {step.label}
               </span>
-              <span className="text-meta block truncate">
-                {locked ? 'Locked' : active ? 'Active' : done ? 'Completed' : 'Ready'}
-              </span>
+              {!locked && (
+                <span className="text-meta block truncate">
+                  {active ? 'Active' : done ? 'Completed' : 'Ready'}
+                </span>
+              )}
             </span>
           </button>
         );

@@ -20,13 +20,13 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
         nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
         collapsed ? 'justify-center' : ''
-      } ${
+      } ${soon || disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${
         isActive
           ? 'sidebar-item-active font-bold text-brand-800'
           : soon
-            ? 'cursor-default font-semibold text-ink-600'
+            ? 'font-semibold text-ink-600'
             : disabled
-              ? 'cursor-default font-semibold text-sidebar-ink'
+              ? 'font-semibold text-sidebar-ink'
               : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
       }`}
     >
@@ -66,7 +66,7 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
 
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className="w-full text-left">
+      <button type="button" onClick={onClick} className="w-full cursor-pointer text-left">
         {content(false)}
       </button>
     );

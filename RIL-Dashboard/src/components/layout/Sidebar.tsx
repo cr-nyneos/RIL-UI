@@ -7,7 +7,7 @@ import {
   LogOut,
   Warehouse,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import SidebarGroup from './SidebarGroup';
 import Button from '../ui/Button';
@@ -33,7 +33,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <aside
-      className={`glass-raised animate-slide-left sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
+      className={`glass-raised animate-slide-left flex h-full flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
@@ -42,12 +42,18 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'
         }`}
       >
-        <div className="flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] bg-brand-600 text-sm font-bold text-white">
-          <Warehouse size={18} strokeWidth={2.2} />
-        </div>
-        {!collapsed && (
-          <span className="truncate text-[16px] font-bold tracking-tight text-ink-900">NyneOS</span>
-        )}
+        <Link
+          to="/"
+          aria-label="Go to dashboard"
+          className="flex min-w-0 cursor-pointer items-center gap-2.5"
+        >
+          <span className="flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] bg-brand-600 text-sm font-bold text-white">
+            <Warehouse size={18} strokeWidth={2.2} />
+          </span>
+          {!collapsed && (
+            <span className="truncate text-[16px] font-bold tracking-tight text-ink-900">NyneOS</span>
+          )}
+        </Link>
         <Button
           variant="ghost"
           size="sm"

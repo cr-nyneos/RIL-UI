@@ -331,6 +331,123 @@
 .kpi-spotlight { display: none; }
 
 /* ---------------------------------------------------------------- */
+/* KPI card interaction — structural feedback, not decoration        */
+/* ---------------------------------------------------------------- */
+.kpi-card {
+  transition:
+    transform .24s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .24s ease,
+    border-color .18s ease;
+}
+
+/* Brand rule that draws across the top edge on hover — the same
+   language the active nav item and selected tab already use. */
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 3;
+  background: var(--color-brand-600);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+
+.kpi-card:hover,
+.kpi-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 8px 18px -8px rgba(16, 24, 40, 0.18);
+}
+.kpi-card:hover::after,
+.kpi-card:focus-visible::after { transform: scaleX(1); }
+
+/* The sparkline swells from its baseline and saturates as you hover. */
+.kpi-spark {
+  transform-origin: bottom;
+  opacity: .82;
+  transition:
+    transform .32s cubic-bezier(.16, 1, .3, 1),
+    opacity .24s ease;
+}
+.kpi-card:hover .kpi-spark {
+  transform: scaleY(1.1);
+  opacity: 1;
+}
+
+/* --- The wave itself moves on hover -------------------------------
+   Surface and body undulate on offset phases, so the two never peak
+   together and the fill reads as liquid rather than a scaling shape. */
+@keyframes kpi-wave-surface {
+  0%, 100% { transform: translateY(0)     scaleY(1); }
+  25%      { transform: translateY(-2.5px) scaleY(1.07); }
+  50%      { transform: translateY(1px)    scaleY(0.96); }
+  75%      { transform: translateY(-1.5px) scaleY(1.04); }
+}
+@keyframes kpi-wave-body {
+  0%, 100% { transform: translateY(0)     scaleY(1); }
+  30%      { transform: translateY(1px)    scaleY(0.97); }
+  60%      { transform: translateY(-2px)   scaleY(1.05); }
+}
+
+.kpi-surface,
+.kpi-liquid,
+.kpi-meniscus {
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
+.kpi-card:hover .kpi-surface,
+.kpi-card:hover .kpi-meniscus {
+  animation: kpi-wave-surface 2.1s ease-in-out infinite;
+  animation-delay: var(--wave-phase, 0s);
+}
+.kpi-card:hover .kpi-meniscus { animation-delay: calc(var(--wave-phase, 0s) + .08s); }
+.kpi-card:hover .kpi-liquid {
+  animation: kpi-wave-body 2.6s ease-in-out infinite;
+  animation-delay: var(--wave-phase, 0s);
+}
+
+/* A crest of light runs left→right along the surface — the cue that
+   reads as the wave travelling rather than just bobbing. */
+.kpi-crest {
+  opacity: 0;
+  stroke-dasharray: 46 260;
+  stroke-dashoffset: 306;
+  transition: opacity .2s ease;
+}
+.kpi-card:hover .kpi-crest {
+  opacity: 1;
+  animation: kpi-crest-travel 2.1s linear infinite;
+}
+@keyframes kpi-crest-travel {
+  from { stroke-dashoffset: 306; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* The end node reacts to the swell. */
+.kpi-node {
+  transition: r .28s cubic-bezier(.16, 1, .3, 1);
+}
+.kpi-card:hover .kpi-node { r: 4.4; }
+
+/* Label + icon shift a hair toward the value on hover. */
+.kpi-head {
+  transition: transform .24s cubic-bezier(.16, 1, .3, 1), color .18s ease;
+}
+.kpi-card:hover .kpi-head { transform: translateX(2px); }
+
+.kpi-value {
+  transition: transform .24s cubic-bezier(.16, 1, .3, 1);
+  transform-origin: left bottom;
+}
+.kpi-card:hover .kpi-value { transform: scale(1.04); }
+
+/* ---------------------------------------------------------------- */
 /* Staged page entrance — mount only, stagger via inline delay       */
 /* ---------------------------------------------------------------- */
 @keyframes rise-in {
@@ -350,12 +467,12 @@
 
 .animate-rise {
   opacity: 0;
-  animation: rise-in .34s cubic-bezier(.16,1,.3,1) forwards;
+  animation: rise-in .46s cubic-bezier(.16,1,.3,1) forwards;
 }
 
 .animate-fade {
   opacity: 0;
-  animation: fade-in .3s ease-out forwards;
+  animation: fade-in .34s ease-out forwards;
 }
 
 .animate-slide-left {
@@ -367,6 +484,31 @@
 .animate-fade-fast {
   opacity: 0;
   animation: fade-in .18s ease-out forwards;
+}
+
+/* Route entrance — the whole page settles in, children stagger on top.
+   Opacity only, so no transform containing block is created for the
+   fixed-position dialogs and sticky action bars living inside. */
+.animate-page {
+  animation: fade-in .4s ease-out both;
+}
+
+/* Workflow step / tab panel swap */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-panel {
+  animation: panel-in .34s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* Sidebar summary column on a workflow step change */
+@keyframes panel-in-right {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-panel-right {
+  animation: panel-in-right .34s cubic-bezier(.16, 1, .3, 1) both;
 }
 
 /* ---------------------------------------------------------------- */
@@ -489,10 +631,22 @@
 
   .is-error { animation: none; }
   .status-dot-pulse { animation: none; }
-  .animate-rise, .animate-fade, .animate-fade-fast, .animate-slide-left {
+  .animate-rise, .animate-fade, .animate-fade-fast, .animate-slide-left,
+  .animate-page, .animate-panel, .animate-panel-right {
     animation: none;
     opacity: 1;
     transform: none;
   }
   .focus-bloom { transition: none; }
+  .kpi-card, .kpi-spark, .kpi-head, .kpi-value, .kpi-node { transition: none; }
+  .kpi-card:hover { transform: none; }
+  .kpi-card:hover .kpi-spark,
+  .kpi-card:hover .kpi-head,
+  .kpi-card:hover .kpi-value { transform: none; }
+  .kpi-card::after { transition: none; }
+  .kpi-card:hover .kpi-surface,
+  .kpi-card:hover .kpi-meniscus,
+  .kpi-card:hover .kpi-liquid,
+  .kpi-card:hover .kpi-crest { animation: none; }
+  .kpi-crest { display: none; }
 }

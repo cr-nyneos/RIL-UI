@@ -77,7 +77,7 @@ export default function DispatchWorkspaceSidebar({
   const expected = order ? formatExpected(order.expected, order.progress >= 100) : undefined;
 
   return (
-    <aside className="space-y-4 xl:sticky xl:top-8">
+    <aside className="animate-panel-right space-y-4 xl:sticky xl:top-8">
       {activeStep === 'order' && (
         <>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>

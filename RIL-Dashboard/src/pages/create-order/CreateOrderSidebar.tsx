@@ -51,7 +51,7 @@ export default function CreateOrderSidebar({
   documents,
 }: CreateOrderSidebarProps) {
   return (
-    <aside className="space-y-4 xl:sticky xl:top-8">
+    <aside className="animate-panel-right space-y-4 xl:sticky xl:top-8">
       {activeStep === 'details' && (
         <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
           <CardHeader eyebrow="Order" icon={PackageCheck} title="Order Summary" subtitle="Current commercial values." />
