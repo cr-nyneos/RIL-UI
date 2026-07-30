@@ -28,15 +28,6 @@ export default function DashboardFilters({
         onChange={onPlantChange}
         options={[{ value: 'all', label: 'All Plants' }, ...PLANTS.map((p) => ({ value: p.id, label: p.label }))]}
       />
-      <SegmentedControl
-        value={contractType}
-        onChange={onContractTypeChange}
-        options={[
-          { value: 'all', label: 'All' },
-          { value: 'Manufactured', label: 'Manufactured' },
-          { value: 'Material', label: 'Material' },
-        ]}
-      />
       <Select
         ariaLabel="Filter by period"
         value={period}
@@ -44,6 +35,15 @@ export default function DashboardFilters({
         options={[
           { value: '3m', label: 'Last 3 Months' },
           { value: '6m', label: 'Last 6 Months' },
+        ]}
+      />
+       <SegmentedControl
+        value={contractType}
+        onChange={onContractTypeChange}
+        options={[
+          { value: 'all', label: 'All' },
+          { value: 'Manufactured', label: 'Manufactured' },
+          { value: 'Material', label: 'Material' },
         ]}
       />
     </div>

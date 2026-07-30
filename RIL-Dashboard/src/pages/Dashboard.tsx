@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import AppShell from '../components/layout/AppShell';
-// Greeting hero — parked for now, may return later.
 // import GreetingHero from '../components/dashboard/GreetingHero';
 import DashboardFilters from '../components/dashboard/DashboardFilters';
 import KpiRow from '../components/dashboard/KpiRow';
@@ -8,14 +7,12 @@ import OrderStatusCard from '../components/dashboard/OrderStatusCard';
 import PlantLoadCard from '../components/dashboard/PlantLoadCard';
 import DeliveryTrendCard from '../components/dashboard/DeliveryTrendCard';
 import { MONTHLY_DELIVERIES_ACTUAL, MONTHLY_DELIVERIES_PLANNED } from '../lib/mockData/dashboard';
-import {
-  computeFilteredTotals,
-  computeFilteredStatusDistribution,
-  computeFilteredPlantSegments,
+import {  computeFilteredTotals,  computeFilteredStatusDistribution, computeFilteredPlantSegments,
   type PlantFilter,
   type ContractTypeFilter,
   type PeriodFilter,
 } from '../lib/dashboardFilters';
+import GreetingHero from '../components/dashboard/GreetingHero';
 
 export default function Dashboard() {
   const [plant, setPlant] = useState<PlantFilter>('all');
@@ -36,8 +33,10 @@ export default function Dashboard() {
   );
 
   return (
+    <>
     <AppShell>
-      <div className="flex flex-col gap-8 py-7">
+      <div className="flex flex-col gap-8">
+        <GreetingHero /> 
         <DashboardFilters
           plant={plant}
           onPlantChange={setPlant}
@@ -65,5 +64,6 @@ export default function Dashboard() {
         </div>
       </div>
     </AppShell>
+    </>
   );
 }

@@ -308,6 +308,58 @@
   color: var(--color-ink-600);
 }
 
+@utility text-page-title {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-ink-900);
+}
+
+@utility text-section-title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-ink-800);
+}
+
+@utility text-body {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--color-ink-700);
+}
+
+@utility text-body-strong {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--color-ink-800);
+}
+
+@utility text-table-head {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+}
+
+@utility text-meta {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--color-ink-500);
+}
+
+@utility text-badge {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
 /* ---------------------------------------------------------------- */
 /* Sidebar glass + nav item states — Dashboard Pass 2                */
 /* ---------------------------------------------------------------- */
@@ -434,6 +486,12 @@
 .animate-slide-left {
   opacity: 0;
   animation: slide-in-left .5s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* Filter / tab / sort change — crossfades the table body only */
+.animate-fade-fast {
+  opacity: 0;
+  animation: fade-in .22s ease-out forwards;
 }
 
 /* ---------------------------------------------------------------- */
@@ -593,14 +651,130 @@
 }
 .status-dot-pulse { animation: status-dot-pulse 2.5s ease-in-out infinite; }
 
+.dt-head {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.dt-row {
+  position: relative;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  transition: background-color 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dt-row:last-child { border-bottom: none; }
+
+.dt-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #22D3EE, #8B5CF6);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.dt-row::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dt-row-clickable { cursor: pointer; }
+
+.dt-row:hover,
+.dt-row:focus-visible {
+  background: rgba(79, 70, 229, 0.045);
+}
+.dt-row:focus-visible {
+  outline: 2px solid rgba(79, 70, 229, 0.45);
+  outline-offset: -2px;
+}
+.dt-row:hover::before,
+.dt-row:focus-visible::before { transform: scaleY(1); }
+.dt-row:hover::after,
+.dt-row:focus-visible::after { animation: dt-sheen 700ms ease-out; }
+
+@keyframes dt-sheen {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ---------------------------------------------------------------- */
+/* GateRail — current-segment pulse + inline glass tooltip           */
+/* ---------------------------------------------------------------- */
+@keyframes gate-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.35); }
+  70%, 100% { box-shadow: 0 0 0 5px rgba(79, 70, 229, 0); }
+}
+@keyframes gate-pulse-danger {
+  0%   { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.35); }
+  70%, 100% { box-shadow: 0 0 0 5px rgba(244, 63, 94, 0); }
+}
+.gate-pulse { animation: gate-pulse 2.4s ease-in-out infinite; }
+.gate-pulse-danger { animation: gate-pulse-danger 2.4s ease-in-out infinite; }
+
+.glass-tooltip {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.88));
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow:
+    0 1px 1px rgba(16, 24, 40, 0.04),
+    0 12px 28px -12px rgba(16, 24, 40, 0.22);
+}
+
+/* Tabs — a single pill that slides between tabs */
+.tab-pill {
+  transition:
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    width 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 200ms ease;
+}
+
+/* ---------------------------------------------------------------- */
+/* Focus bloom — shared by SearchInput / FilterSelect                */
+/* ---------------------------------------------------------------- */
+.focus-bloom {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.focus-bloom:focus-within,
+.focus-bloom:focus {
+  outline: none;
+  border-color: rgba(79, 70, 229, 0.35);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.10);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .dt-row,
+  .dt-row::before { transition: none; }
+  .dt-row::before { transform: scaleY(1); opacity: 0; }
+  .dt-row:hover::before,
+  .dt-row:focus-visible::before { opacity: 1; }
+  .dt-row:hover::after,
+  .dt-row:focus-visible::after { animation: none; }
+  .gate-pulse, .gate-pulse-danger { animation: none; }
+  .tab-pill { transition: none; }
+  .progress-fill { transition: none !important; }
+
   .hero-aurora { animation: none; }
   .kpi-bubble, .kpi-halo, .group:hover .kpi-surface { animation: none; }
   .kpi-spotlight { transition: none; }
   .btn-primary.is-loading::after { animation: none; }
   .is-error { animation: none; }
   .status-dot-pulse { animation: none; }
-  .animate-rise, .animate-fade, .animate-slide-left {
+  .animate-rise, .animate-fade, .animate-fade-fast, .animate-slide-left {
     animation: none;
     opacity: 1;
     transform: none;

@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, AlertCircle, Check, WarehouseIcon } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { Warehouse } from "lucide-react";
 
 const DEMO_EMAIL = 'admin@gmail.com';
@@ -55,7 +55,7 @@ export default function Login() {
 
   return (
     <div className="app-canvas flex h-screen max-h-screen w-full overflow-hidden">
-  <div className="flex flex-1 items-center justify-center px-6 lg:flex-[0_0_46%] lg:px-16">
+      <div className="flex flex-1 items-center justify-center px-6 lg:flex-[0_0_46%] lg:px-16">
         <div className={`w-full max-w-[370px] ${shake ? 'is-error' : ''}`}>
           {/* <div className="mb-12 flex items-center gap-2.5 max-[480px]:mb-8">
             <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-600),var(--color-violet-500))] text-sm font-extrabold text-white">
@@ -69,7 +69,7 @@ export default function Login() {
               WELCOME BACK
             </h1>
             <p className="text-[17px] leading-7 font-normal text-slate-500">
-             Welcome back! Please enter your details.
+              Welcome back! Please enter your details.
             </p>
           </div>
 
