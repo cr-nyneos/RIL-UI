@@ -1,5 +1,5 @@
 import Select from '../ui/Select';
-import SegmentedControl from '../ui/SegmentedControl';
+import Tabs from '../ui/Tabs';
 import { PLANTS } from '../../lib/mockData/dashboard';
 import type { PlantFilter, ContractTypeFilter, PeriodFilter } from '../../lib/dashboardFilters';
 
@@ -37,13 +37,15 @@ export default function DashboardFilters({
           { value: '6m', label: 'Last 6 Months' },
         ]}
       />
-       <SegmentedControl
-        value={contractType}
-        onChange={onContractTypeChange}
-        options={[
-          { value: 'all', label: 'All' },
-          { value: 'Manufactured', label: 'Manufactured' },
-          { value: 'Material', label: 'Material' },
+       <Tabs
+        active={contractType}
+        onChange={(value) => onContractTypeChange(value as ContractTypeFilter)}
+        size="sm"
+        variant="segmented"
+        tabs={[
+          { key: 'all', label: 'All' },
+          { key: 'Manufactured', label: 'Manufactured' },
+          { key: 'Material', label: 'Material' },
         ]}
       />
     </div>

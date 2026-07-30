@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components --
+   Tooltip style constants are shared by the chart tooltip content. */
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 

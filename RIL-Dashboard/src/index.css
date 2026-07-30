@@ -5,47 +5,8 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 
 @theme {
-  /* Surfaces */
-  --color-bg-0: #f9f9f7;
-  --color-bg-1: #f3f3ef;
-  --color-bg-2: #e9e9e2;
-  --color-card: #ffffffbf;
-  --color-card-hi: #ffffffe6;
-  --color-border: #0b0b0b1a;
-  --color-border-hi: #0b0b0b29;
-
-  /* Text */
-  --color-text-0: #0b0b0b;
-  --color-text-1: #52514e;
-  --color-text-2: #898781;
-
-  /* Chart chrome */
-  --color-grid: #e1e0d9;
-  --color-axis: #c3c2b7;
-
-  /* Status */
-  --color-good: #006300;
-  --color-critical: #d03b3b;
-
-  /* Categorical (validated colorblind-safe order) */
-  --color-cat-1: #2a78d6;
-  --color-cat-2: #eb6834;
-  --color-cat-3: #1baf7a;
-  --color-cat-4: #eda100;
-  --color-cat-5: #e87ba4;
-
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;
-
-  /* NyneOS dashboard design system (light theme only) */
-  --color-brand-primary: #0B3D91;
-  --color-brand-soft: #E8EEFC;
-  --color-surface: #FFFFFF;
-  --color-surface-muted: #F7F9FC;
-  --color-border-subtle: #E7EAF0;
-  --color-ink: #101828;
-  --color-ink-muted: #667085;
-  --color-ink-faint: #98A2B3;
 
   /* ---- NyneOS Liquid Glass design system (Dashboard rebuild) ---- */
   --font-display2: 'Inter', system-ui, sans-serif;
@@ -104,6 +65,15 @@
   --color-glass-fill-deep: rgba(255, 255, 255, 0.44);
   --color-glass-edge: rgba(255, 255, 255, 0.75);
   --color-glass-hairline: rgba(15, 23, 42, 0.06);
+  --color-glass-hairline-deep: rgba(15,23,42,0.10);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --gradient-liquid: linear-gradient(90deg, var(--color-brand-600), var(--color-violet-500));
+  --wash-brand-hover: rgba(79,70,229,0.06);
+  --wash-brand-active: rgba(79,70,229,0.12);
 
   --shadow-glass:
     0 1px 1px rgba(16, 24, 40, 0.03),
@@ -153,10 +123,6 @@
   --bloom-warning: rgba(234, 166, 64, 0.09);
   --bloom-violet: rgba(139, 92, 246, 0.14);
   --bloom-neutral: rgba(99, 102, 241, 0.05);
-}
-
-.app-gradient-bg {
-  background: linear-gradient(180deg, var(--color-brand-soft) 0%, #FFFFFF 38%, #FFFFFF 100%);
 }
 
 /* ---------------------------------------------------------------- */
@@ -363,30 +329,15 @@
 /* ---------------------------------------------------------------- */
 /* Sidebar glass + nav item states — Dashboard Pass 2                */
 /* ---------------------------------------------------------------- */
-.glass-sidebar {
-  background: linear-gradient(170deg,
-    rgba(255,255,255,0.86) 0%,
-    rgba(255,255,255,0.70) 60%,
-    rgba(255,255,255,0.78) 100%);
-  backdrop-filter: blur(26px) saturate(150%);
-  -webkit-backdrop-filter: blur(26px) saturate(150%);
-  border: 1px solid rgba(255,255,255,0.92);
-  border-radius: 24px;
-  box-shadow:
-    0 1px 1px rgba(16,24,40,0.04),
-    0 20px 48px -24px rgba(79,70,229,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.95);
-}
-
 .sidebar-item-hover:hover {
-  background: rgba(79, 70, 229, 0.07);
+  background: var(--wash-brand-hover);
 }
 .sidebar-item-active {
-  background: linear-gradient(90deg, rgba(79, 70, 229, 0.16), rgba(79, 70, 229, 0.04));
-  box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.10);
+  background: linear-gradient(90deg, var(--wash-brand-active), var(--wash-brand-hover));
+  box-shadow: inset 0 0 0 1px var(--color-glass-hairline-deep);
 }
 .sidebar-item-indicator {
-  background: linear-gradient(180deg, #22D3EE, #8B5CF6);
+  background: linear-gradient(180deg, var(--color-aqua-400), var(--color-violet-500));
 }
 
 /* Glass edge + shadow for solid-fill surfaces (e.g. the avatar) that
@@ -495,135 +446,20 @@
 }
 
 /* ---------------------------------------------------------------- */
-/* Login page — split shell, labelled fields, button                 */
+/* Shared button craft                                                */
 /* ---------------------------------------------------------------- */
-.field { position: relative; }
-
-.field-input {
-  width: 100%;
-  height: 56px;
-  padding: 0 18px;
-
-  background: #ffffff;
-
-  border: 1.5px solid #D6D8E0;
-
-  border-radius: 14px;
-
-  box-shadow: none;
-
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--color-ink-900);
-
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease;
-}
-/* leaves room for the visibility toggle */
-.field-input-toggle { padding-right: 46px; }
-
-.field-input::placeholder{
-    color:#8A94A6;
-    font-weight:500;
-}
-
-.field-input:focus{
-    outline:none;
-
-    border-color:#7C3AED;
-
-    box-shadow:
-      0 0 0 3px rgba(124,58,237,.12);
-}
-
-.field-input[aria-invalid='true'] {
-  border-color: rgba(244,63,94,0.40);
-}
-
-.field-label{
-    display:block;
-    margin-bottom:10px;
-
-    font-size:16px;
-    font-weight:600;
-
-    color:#111827;
-}
-
-/* .field-liquid {
-  position: absolute;
-  left: 12px; right: 12px; bottom: 0;
-  height: 2px;
-  border-radius: 2px;
-  overflow: hidden;
-  pointer-events: none;
-}
-.field-liquid::after {
+.button-specular::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, var(--color-aqua-400), var(--color-brand-600), var(--color-violet-500));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .38s cubic-bezier(.16,1,.3,1);
-} */
-
-.field-input:focus ~ .field-liquid::after { transform: scaleX(1); }
-
-.field-toggle {
-  position: absolute;
-  top: 50%;
-  right: 14px;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  border-radius: 10px;
-  color: var(--color-sidebar-icon);
-  cursor: pointer;
-  transition: color .18s ease;
-}
-.field-toggle:hover { color: var(--color-brand-700); }
-
-/* primary button */
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 56px;
-  border-radius: 15px;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-violet) 100%);
-  color: #fff;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: .01em;
-  box-shadow:
-    0 1px 1px rgba(16,24,40,0.06),
-    0 12px 26px -10px rgba(79,70,229,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-  transition: transform .2s cubic-bezier(.16,1,.3,1),
-              box-shadow .25s ease;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+  pointer-events: none;
 }
 
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow:
-    0 2px 2px rgba(16,24,40,0.07),
-    0 20px 40px -12px rgba(79,70,229,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.35);
-}
-
-.btn-primary:active:not(:disabled) { transform: translateY(0); }
-.btn-primary:disabled { opacity: .75; cursor: not-allowed; transform: none; }
-
-.btn-primary::after {
+.button-sweep::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -631,10 +467,10 @@
   transform: translateX(-100%);
   pointer-events: none;
 }
-.btn-primary.is-loading::after {
-  animation: btn-sweep 1.05s linear infinite;
+.button-sweep.is-loading::after {
+  animation: sweep 1.05s linear infinite;
 }
-@keyframes btn-sweep { to { transform: translateX(100%); } }
+@keyframes sweep { to { transform: translateX(100%); } }
 
 @keyframes card-shake {
   0%, 100% { transform: translateX(0); }
@@ -771,7 +607,7 @@
   .hero-aurora { animation: none; }
   .kpi-bubble, .kpi-halo, .group:hover .kpi-surface { animation: none; }
   .kpi-spotlight { transition: none; }
-  .btn-primary.is-loading::after { animation: none; }
+  .button-sweep.is-loading::after { animation: none; }
   .is-error { animation: none; }
   .status-dot-pulse { animation: none; }
   .animate-rise, .animate-fade, .animate-fade-fast, .animate-slide-left {
@@ -779,6 +615,5 @@
     opacity: 1;
     transform: none;
   }
-  .field-liquid::after,
-  .field-input { transition: none; }
+  .focus-bloom { transition: none; }
 }

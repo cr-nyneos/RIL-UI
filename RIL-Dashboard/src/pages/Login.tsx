@@ -1,7 +1,9 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
-import { Warehouse } from "lucide-react";
+import TextField from '../components/ui/TextField';
+import Button from '../components/ui/Button';
+import Alert from '../components/ui/Alert';
 
 const DEMO_EMAIL = 'admin@gmail.com';
 const DEMO_PASSWORD = 'admin123';
@@ -12,7 +14,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(false);
   const [error, setError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [shake, setShake] = useState(false);
@@ -27,12 +28,6 @@ export default function Login() {
   const handlePasswordChange = (value: string) => {
     setPassword(value);
     if (error) setError(false);
-  };
-
-  const handleAutofill = () => {
-    setEmail(DEMO_EMAIL);
-    setPassword(DEMO_PASSWORD);
-    setError(false);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -74,79 +69,64 @@ export default function Login() {
           </div>
 
           <form onSubmit={handleSubmit} noValidate>
-            <div className="mb-[7px]">
-              <label htmlFor="login-email" className="field-label">
-                Email
-              </label>
-              <div className="field">
-                <input
-                  id="login-email"
-                  type="email"
-                  autoComplete="email"
-                  autoFocus
-                  inputMode="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => handleEmailChange(e.target.value)}
-                  aria-invalid={error}
-                  className="field-input"
-                />
-                <div className="field-liquid" />
-              </div>
-            </div>
+            <TextField
+              id="login-email"
+              label="Email"
+              type="email"
+              autoComplete="email"
+              autoFocus
+              inputMode="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={error}
+              size="lg"
+              className="mb-[7px]"
+            />
 
-            <div className="mb-3.5">
-              <label htmlFor="login-password" className="field-label">
-                Password
-              </label>
-              <div className="field">
-                <input
-                  id="login-password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => handlePasswordChange(e.target.value)}
-                  aria-invalid={error}
-                  className="field-input field-input-toggle"
-                />
-                <div className="field-liquid" />
-                <button
-                  type="button"
+            <TextField
+              id="login-password"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={handlePasswordChange}
+              error={error}
+              size="lg"
+              className="mb-3.5"
+              trailingAction={
+                <Button
+                  variant="icon"
+                  size="sm"
                   onClick={() => setShowPassword((s) => !s)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="field-toggle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                  className="h-[30px] w-[30px] border-0 bg-transparent shadow-none"
                 >
                   {showPassword ? <EyeOff size={18} strokeWidth={2.2} /> : <Eye size={18} strokeWidth={2.2} />}
-                </button>
-              </div>
-            </div>
+                </Button>
+              }
+            />
 
             <div className="min-h-9" aria-live="polite">
               {error && (
-                <div
-                  className="glass-inset flex items-center gap-2 px-3.5 py-2.5 text-[13px] font-semibold text-kpi-danger-text"
-                  style={{
-                    borderRadius: 12,
-                    background: 'rgba(244,63,94,0.08)',
-                    borderColor: 'rgba(244,63,94,0.20)',
-                  }}
-                >
-                  <AlertCircle size={14} strokeWidth={2.4} className="flex-none" />
+                <Alert tone="danger" icon={<AlertCircle size={14} strokeWidth={2.4} />}>
                   Incorrect email or password.
-                </div>
+                </Alert>
               )}
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={!canSubmit}
-              className={`btn-primary mb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 ${
-                submitting ? 'is-loading' : ''
-              }`}
+              variant="primary"
+              size="lg"
+              fullWidth
+              loading={submitting}
+              className="mb-4 h-14 text-[17px]"
             >
               {submitting ? 'Signing in...' : 'Sign in'}
-            </button>
+            </Button>
           </form>
 
         </div>

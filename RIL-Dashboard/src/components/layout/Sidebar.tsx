@@ -1,10 +1,5 @@
 import {
   Menu,
-  LayoutDashboard,
-  Package,
-  ShieldCheck,
-  Building2,
-  Wallet,
   FileText,
   Bell,
   BarChart3,
@@ -14,19 +9,13 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
+import Button from '../ui/Button';
+import { PRIMARY_NAV } from '../../lib/routes';
 
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
 }
-
-const PRIMARY_NAV = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/orders', icon: Package, label: 'Orders' },
-  { to: '/approvals', icon: ShieldCheck, label: 'Approvals' },
-  { to: '/vendors', icon: Building2, label: 'Vendors' },
-  { to: '/payments', icon: Wallet, label: 'Payments' },
-];
 
 const PHASE_2_NAV = [
   { icon: FileText, label: 'Documents' },
@@ -43,7 +32,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <aside
-      className={`glass-sidebar animate-slide-left sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
+      className={`glass-raised animate-slide-left sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
@@ -54,27 +43,29 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {!collapsed && (
           <span className="truncate text-[17px] font-extrabold tracking-tight text-ink-900">NyneOS</span>
         )}
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={onToggle}
-          className={`ml-auto flex h-8 w-8 flex-none items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-glass-fill-deep hover:text-ink-700 ${
+          className={`ml-auto h-8 w-8 flex-none ${
             collapsed ? 'hidden' : ''
           }`}
           aria-label="Collapse sidebar"
         >
           <Menu size={16} />
-        </button>
+        </Button>
       </div>
 
       {collapsed && (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={onToggle}
-          className="mx-auto mb-2 flex h-8 w-8 flex-none items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-glass-fill-deep hover:text-ink-700"
+          className="mx-auto mb-2 h-8 w-8 flex-none"
           aria-label="Expand sidebar"
         >
           <Menu size={16} />
-        </button>
+        </Button>
       )}
 
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-2.5">

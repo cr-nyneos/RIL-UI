@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import Sidebar from './Sidebar';
-// import Topbar from './Topbar';
+import Topbar from './Topbar';
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);

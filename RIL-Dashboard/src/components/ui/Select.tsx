@@ -1,10 +1,6 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown } from 'lucide-react';
-
-interface Option<T extends string> {
-  value: T;
-  label: string;
-}
+import type { Option } from '../../lib/types/ui';
 
 interface SelectProps<T extends string> {
   options: Option<T>[];
@@ -28,7 +24,8 @@ export default function Select<T extends string>({
         className={`cursor-pointer
           inline-flex h-11 items-center justify-between gap-3
           rounded-2xl
-          border border-[rgba(15,23,42,0.08)]
+          focus-bloom
+          border border-[var(--color-glass-hairline-deep)]
           bg-white
           px-5
           text-[15px]
@@ -39,9 +36,6 @@ export default function Select<T extends string>({
           duration-200
           hover:border-[rgba(79,70,229,0.18)]
           hover:shadow-[0_12px_32px_-12px_rgba(79,70,229,0.18)]
-          focus:outline-none
-          focus:ring-2
-          focus:ring-[rgba(79,70,229,0.18)]
           data-[state=open]:border-[rgba(79,70,229,0.30)]
           data-[state=open]:shadow-[0_16px_40px_-16px_rgba(79,70,229,0.25)]
           ${className}

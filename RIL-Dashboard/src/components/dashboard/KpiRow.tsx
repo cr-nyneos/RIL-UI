@@ -2,9 +2,18 @@ import { Package, Truck, AlertTriangle, ShieldCheck, Wallet } from 'lucide-react
 import StatCard from '../ui/StatCard';
 import { KPI_SPARKLINES } from '../../lib/mockData/dashboard';
 import type { FilteredTotals } from '../../lib/dashboardFilters';
+import { formatCurrency } from '../../lib/format';
 
 interface KpiRowProps {
   totals: FilteredTotals;
+}
+
+function trendValue(series: number[]): string {
+  return String(Math.abs(series.at(-1)! - series.at(-2)!));
+}
+
+function trendDirection(series: number[]): 'up' | 'down' {
+  return series.at(-1)! >= series.at(-2)! ? 'up' : 'down';
 }
 
 export default function KpiRow({ totals }: KpiRowProps) {
@@ -14,8 +23,8 @@ export default function KpiRow({ totals }: KpiRowProps) {
         icon={Package}
         label="Active Orders"
         value={String(totals.activeOrders)}
-        trend="up"
-        trendValue="6"
+        trend={trendDirection(KPI_SPARKLINES.activeOrders)}
+        trendValue={trendValue(KPI_SPARKLINES.activeOrders)}
         bloom="info"
         trendTone="neutral"
         accentId="active-orders"
@@ -30,8 +39,8 @@ export default function KpiRow({ totals }: KpiRowProps) {
         icon={Truck}
         label="In Transit"
         value={String(totals.inTransit)}
-        trend="up"
-        trendValue="2"
+        trend={trendDirection(KPI_SPARKLINES.inTransit)}
+        trendValue={trendValue(KPI_SPARKLINES.inTransit)}
         bloom="neutral"
         trendTone="neutral"
         accentId="in-transit"
@@ -46,8 +55,8 @@ export default function KpiRow({ totals }: KpiRowProps) {
         icon={AlertTriangle}
         label="Delayed"
         value={String(totals.delayed)}
-        trend="up"
-        trendValue="1"
+        trend={trendDirection(KPI_SPARKLINES.delayed)}
+        trendValue={trendValue(KPI_SPARKLINES.delayed)}
         bloom="danger"
         trendTone="danger"
         accentId="delayed"
@@ -62,8 +71,8 @@ export default function KpiRow({ totals }: KpiRowProps) {
         icon={ShieldCheck}
         label="Governance Approvals"
         value={String(totals.governanceApprovals)}
-        trend="down"
-        trendValue="1"
+        trend={trendDirection(KPI_SPARKLINES.governanceApprovals)}
+        trendValue={trendValue(KPI_SPARKLINES.governanceApprovals)}
         bloom="warning"
         trendTone="warning"
         accentId="governance-approvals"
@@ -77,9 +86,9 @@ export default function KpiRow({ totals }: KpiRowProps) {
       <StatCard
         icon={Wallet}
         label="Pending Payments"
-        value={`₹${totals.pendingPaymentsCr.toFixed(1)} Cr`}
-        trend="up"
-        trendValue="0.4"
+        value={formatCurrency(totals.pendingPaymentsCr)}
+        trend={trendDirection(KPI_SPARKLINES.pendingPayments)}
+        // trendValue={trendValue(KPI_SPARKLINES.pendingPayments)}
         bloom="neutral"
         trendTone="neutral"
         accentId="pending-payments"

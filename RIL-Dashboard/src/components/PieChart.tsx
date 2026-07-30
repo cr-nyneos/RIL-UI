@@ -14,7 +14,7 @@ const CX = 120;
 const CY = 120;
 const R_OUT = 100;
 const R_IN = 64;
-const GAP = 0; // slices touch: the ring reads as one continuous object
+const GAP = 0; 
 
 const DC_TREND =
   'mt-2 inline-flex items-center gap-1 rounded-full border border-border-hi bg-[#0b0b0b0a] px-[9px] py-[3px] text-xs font-semibold [font-variant-numeric:tabular-nums]';

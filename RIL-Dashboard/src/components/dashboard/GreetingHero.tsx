@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import { PRIORITY_SIGNALS } from '../../lib/mockData/dashboard';
+import { formatDate } from '../../lib/format';
 
 function timeGreeting() {
   const h = new Date().getHours();
@@ -16,7 +17,7 @@ const TONE_DOT: Record<string, string> = {
 };
 
 export default function GreetingHero() {
-  const dateLabel = new Date().toLocaleDateString('en-IN', {
+  const dateLabel = formatDate(new Date(), {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
