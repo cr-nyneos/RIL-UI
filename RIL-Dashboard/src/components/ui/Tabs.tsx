@@ -91,7 +91,7 @@ export default function Tabs({
               variant === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-sm)]'
             } ${size === 'sm' ? 'px-3 py-1.5 text-[15px]' : 'px-4 py-2 text-[15px]'} ${
               isActive
-                ? `${variant === 'segmented' ? 'bg-brand-soft2' : ''} font-bold text-brand-700`
+                ? `${variant === 'segmented' ? 'bg-brand-600 text-white shadow-[0_10px_26px_-14px_rgba(79,70,229,0.65)]' : 'text-brand-700'} font-bold`
                 : 'font-semibold text-ink-600 hover:text-ink-800'
             }`}
           >

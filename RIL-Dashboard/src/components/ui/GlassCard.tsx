@@ -6,6 +6,7 @@ interface GlassCardProps {
   bloom?: BloomTone;
   interactive?: boolean;
   className?: string;
+  style?: CSSProperties;
   children: ReactNode;
   onMouseMove?: (e: MouseEvent<HTMLDivElement>) => void;
 }
@@ -24,15 +25,19 @@ export default function GlassCard({
   bloom = 'none',
   interactive = false,
   className = '',
+  style,
   children,
   onMouseMove,
 }: GlassCardProps) {
-  const style = bloom !== 'none' ? ({ '--bloom': BLOOM_VAR[bloom] } as CSSProperties) : undefined;
+  const cardStyle =
+    bloom !== 'none'
+      ? ({ ...style, '--bloom': BLOOM_VAR[bloom] } as CSSProperties)
+      : style;
 
   return (
     <div
       className={`glass-raised ${interactive ? 'glass-interactive' : ''} ${className}`}
-      style={style}
+      style={cardStyle}
       onMouseMove={onMouseMove}
     >
       {children}

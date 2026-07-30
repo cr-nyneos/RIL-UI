@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Download, PackageSearch } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ClipboardPlus, Download, PackageSearch } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 import AppShell from '../components/layout/AppShell';
@@ -19,7 +19,8 @@ import ExceptionFlags from '../components/ui/ExceptionFlags';
 import Toast from '../components/ui/Toast';
 import Button from '../components/ui/Button';
 
-import { ORDERS, ORDER_PLANTS } from '../lib/mockData/orders';
+import { ORDER_PLANTS } from '../lib/mockData/orders';
+import { getOrders } from '../lib/orderStore';
 import type { Order } from '../lib/types/order';
 import {
   formatExpected,
@@ -100,20 +101,25 @@ function compare(a: Order, b: Order, key: string): number {
 
 export default function Orders() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [query, setQuery] = useState('');
   const [plant, setPlant] = useState('all');
   const [filter, setFilter] = useState<OrderFilter>('all');
-  const [sort, setSort] = useState<SortState>({ key: 'expected', dir: 'asc' });
+  const [sort, setSort] = useState<SortState>({ key: 'order', dir: 'desc' });
   const [page, setPage] = useState(1);
   const [staggerRows, setStaggerRows] = useState(true);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(() => {
+    const state = location.state as { toast?: string } | null;
+    return state?.toast ?? null;
+  });
+  const orders = useMemo(() => getOrders(), []);
 
   // Everything the strip and the tabs count is derived from this set, so the
   // numbers stay honest against the active search and plant filter.
   const scoped = useMemo(
-    () => ORDERS.filter((o) => (plant === 'all' || o.plant === plant) && matchesSearch(o, query)),
-    [plant, query],
+    () => orders.filter((o) => (plant === 'all' || o.plant === plant) && matchesSearch(o, query)),
+    [orders, plant, query],
   );
 
   const counts = useMemo(() => {
@@ -285,6 +291,14 @@ export default function Orders() {
                     setPlant(value);
                   }}
                 />
+                <Button
+                  variant="primary"
+                  icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
+                  className="cursor-pointer"
+                  onClick={() => navigate('/orders/create')}
+                >
+                  Create Order
+                </Button>
                 <Button
                   variant="secondary"
                   icon={<Download size={16} strokeWidth={2.2} />}

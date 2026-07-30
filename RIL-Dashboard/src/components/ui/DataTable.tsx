@@ -26,7 +26,6 @@ interface DataTableProps<T> {
   stagger?: boolean;
   density?: 'default' | 'compact';
   footer?: ReactNode;
-  maxHeight?: string;
   bloom?: string;
   /** Change this to crossfade the body (filter / sort / page change) without replaying the page entrance. */
   bodyKey?: string;
@@ -59,7 +58,6 @@ export default function DataTable<T>({
   stagger = false,
   density = 'default',
   footer,
-  maxHeight = '620px',
   bloom = 'rgba(99,102,241,0.06)',
   bodyKey,
   minWidth = '1320px',
@@ -83,11 +81,11 @@ export default function DataTable<T>({
 
   return (
     <div className="glass-raised overflow-hidden" style={{ ['--bloom' as string]: bloom }}>
-      <div className="overflow-auto" style={{ maxHeight }}>
+      <div className="overflow-x-auto overflow-y-visible">
         <div role="table" style={{ minWidth }}>
           <div
             role="row"
-            className="dt-head sticky top-0 z-10 grid items-center"
+            className="dt-head grid items-center"
             style={{ gridTemplateColumns: template }}
           >
             {columns.map((column, index) => {

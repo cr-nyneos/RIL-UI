@@ -75,9 +75,10 @@ export default function Button({
   );
 
   if (as !== 'button') {
-    const Component = as;
+    const Component = as as ComponentType<Record<string, unknown>>;
+    const componentProps = props as Record<string, unknown>;
     return (
-      <Component className={classes} aria-disabled={disabled || loading} {...(props as never)}>
+      <Component className={classes} aria-disabled={disabled || loading} {...componentProps}>
         {body}
       </Component>
     );
