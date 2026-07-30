@@ -7,6 +7,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import GlassCard from '../components/ui/GlassCard';
 import PageHeader from '../components/ui/PageHeader';
+import StepNavigation from '../components/ui/StepNavigation';
 import Toast from '../components/ui/Toast';
 import { upsertWorkspaceOrder } from '../lib/orderStore';
 import type { ContractType } from '../lib/types/order';
@@ -14,7 +15,6 @@ import CreateOrderSidebar from './create-order/CreateOrderSidebar';
 import DetailsTab from './create-order/DetailsTab';
 import DocumentsTab from './create-order/DocumentsTab';
 import ReviewTab from './create-order/ReviewTab';
-import StepNavigation from './create-order/StepNavigation';
 import TeamTab from './create-order/TeamTab';
 import WorkflowTab from './create-order/WorkflowTab';
 import { REQUIRED_DOCUMENTS, ROLE_ORDER, STEP_COPY, STEPS, WORKFLOWS } from './create-order/constants';
@@ -325,6 +325,7 @@ export default function CreateOrder() {
 
         <div className="animate-rise" style={{ animationDelay: '110ms' }}>
           <StepNavigation
+            steps={STEPS}
             activeStep={activeStep}
             highestUnlockedIndex={highestUnlockedIndex}
             completed={completed}

@@ -3,18 +3,22 @@ import type { LucideIcon } from 'lucide-react';
 
 interface SidebarItemProps {
   to?: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   label: string;
   collapsed: boolean;
   disabled?: boolean;
   soon?: boolean;
+  nested?: boolean;
+  end?: boolean;
   onClick?: () => void;
 }
 
-export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled, soon, onClick }: SidebarItemProps) {
+export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled, soon, nested, end, onClick }: SidebarItemProps) {
   const content = (isActive: boolean) => (
     <div
-      className={`group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[15px] transition-colors duration-180 ${
+      className={`group relative flex items-center gap-3 rounded-xl py-2.5 text-[15px] transition-colors duration-180 ${
+        nested ? 'pr-3.5 pl-4' : 'px-3.5'
+      } ${
         collapsed ? 'justify-center' : ''
       } ${
         isActive
@@ -27,17 +31,25 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       }`}
     >
       {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-0.75 rounded-full" />}
-      <Icon
-        size={20}
-        strokeWidth={2.1}
-        className={`flex-none transition-colors duration-180 ${
-          isActive
-            ? 'text-brand-600'
-            : soon || disabled
-              ? 'text-sidebar-icon'
-              : 'text-sidebar-icon group-hover:text-brand-600'
-        }`}
-      />
+      {Icon ? (
+        <Icon
+          size={20}
+          strokeWidth={2.1}
+          className={`flex-none transition-colors duration-180 ${
+            isActive
+              ? 'text-brand-600'
+              : soon || disabled
+                ? 'text-sidebar-icon'
+                : 'text-sidebar-icon group-hover:text-brand-600'
+          }`}
+        />
+      ) : (
+        <span
+          className={`h-1.5 w-1.5 flex-none rounded-full transition-colors duration-180 ${
+            isActive ? 'bg-brand-600' : 'bg-sidebar-icon group-hover:bg-brand-600'
+          }`}
+        />
+      )}
       {!collapsed && <span className="truncate">{label}</span>}
       {soon && !collapsed && (
         <span className="ml-auto flex-none rounded-md bg-chip-neutral px-1.5 py-0.5 text-[10px] font-bold text-ink-500">
@@ -65,7 +77,7 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
   }
 
   return (
-    <NavLink to={to} end={to === '/'}>
+    <NavLink to={to} end={end ?? to === '/'}>
       {({ isActive }) => content(isActive)}
     </NavLink>
   );

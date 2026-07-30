@@ -1,21 +1,31 @@
 import { Check, Lock } from 'lucide-react';
 
-import GlassCard from '../../components/ui/GlassCard';
-import { STEPS } from './constants';
-import type { StepKey } from './types';
+import GlassCard from './GlassCard';
 
-interface StepNavigationProps {
-  activeStep: StepKey;
-  highestUnlockedIndex: number;
-  completed: Record<StepKey, boolean>;
-  onStepChange: (step: StepKey) => void;
+export interface StepItem<K extends string> {
+  key: K;
+  label: string;
 }
 
-export default function StepNavigation({ activeStep, highestUnlockedIndex, completed, onStepChange }: StepNavigationProps) {
+interface StepNavigationProps<K extends string> {
+  steps: StepItem<K>[];
+  activeStep: K;
+  highestUnlockedIndex: number;
+  completed: Record<K, boolean>;
+  onStepChange: (step: K) => void;
+}
+
+export default function StepNavigation<K extends string>({
+  steps,
+  activeStep,
+  highestUnlockedIndex,
+  completed,
+  onStepChange,
+}: StepNavigationProps<K>) {
   return (
     <GlassCard className="p-2">
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-5">
-        {STEPS.map((step, index) => {
+        {steps.map((step, index) => {
           const locked = index > highestUnlockedIndex;
           const active = activeStep === step.key;
           const done = completed[step.key];

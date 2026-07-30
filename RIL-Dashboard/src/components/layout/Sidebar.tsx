@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
+import SidebarGroup from './SidebarGroup';
 import Button from '../ui/Button';
 import { PRIMARY_NAV } from '../../lib/routes';
 
@@ -55,9 +56,20 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-2.5">
-        {PRIMARY_NAV.map((item) => (
-          <SidebarItem key={item.label} {...item} collapsed={collapsed} />
-        ))}
+        {PRIMARY_NAV.map((item) =>
+          item.children ? (
+            <SidebarGroup
+              key={item.label}
+              to={item.to}
+              icon={item.icon}
+              label={item.label}
+              items={item.children}
+              collapsed={collapsed}
+            />
+          ) : (
+            <SidebarItem key={item.label} to={item.to} icon={item.icon} label={item.label} collapsed={collapsed} />
+          ),
+        )}
 
         <div className={`mt-7 mb-2.5 px-3 ${collapsed ? 'text-center' : ''}`}>
           {!collapsed && (
