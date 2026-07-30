@@ -70,7 +70,6 @@ export default function PieChart({
   trendLabel = 'YoY trend',
   totalLabel = 'Total Revenue',
   shareUnitLabel = 'of revenue',
-  idleHint = 'Hover a segment for the breakdown',
   showTrend = true,
   ariaLabel = 'Revenue by segment',
 }: PieChartProps) {
@@ -304,7 +303,7 @@ export default function PieChart({
                   <AnimatedNumber value={total} />
                   {unit}
                 </div>
-                <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">{idleHint}</div>
+                {/* <div className="mt-2 max-w-37.5 text-[11.5px] leading-[1.4] text-text-2">{idleHint}</div> */}
               </motion.div>
             )}
           </AnimatePresence>

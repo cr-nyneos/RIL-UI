@@ -117,7 +117,7 @@ function Demo() {
                   Revenue flow
                 </div>
                 <h2 className={CARD_TITLE}>Monthly Momentum</h2>
-                <p className={CARD_SUB}>Hover the current to read each month &amp; disturb the water</p>
+                {/* <p className={CARD_SUB}>Hover the current to read each month &amp; disturb the water</p> */}
               </div>
               <span className={UNIT_PILL}>FY24 · USD B</span>
             </div>

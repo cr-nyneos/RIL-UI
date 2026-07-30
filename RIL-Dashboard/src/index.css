@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
@@ -35,7 +35,7 @@
   --color-cat-5: #e87ba4;
 
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Sora', 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
 
   /* NyneOS dashboard design system (light theme only) */
   --color-brand-primary: #0B3D91;
@@ -48,7 +48,7 @@
   --color-ink-faint: #98A2B3;
 
   /* ---- NyneOS Liquid Glass design system (Dashboard rebuild) ---- */
-  --font-display2: 'Outfit', 'Sora', 'Inter', system-ui, sans-serif;
+  --font-display2: 'Inter', system-ui, sans-serif;
 
   /* Canvas */
   --color-canvas-lilac: #EEF1FB;
@@ -83,6 +83,12 @@
   --color-info: #4F46E5;
   --color-info-soft: #EEF0FE;
 
+  /* Cyan / violet — extra accent tones for the KPI row (Dashboard Pass 2) */
+  --color-cyan: #0E7490;
+  --color-cyan-soft: #ECFEFF;
+  --color-violet: #6D28D9;
+  --color-violet-soft: #F5F3FF;
+
   /* Ink scale */
   --color-ink-900: #0B1020;
   --color-ink-700: #2B3245;
@@ -104,11 +110,38 @@
     0 2px 2px rgba(16, 24, 40, 0.04),
     0 16px 32px -12px rgba(16, 24, 40, 0.14),
     0 40px 72px -32px rgba(79, 70, 229, 0.22);
+
+  /* KPI accent tokens — Dashboard Pass 2 (one fill + one text color per card) */
+  --color-kpi-brand-fill: #4F46E5;
+  --color-kpi-brand-text: #4338CA;
+  --color-kpi-cyan-fill: #22D3EE;
+  --color-kpi-cyan-text: #0E7490;
+  --color-kpi-danger-fill: #F43F5E;
+  --color-kpi-danger-text: #BE123C;
+  --color-kpi-warning-fill: #EAA640;
+  --color-kpi-warning-text: #B45309;
+  --color-kpi-violet-fill: #8B5CF6;
+  --color-kpi-violet-text: #6D28D9;
+
+  /* Sidebar type tokens — Dashboard Pass 2 */
+  --color-sidebar-ink: #4A5468;
+  --color-sidebar-icon: #8A94A6;
+  --color-sidebar-hover-ink: #1C2333;
+  --color-sidebar-group-label: #8A94A6;
 }
 
 :root {
   color-scheme: light;
   --grid-line-color: rgba(15, 23, 42, 0.07);
+
+  /* Corner-bloom tints — Dashboard Pass 2 */
+  --bloom-brand: rgba(99, 102, 241, 0.14);
+  --bloom-success: rgba(16, 185, 129, 0.14);
+  --bloom-cyan: rgba(34, 211, 238, 0.14);
+  --bloom-danger: rgba(244, 63, 94, 0.12);
+  --bloom-warning: rgba(234, 166, 64, 0.14);
+  --bloom-violet: rgba(139, 92, 246, 0.14);
+  --bloom-neutral: rgba(99, 102, 241, 0.08);
 }
 
 .app-gradient-bg {
@@ -121,33 +154,22 @@
 .app-canvas {
   position: relative;
   min-height: 100vh;
-  background: #ffffff;
+  background-color: #FAFBFD;
   font-family: var(--font-display2);
 }
-.app-canvas::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(70% 60% at 4% 4%, rgba(79, 70, 229, 0.24), transparent 68%),
-    radial-gradient(70% 65% at 58% -6%, rgba(139, 92, 246, 0.20), transparent 70%),
-    radial-gradient(60% 55% at 98% 2%, rgba(251, 200, 226, 0.5), transparent 68%),
-    linear-gradient(180deg, #eef1fb 0%, #f4f6fd 45%, #ffffff 100%);
-}
+
+/* Layer 2 — grid texture. Full height, no fade-out. */
 .app-canvas::after {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
+  z-index: 0;
   background-image:
-    repeating-linear-gradient(to right, var(--grid-line-color) 0 1px, transparent 1px 40px),
-    repeating-linear-gradient(to bottom, var(--grid-line-color) 0 1px, transparent 1px 40px);
-  -webkit-mask-image: linear-gradient(to bottom, black, transparent 92%);
-  mask-image: linear-gradient(to bottom, black, transparent 92%);
+    repeating-linear-gradient(0deg,  rgba(15,23,42,0.030) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(15,23,42,0.030) 0 1px, transparent 1px 44px);
 }
+
 .app-canvas > * {
   position: relative;
   z-index: 1;
@@ -156,37 +178,120 @@
 /* ---------------------------------------------------------------- */
 /* Glass surface recipe — two tiers                                  */
 /* ---------------------------------------------------------------- */
-.glass-raised {
-  position: relative;
-  background: var(--color-glass-fill);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--color-glass-edge);
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow-glass);
-}
-.glass-raised::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-  pointer-events: none;
-}
-.glass-raised.glass-interactive {
-  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.glass-raised.glass-interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-glass-hover);
+@layer components {
+
+  .glass-raised {
+    position: relative;
+    /* A vertical gradient fill — not flat rgba. This is what gives glass thickness. */
+    background: linear-gradient(
+      160deg,
+      rgba(255,255,255,0.88) 0%,
+      rgba(255,255,255,0.74) 55%,
+      rgba(255,255,255,0.80) 100%
+    );
+    backdrop-filter: blur(22px) saturate(155%);
+    -webkit-backdrop-filter: blur(22px) saturate(155%);
+    border: 1px solid rgba(255,255,255,0.92);
+    border-radius: 24px;
+    box-shadow:
+      0 1px 1px         rgba(16,24,40,0.04),
+      0 10px 24px -12px rgba(16,24,40,0.10),
+      0 30px 60px -28px rgba(79,70,229,0.20),
+      inset 0 1px 0     rgba(255,255,255,0.95),
+      inset 0 0 0 1px   rgba(255,255,255,0.45);
+    overflow: hidden;
+    transition: transform .28s cubic-bezier(.16,1,.3,1),
+                box-shadow .28s cubic-bezier(.16,1,.3,1);
+  }
+
+  /* Specular highlight across the top edge — the detail that reads as "glass" */
+  .glass-raised::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg,
+      transparent, rgba(255,255,255,1) 30%,
+      rgba(255,255,255,1) 70%, transparent);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Tinted corner bloom — set --bloom per card */
+  .glass-raised::after {
+    content: '';
+    position: absolute;
+    top: -45%; right: -18%;
+    width: 72%; height: 130%;
+    background: radial-gradient(circle at 68% 32%,
+      var(--bloom, rgba(99,102,241,0.12)), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: .85;
+    transition: opacity .28s ease;
+  }
+
+  .glass-raised > * { position: relative; z-index: 1; }
+
+  .glass-interactive:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 2px 2px         rgba(16,24,40,0.05),
+      0 18px 34px -14px rgba(16,24,40,0.14),
+      0 46px 84px -34px rgba(79,70,229,0.28),
+      inset 0 1px 0     rgba(255,255,255,1),
+      inset 0 0 0 1px   rgba(255,255,255,0.6);
+  }
+  .glass-interactive:hover::after { opacity: 1; }
+
+  /* Nested panels, legend rows, chips */
+  .glass-inset {
+    background: linear-gradient(160deg,
+      rgba(255,255,255,0.70), rgba(255,255,255,0.52));
+    backdrop-filter: blur(12px) saturate(130%);
+    -webkit-backdrop-filter: blur(12px) saturate(130%);
+    border: 1px solid rgba(255,255,255,0.80);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+  }
 }
 
-.glass-inset {
-  background: var(--color-glass-fill-deep);
-  border: 1px solid var(--color-glass-hairline);
-  border-radius: 1rem;
+/* ---------------------------------------------------------------- */
+/* Sidebar glass + nav item states — Dashboard Pass 2                */
+/* ---------------------------------------------------------------- */
+.glass-sidebar {
+  background: linear-gradient(170deg,
+    rgba(255,255,255,0.86) 0%,
+    rgba(255,255,255,0.70) 60%,
+    rgba(255,255,255,0.78) 100%);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.92);
+  border-radius: 24px;
+  box-shadow:
+    0 1px 1px rgba(16,24,40,0.04),
+    0 20px 48px -24px rgba(79,70,229,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+.sidebar-item-hover:hover {
+  background: rgba(79, 70, 229, 0.07);
+}
+.sidebar-item-active {
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.16), rgba(79, 70, 229, 0.04));
+  box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.10);
+}
+.sidebar-item-indicator {
+  background: linear-gradient(180deg, #22D3EE, #8B5CF6);
+}
+
+/* Glass edge + shadow for solid-fill surfaces (e.g. the avatar) that
+   can't take the translucent glass background without losing legibility. */
+.glass-ring {
+  box-shadow:
+    0 1px 1px rgba(16,24,40,0.04),
+    0 10px 24px -12px rgba(16,24,40,0.10);
+  outline: 1px solid rgba(255,255,255,0.9);
+  outline-offset: -1px;
 }
 
 .text-gradient-liquid {
@@ -203,6 +308,50 @@
 .hero-aurora {
   animation: aurora-drift 22s ease-in-out infinite;
 }
+
+/* ---------------------------------------------------------------- */
+/* KPI liquid basin — bubbles, halo, surface ripple, spotlight       */
+/* ---------------------------------------------------------------- */
+@keyframes kpi-bubble-rise {
+  0%   { transform: translateY(0);     opacity: 0; }
+  15%  { opacity: .6; }
+  85%  { opacity: .5; }
+  100% { transform: translateY(-78px); opacity: 0; }
+}
+.kpi-bubble { animation: kpi-bubble-rise linear infinite; }
+
+@keyframes kpi-halo-pulse {
+  0%,100% { transform: scale(1);    opacity: .22; }
+  50%     { transform: scale(1.45); opacity: .06; }
+}
+.kpi-halo {
+  animation: kpi-halo-pulse 2.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* hover ripple — the surface swells briefly, echoing the line chart */
+@keyframes kpi-surface-ripple {
+  0%   { transform: translateY(0) scaleY(1); }
+  35%  { transform: translateY(-2px) scaleY(1.06); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+.group:hover .kpi-surface {
+  animation: kpi-surface-ripple .9s cubic-bezier(.16,1,.3,1);
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
+.kpi-spotlight {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%),
+              rgba(255,255,255,0.55), transparent 65%);
+}
+.group:hover .kpi-spotlight { opacity: 1; }
+
 @media (prefers-reduced-motion: reduce) {
   .hero-aurora { animation: none; }
+  .kpi-bubble, .kpi-halo, .group:hover .kpi-surface { animation: none; }
+  .kpi-spotlight { transition: none; }
 }

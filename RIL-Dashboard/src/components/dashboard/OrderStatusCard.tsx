@@ -11,25 +11,27 @@ interface OrderStatusCardProps {
 
 export default function OrderStatusCard({ data, activeCount }: OrderStatusCardProps) {
   return (
-    <GlassCard bloom="info" className="h-full p-6">
+    <GlassCard bloom="info" className="flex h-full flex-col p-6">
       <CardHeader
         eyebrow="Order Pipeline"
         icon={PieIcon}
         title="Status Distribution"
-        subtitle="Hover a slice to expand the breakdown"
+        // subtitle="Hover a slice to expand the breakdown"
         pill={`${activeCount} ACTIVE`}
       />
-      <PieChart
-        data={data}
-        unit=""
-        valuePrefix=""
-        shareLabel="Share"
-        shareUnitLabel="of active orders"
-        totalLabel="Total Active"
-        idleHint="Hover a slice for the breakdown"
-        showTrend={false}
-        ariaLabel="Order status distribution"
-      />
+      <div className="flex min-h-75 flex-1 items-center justify-center">
+        <PieChart
+          data={data}
+          unit=""
+          valuePrefix=""
+          shareLabel="Share"
+          shareUnitLabel="of active orders"
+          totalLabel="Total Active"
+          idleHint=""
+          showTrend={false}
+          ariaLabel="Order status distribution"
+        />
+      </div>
     </GlassCard>
   );
 }

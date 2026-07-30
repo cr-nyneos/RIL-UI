@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import AppShell from '../components/layout/AppShell';
-import GreetingHero from '../components/dashboard/GreetingHero';
+// Greeting hero — parked for now, may return later.
+// import GreetingHero from '../components/dashboard/GreetingHero';
 import DashboardFilters from '../components/dashboard/DashboardFilters';
 import KpiRow from '../components/dashboard/KpiRow';
 import OrderStatusCard from '../components/dashboard/OrderStatusCard';
@@ -36,8 +37,9 @@ export default function Dashboard() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-8">
-        <GreetingHero />
+      <div className="flex flex-col gap-8 py-7">
+        {/* Greeting hero — parked for now, may return later. */}
+        {/* <GreetingHero /> */}
 
         <DashboardFilters
           plant={plant}

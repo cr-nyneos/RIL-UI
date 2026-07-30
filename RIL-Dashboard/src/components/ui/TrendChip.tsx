@@ -1,6 +1,6 @@
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
-export type TrendTone = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
+export type TrendTone = 'success' | 'warning' | 'danger' | 'info' | 'cyan' | 'violet' | 'neutral';
 
 interface TrendChipProps {
   direction: 'up' | 'down';
@@ -13,6 +13,8 @@ const TONE_CLASSES: Record<TrendTone, string> = {
   warning: 'bg-warning-soft text-warning',
   danger: 'bg-danger-soft text-danger',
   info: 'bg-info-soft text-info',
+  cyan: 'bg-cyan-soft text-cyan',
+  violet: 'bg-violet-soft text-violet',
   neutral: 'bg-glass-fill-deep text-ink-500',
 };
 

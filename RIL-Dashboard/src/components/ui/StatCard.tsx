@@ -1,7 +1,8 @@
+import type { CSSProperties, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import GlassCard, { type BloomTone } from './GlassCard';
-import TrendChip from './TrendChip';
+import TrendChip, { type TrendTone } from './TrendChip';
 import Sparkline from './Sparkline';
 
 export interface StatCardProps {
@@ -10,18 +11,20 @@ export interface StatCardProps {
   value: string;
   trend?: 'up' | 'down';
   trendValue?: string;
-  tone?: BloomTone;
+  bloom: BloomTone;
+  accentId: string;
+  accentFill: string;
+  accentText: string;
   sparkline?: number[];
   href?: string;
   gradientValue?: boolean;
 }
 
-const TILE_CLASSES: Record<Exclude<BloomTone, 'none'>, string> = {
-  info: 'bg-info-soft text-info',
-  success: 'bg-success-soft text-success',
-  warning: 'bg-warning-soft text-warning',
-  danger: 'bg-danger-soft text-danger',
-};
+function handleSpotlight(e: MouseEvent<HTMLDivElement>) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+}
 
 export default function StatCard({
   icon: Icon,
@@ -29,40 +32,46 @@ export default function StatCard({
   value,
   trend,
   trendValue,
-  tone = 'info',
+  bloom,
+  accentId,
+  accentFill,
+  accentText,
   sparkline,
   href,
   gradientValue = false,
 }: StatCardProps) {
-  const tileClass = tone === 'none' ? 'bg-glass-fill-deep text-ink-500' : TILE_CLASSES[tone];
-
   const content = (
-    <GlassCard bloom={tone} interactive className="flex h-full flex-col overflow-hidden">
-      <div className="flex flex-1 flex-col gap-3 p-5 pb-3">
-        <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${tileClass}`}>
-          <Icon size={17} strokeWidth={2.2} />
-        </div>
-        <div className="min-w-0">
-          <p className="truncate text-[11px] font-semibold tracking-[0.1em] text-ink-400 uppercase">{label}</p>
-          <p
-            className={`mt-1 text-[26px] leading-tight font-semibold tabular-nums tracking-tight ${
-              gradientValue ? 'text-gradient-liquid' : 'text-ink-900'
-            }`}
-          >
-            {value}
-          </p>
-        </div>
-        {trend && trendValue && (
-          <div>
-            <TrendChip direction={trend} value={trendValue} tone={tone === 'none' ? 'neutral' : tone} />
-          </div>
-        )}
+    <GlassCard bloom={bloom} interactive className="group flex h-[200px] flex-col p-5" onMouseMove={handleSpotlight}>
+      <div
+        className="glass-inset flex h-10 w-10 flex-none items-center justify-center rounded-xl"
+        style={{ color: accentText } as CSSProperties}
+      >
+        <Icon size={18} strokeWidth={2.2} />
       </div>
+
+      <p className="mt-3.5 truncate text-[11px] font-semibold tracking-[0.1em] text-ink-400 uppercase">{label}</p>
+
+      <div className="mt-1 flex items-baseline gap-2.5">
+        <span
+          className={`text-[26px] leading-tight font-semibold tabular-nums tracking-tight ${gradientValue ? 'text-gradient-liquid' : ''}`}
+          style={gradientValue ? undefined : ({ color: accentText } as CSSProperties)}
+        >
+          {value}
+        </span>
+        {trend && trendValue && <TrendChip direction={trend} value={trendValue} tone={bloom as TrendTone} />}
+      </div>
+
       {sparkline && (
-        <div className="-mt-1">
-          <Sparkline data={sparkline} tone={tone === 'none' ? 'info' : tone} />
-        </div>
+        <Sparkline
+          data={sparkline}
+          uid={accentId}
+          fill={accentFill}
+          text={accentText}
+          className="absolute inset-x-0 bottom-0 h-[42%] w-full"
+        />
       )}
+
+      <span className="kpi-spotlight" />
     </GlassCard>
   );
 

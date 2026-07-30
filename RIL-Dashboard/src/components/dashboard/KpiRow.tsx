@@ -16,7 +16,10 @@ export default function KpiRow({ totals }: KpiRowProps) {
         value={String(totals.activeOrders)}
         trend="up"
         trendValue="6"
-        tone="info"
+        bloom="info"
+        accentId="active-orders"
+        accentFill="var(--color-kpi-brand-fill)"
+        accentText="var(--color-kpi-brand-text)"
         sparkline={KPI_SPARKLINES.activeOrders}
         href="/orders"
         gradientValue
@@ -27,7 +30,10 @@ export default function KpiRow({ totals }: KpiRowProps) {
         value={String(totals.inTransit)}
         trend="up"
         trendValue="2"
-        tone="info"
+        bloom="cyan"
+        accentId="in-transit"
+        accentFill="var(--color-kpi-cyan-fill)"
+        accentText="var(--color-kpi-cyan-text)"
         sparkline={KPI_SPARKLINES.inTransit}
         href="/orders"
       />
@@ -37,7 +43,10 @@ export default function KpiRow({ totals }: KpiRowProps) {
         value={String(totals.delayed)}
         trend="up"
         trendValue="1"
-        tone="danger"
+        bloom="danger"
+        accentId="delayed"
+        accentFill="var(--color-kpi-danger-fill)"
+        accentText="var(--color-kpi-danger-text)"
         sparkline={KPI_SPARKLINES.delayed}
         href="/orders"
       />
@@ -47,7 +56,10 @@ export default function KpiRow({ totals }: KpiRowProps) {
         value={String(totals.governanceApprovals)}
         trend="down"
         trendValue="1"
-        tone="warning"
+        bloom="warning"
+        accentId="governance-approvals"
+        accentFill="var(--color-kpi-warning-fill)"
+        accentText="var(--color-kpi-warning-text)"
         sparkline={KPI_SPARKLINES.governanceApprovals}
         href="/approvals"
       />
@@ -57,7 +69,10 @@ export default function KpiRow({ totals }: KpiRowProps) {
         value={`₹${totals.pendingPaymentsCr.toFixed(1)} Cr`}
         trend="up"
         trendValue="0.4"
-        tone="warning"
+        bloom="violet"
+        accentId="pending-payments"
+        accentFill="var(--color-kpi-violet-fill)"
+        accentText="var(--color-kpi-violet-text)"
         sparkline={KPI_SPARKLINES.pendingPayments}
         href="/payments"
       />

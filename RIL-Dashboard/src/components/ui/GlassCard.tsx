@@ -1,30 +1,39 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 
-export type BloomTone = 'info' | 'success' | 'warning' | 'danger' | 'none';
+export type BloomTone = 'info' | 'success' | 'warning' | 'danger' | 'cyan' | 'violet' | 'none';
 
 interface GlassCardProps {
   bloom?: BloomTone;
   interactive?: boolean;
   className?: string;
   children: ReactNode;
+  onMouseMove?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-const BLOOM_COLOR: Record<Exclude<BloomTone, 'none'>, string> = {
-  info: 'rgba(79, 70, 229, 0.16)',
-  success: 'rgba(5, 150, 105, 0.16)',
-  warning: 'rgba(217, 119, 6, 0.16)',
-  danger: 'rgba(225, 29, 72, 0.16)',
+const BLOOM_VAR: Record<Exclude<BloomTone, 'none'>, string> = {
+  info: 'var(--bloom-brand)',
+  success: 'var(--bloom-success)',
+  warning: 'var(--bloom-warning)',
+  danger: 'var(--bloom-danger)',
+  cyan: 'var(--bloom-cyan)',
+  violet: 'var(--bloom-violet)',
 };
 
-export default function GlassCard({ bloom = 'none', interactive = false, className = '', children }: GlassCardProps) {
+export default function GlassCard({
+  bloom = 'none',
+  interactive = false,
+  className = '',
+  children,
+  onMouseMove,
+}: GlassCardProps) {
+  const style = bloom !== 'none' ? ({ '--bloom': BLOOM_VAR[bloom] } as CSSProperties) : undefined;
+
   return (
-    <div className={`glass-raised ${interactive ? 'glass-interactive' : ''} relative overflow-hidden ${className}`}>
-      {bloom !== 'none' && (
-        <span
-          className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full blur-2xl"
-          style={{ background: `radial-gradient(closest-side, ${BLOOM_COLOR[bloom]}, transparent 72%)` }}
-        />
-      )}
+    <div
+      className={`glass-raised ${interactive ? 'glass-interactive' : ''} ${className}`}
+      style={style}
+      onMouseMove={onMouseMove}
+    >
       {children}
     </div>
   );

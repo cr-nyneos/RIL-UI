@@ -15,7 +15,7 @@ export default function DeliveryTrendCard({ actual, planned }: DeliveryTrendCard
         eyebrow="Delivery Trend"
         icon={Waypoints}
         title="Planned vs Actual"
-        subtitle="Hover the current to read each month"
+        // subtitle="Hover the current to read each month"
         pill="LAST 6 MONTHS"
       />
       <div className="min-h-85 flex-1 max-[560px]:min-h-65">

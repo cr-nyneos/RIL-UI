@@ -9,7 +9,6 @@ import {
   Bell,
   BarChart3,
   Settings,
-  Droplets,
 } from 'lucide-react';
 import SidebarItem from './SidebarItem';
 
@@ -35,16 +34,16 @@ const PHASE_2_NAV = [
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   return (
     <aside
-      className={`glass-raised sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden rounded-3xl transition-[width] duration-250 ease-out ${
+      className={`glass-sidebar sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
       <div className={`flex items-center gap-2.5 px-4 pt-5 pb-4 ${collapsed ? 'justify-center' : ''}`}>
-        <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-brand-soft2 text-brand-600">
-          <Droplets size={18} strokeWidth={2.2} />
+        <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-sm font-extrabold text-white">
+          N
         </div>
         {!collapsed && (
-          <span className="truncate font-display text-[15px] font-semibold tracking-tight text-ink-900">NyneOS</span>
+          <span className="truncate text-[17px] font-extrabold tracking-tight text-ink-900">NyneOS</span>
         )}
         <button
           type="button"
@@ -74,14 +73,26 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <SidebarItem key={item.label} {...item} collapsed={collapsed} />
         ))}
 
-        <div className={`mt-5 mb-1.5 px-3 ${collapsed ? 'text-center' : ''}`}>
+        <div className={`mt-7 mb-2.5 px-3 ${collapsed ? 'text-center' : ''}`}>
           {!collapsed && (
-            <span className="text-[10px] font-semibold tracking-[0.14em] text-ink-300 uppercase">Phase 2</span>
+            <span className="text-[11px] font-bold tracking-[0.14em] text-sidebar-group-label uppercase">
+              Phase 2
+            </span>
           )}
         </div>
         {PHASE_2_NAV.map((item) => (
           <SidebarItem key={item.label} icon={item.icon} label={item.label} collapsed={collapsed} disabled />
         ))}
+
+        {!collapsed && (
+          <div className="glass-inset mt-auto mb-1 flex items-center gap-2 rounded-2xl px-3 py-2.5 text-[11.5px] font-medium text-ink-500">
+            <span className="relative flex h-2 w-2 flex-none">
+              <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-75" />
+              <span className="relative h-2 w-2 rounded-full bg-success" />
+            </span>
+            POC · Mock Data
+          </div>
+        )}
       </nav>
 
       <div className="border-t border-glass-hairline px-2.5 py-3">
