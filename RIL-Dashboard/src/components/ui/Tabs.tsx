@@ -87,7 +87,7 @@ export default function Tabs({
             tabIndex={isActive ? 0 : -1}
             onClick={() => handleChange(tab.key)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`relative z-1 inline-flex items-center gap-2 whitespace-nowrap transition-colors duration-200 ${
+            className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap transition-colors duration-200 ${
               variant === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-sm)]'
             } ${size === 'sm' ? 'px-3 py-1.5 text-[15px]' : 'px-4 py-2 text-[15px]'} ${
               isActive

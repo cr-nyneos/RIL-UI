@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Download, PackageSearch } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 import AppShell from '../components/layout/AppShell';
 import PageHeader from '../components/ui/PageHeader';
@@ -36,6 +37,47 @@ const PLANT_OPTIONS = [
   { value: 'all', label: 'All Plants' },
   ...ORDER_PLANTS.map((plant) => ({ value: plant, label: plant })),
 ];
+
+function exportOrdersToExcel(orders: Order[]) {
+  const worksheet = XLSX.utils.json_to_sheet(
+    orders.map((order) => {
+      const currentGate = order.gates.find((gate) => gate.state === 'current')?.label ?? 'All gates cleared';
+      const expected = formatExpected(order.expected, order.progress >= 100);
+      const flags = order.flags.map((flag) => flag.detail || flag.type).join(', ');
+
+      return {
+        Order: order.id,
+        PO: order.po,
+        Vendor: order.vendor,
+        Plant: order.plant,
+        Type: order.type,
+        Gate: currentGate,
+        Progress: `${order.progress}%`,
+        Expected: `${expected.label} ${expected.relative}`,
+        Status: order.status,
+        Flags: flags,
+        Value: formatValue(order.valueCr),
+      };
+    }),
+  );
+  worksheet['!cols'] = [
+    { wch: 12 },
+    { wch: 14 },
+    { wch: 28 },
+    { wch: 14 },
+    { wch: 14 },
+    { wch: 18 },
+    { wch: 10 },
+    { wch: 24 },
+    { wch: 24 },
+    { wch: 32 },
+    { wch: 12 },
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders');
+  XLSX.writeFile(workbook, `orders-${new Date().toISOString().slice(0, 10)}.xlsx`, { compression: true });
+}
 
 function compare(a: Order, b: Order, key: string): number {
   switch (key) {
@@ -118,7 +160,7 @@ export default function Orders() {
     {
       key: 'order',
       header: 'Order',
-      width: '170px',
+      width: '145px',
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
@@ -143,14 +185,14 @@ export default function Orders() {
     {
       key: 'type',
       header: 'Type',
-      width: '140px',
+      width: '125px',
       sortable: true,
       render: (order) => <TypeBadge type={order.type} />,
     },
     {
       key: 'gate',
       header: 'Gate',
-      width: '190px',
+      width: '170px',
       render: (order) => (
         <GateRail gates={order.gates} compact blocked={getOrderBucket(order) === 'blocked'} />
       ),
@@ -158,7 +200,7 @@ export default function Orders() {
     {
       key: 'progress',
       header: 'Progress',
-      width: '130px',
+      width: '110px',
       sortable: true,
       render: (order) => {
         const bucket = getOrderBucket(order);
@@ -175,7 +217,7 @@ export default function Orders() {
     {
       key: 'expected',
       header: 'Expected',
-      width: '150px',
+      width: '130px',
       sortable: true,
       render: (order) => {
         const expected = formatExpected(order.expected, order.progress >= 100);
@@ -195,10 +237,10 @@ export default function Orders() {
     {
       key: 'status',
       header: 'Status',
-      width: '290px',
+      width: '250px',
       render: (order) => (
-        <div className="flex min-w-0 items-center gap-2">
-          <StatusBadge status={order.status} />
+        <div className="flex min-w-0 items-center gap-1.5 overflow-visible">
+          <StatusBadge status={order.status} wrap className="max-w-[150px] justify-center leading-4" />
           <ExceptionFlags flags={order.flags} />
         </div>
       ),
@@ -206,7 +248,7 @@ export default function Orders() {
     {
       key: 'value',
       header: 'Value',
-      width: '120px',
+      width: '100px',
       align: 'right',
       sortable: true,
       render: (order) => (
@@ -246,7 +288,11 @@ export default function Orders() {
                 <Button
                   variant="secondary"
                   icon={<Download size={16} strokeWidth={2.2} />}
-                  onClick={() => setToast('Export queued — available in the full release.')}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    exportOrdersToExcel(rows);
+                    setToast(`Exported ${rows.length} orders.`);
+                  }}
                 >
                   Export
                 </Button>
@@ -295,7 +341,7 @@ export default function Orders() {
               setSort(next);
             }}
             stagger={staggerRows}
-            minWidth="1400px"
+            minWidth="1100px"
             bodyKey={`${filter}-${query}-${plant}-${sort.key}-${sort.dir}-${page}`}
             emptyState={
               <EmptyState

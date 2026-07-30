@@ -43,9 +43,9 @@ const ALIGN: Record<'left' | 'center' | 'right', string> = {
 const STAGGER_CAP = 10;
 
 function cellPadding(index: number, count: number): string {
-  if (index === 0) return 'pl-6 pr-5';
-  if (index === count - 1) return 'pl-5 pr-6';
-  return 'px-5';
+  if (index === 0) return 'pl-5 pr-3';
+  if (index === count - 1) return 'pl-3 pr-5';
+  return 'px-3';
 }
 
 export default function DataTable<T>({

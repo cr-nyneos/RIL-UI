@@ -53,7 +53,7 @@ export default function StatCard({
         <Icon size={18} strokeWidth={2.2} />
       </div>
 
-      <p className="mt-3 truncate text-kpi-label uppercase">{label}</p>
+      <p className="mt-0 truncate text-kpi-label uppercase">{label}</p>
 
       <div key={value} className="animate-fade mt-0.5 flex items-baseline gap-2.5">
         <span

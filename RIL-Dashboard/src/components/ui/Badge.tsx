@@ -9,6 +9,7 @@ interface BadgeProps {
   variant?: 'soft' | 'glass' | 'outline';
   icon?: ReactNode;
   pulse?: boolean;
+  wrap?: boolean;
   children: ReactNode;
   className?: string;
 }
@@ -26,6 +27,7 @@ export default function Badge({
   variant = 'soft',
   icon,
   pulse = false,
+  wrap = false,
   children,
   className = '',
 }: BadgeProps) {
@@ -38,9 +40,9 @@ export default function Badge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 whitespace-nowrap border font-bold tabular-nums ${
+      className={`inline-flex items-center gap-1.5 border font-bold tabular-nums ${
         shape === 'pill' ? 'rounded-full' : 'rounded-[var(--radius-sm)]'
-      } ${SIZE[size]} ${className}`}
+      } ${wrap ? 'whitespace-normal text-center' : 'whitespace-nowrap'} ${SIZE[size]} ${className}`}
       style={style}
     >
       {pulse && (

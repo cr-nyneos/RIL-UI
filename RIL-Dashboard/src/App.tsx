@@ -4,8 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 import Demo from './pages/Demo';
 import RouteStub from './pages/RouteStub';
 import Login from './pages/Login';
-import LoadingScreen from './components/Loadingscreen.tsx';
+// import LoadingScreen from './components/Loadingscreen.tsx';
 import { APP_ROUTES } from './lib/routes';
+import LoadingScreen2 from './components/LoadingScreen2.tsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ function App() {
         <Route path="/demo" element={<Demo />} />
         <Route path="*" element={<RouteStub title="Not Found" />} />
       </Routes>
-      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+      {loading && <LoadingScreen2 onComplete={() => setLoading(false)} />}
     </>
   );
 }

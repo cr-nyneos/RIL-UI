@@ -34,13 +34,15 @@ export function isEscalated(status: string): boolean {
 interface StatusBadgeProps {
   status: string;
   size?: 'sm' | 'md';
+  wrap?: boolean;
+  className?: string;
 }
 
-export default function StatusBadge({ status, size = 'md' }: StatusBadgeProps) {
+export default function StatusBadge({ status, size = 'md', wrap = false, className = '' }: StatusBadgeProps) {
   const tone = getStatusTone(status);
 
   return (
-    <Badge tone={tone} size={size} variant="soft" pulse={isEscalated(status)}>
+    <Badge tone={tone} size={size} variant="soft" pulse={isEscalated(status)} wrap={wrap} className={className}>
       {status}
     </Badge>
   );

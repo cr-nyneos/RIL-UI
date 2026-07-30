@@ -36,9 +36,9 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
-      <div className={`flex items-center gap-2.5 px-4 pt-5 pb-4 ${collapsed ? 'justify-center' : ''}`}>
+      <div className={`flex items-center pt-5 pb-4 ${collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'}`}>
         <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-sm font-extrabold text-white">
-         <Warehouse size={20} strokeWidth={2.2} />
+          <Warehouse size={20} strokeWidth={2.2} />
         </div>
         {!collapsed && (
           <span className="truncate text-[17px] font-extrabold tracking-tight text-ink-900">NyneOS</span>
@@ -47,28 +47,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           variant="ghost"
           size="sm"
           onClick={onToggle}
-          className={`ml-auto h-8 w-8 flex-none ${
-            collapsed ? 'hidden' : ''
-          }`}
-          aria-label="Collapse sidebar"
+          className={`flex-none p-0 ${collapsed ? 'h-7 w-7' : 'ml-auto h-8 w-8'}`}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           <Menu size={16} />
         </Button>
       </div>
 
-      {collapsed && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggle}
-          className="mx-auto mb-2 h-8 w-8 flex-none"
-          aria-label="Expand sidebar"
-        >
-          <Menu size={16} />
-        </Button>
-      )}
-
-      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-2.5">
+      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-2.5">
         {PRIMARY_NAV.map((item) => (
           <SidebarItem key={item.label} {...item} collapsed={collapsed} />
         ))}

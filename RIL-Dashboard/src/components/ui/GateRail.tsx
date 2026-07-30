@@ -56,7 +56,7 @@ export default function GateRail({ gates, compact = true, blocked = false }: Gat
                 onMouseLeave={() => setHovered(null)}
               />
               {hovered === gate.key && (
-                <div className="glass-tooltip pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 -translate-x-1/2 whitespace-nowrap px-2.5 py-1.5">
+                <div className="glass-tooltip pointer-events-none absolute bottom-full left-1/2 z-[60] mb-2 -translate-x-1/2 whitespace-nowrap px-2.5 py-1.5">
                   <div className="text-[12px] font-bold text-ink-800">{gate.label}</div>
                   <div className="text-[11px] font-medium text-ink-500">
                     {blocked && isCurrent ? 'Blocked' : STATE_LABEL[gate.state]}

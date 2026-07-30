@@ -64,7 +64,7 @@ export default function Login() {
               WELCOME BACK
             </h1>
             <p className="text-[17px] leading-7 font-normal text-slate-500">
-              Welcome back! Please enter your details.
+             Please enter your details.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function Login() {
               loading={submitting}
               className="mb-4 h-14 text-[17px]"
             >
-              {submitting ? 'Signing in...' : 'Sign in'}
+              {submitting ? 'Signing in...' : 'SIGN IN'}
             </Button>
           </form>
 
