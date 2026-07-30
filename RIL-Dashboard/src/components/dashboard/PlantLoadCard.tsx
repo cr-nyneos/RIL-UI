@@ -10,7 +10,7 @@ interface PlantLoadCardProps {
 
 export default function PlantLoadCard({ data }: PlantLoadCardProps) {
   return (
-    <GlassCard bloom="success" className="flex h-full flex-col p-6">
+    <GlassCard bloom="neutral" className="flex h-full flex-col p-6">
       <CardHeader
         eyebrow="Site Load"
         icon={Waves}

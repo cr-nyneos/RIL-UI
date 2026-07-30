@@ -12,12 +12,14 @@ export interface StatCardProps {
   trend?: 'up' | 'down';
   trendValue?: string;
   bloom: BloomTone;
+  trendTone: TrendTone;
   accentId: string;
   accentFill: string;
   accentText: string;
+  accentIcon: string;
   sparkline?: number[];
   href?: string;
-  gradientValue?: boolean;
+  delay?: number;
 }
 
 function handleSpotlight(e: MouseEvent<HTMLDivElement>) {
@@ -33,54 +35,65 @@ export default function StatCard({
   trend,
   trendValue,
   bloom,
+  trendTone,
   accentId,
   accentFill,
   accentText,
+  accentIcon,
   sparkline,
   href,
-  gradientValue = false,
+  delay = 0,
 }: StatCardProps) {
   const content = (
-    <GlassCard bloom={bloom} interactive className="group flex h-[200px] flex-col p-5" onMouseMove={handleSpotlight}>
+    <GlassCard bloom={bloom} interactive className="group flex h-[186px] flex-col p-5" onMouseMove={handleSpotlight}>
       <div
-        className="glass-inset flex h-10 w-10 flex-none items-center justify-center rounded-xl"
-        style={{ color: accentText } as CSSProperties}
+        className="glass-inset flex h-[38px] w-[38px] flex-none items-center justify-center rounded-xl"
+        style={{ color: accentIcon } as CSSProperties}
       >
         <Icon size={18} strokeWidth={2.2} />
       </div>
 
-      <p className="mt-3.5 truncate text-[11px] font-semibold tracking-[0.1em] text-ink-400 uppercase">{label}</p>
+      <p className="mt-3 truncate text-kpi-label uppercase">{label}</p>
 
-      <div className="mt-1 flex items-baseline gap-2.5">
+      <div key={value} className="animate-fade mt-0.5 flex items-baseline gap-2.5">
         <span
-          className={`text-[26px] leading-tight font-semibold tabular-nums tracking-tight ${gradientValue ? 'text-gradient-liquid' : ''}`}
-          style={gradientValue ? undefined : ({ color: accentText } as CSSProperties)}
+          className="text-[26px] leading-tight font-extrabold tabular-nums tracking-tight"
+          style={{ color: accentText } as CSSProperties}
         >
           {value}
         </span>
-        {trend && trendValue && <TrendChip direction={trend} value={trendValue} tone={bloom as TrendTone} />}
+        {trend && trendValue && <TrendChip direction={trend} value={trendValue} tone={trendTone} />}
       </div>
 
       {sparkline && (
-        <Sparkline
-          data={sparkline}
-          uid={accentId}
-          fill={accentFill}
-          text={accentText}
-          className="absolute inset-x-0 bottom-0 h-[42%] w-full"
-        />
+        <>
+          <span className="absolute inset-x-0 bottom-[40%] h-px bg-glass-hairline" />
+          <Sparkline
+            data={sparkline}
+            uid={accentId}
+            fill={accentFill}
+            text={accentIcon}
+            className="absolute inset-x-0 bottom-0 h-[40%] w-full"
+          />
+        </>
       )}
 
       <span className="kpi-spotlight" />
     </GlassCard>
   );
 
+  const style = { animationDelay: `${delay}ms` } as CSSProperties;
+
   if (href) {
     return (
-      <Link to={href} className="block h-full">
+      <Link to={href} className="animate-rise block h-full" style={style}>
         {content}
       </Link>
     );
   }
-  return content;
+  return (
+    <div className="animate-rise h-full" style={style}>
+      {content}
+    </div>
+  );
 }

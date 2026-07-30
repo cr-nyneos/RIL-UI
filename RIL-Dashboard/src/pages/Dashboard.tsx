@@ -38,9 +38,6 @@ export default function Dashboard() {
   return (
     <AppShell>
       <div className="flex flex-col gap-8 py-7">
-        {/* Greeting hero — parked for now, may return later. */}
-        {/* <GreetingHero /> */}
-
         <DashboardFilters
           plant={plant}
           onPlantChange={setPlant}
@@ -52,10 +49,19 @@ export default function Dashboard() {
 
         <KpiRow totals={totals} />
 
-        <div className="grid grid-cols-1 items-stretch gap-6 xl:grid-cols-3">
-          <OrderStatusCard data={statusData} activeCount={totals.activeOrders} />
-          <PlantLoadCard data={plantData} />
-          <DeliveryTrendCard actual={actual} planned={planned} />
+        <div className="grid grid-cols-1">
+          <div className="animate-rise h-[30rem] w-full" style={{ animationDelay: '520ms' }}>
+            <DeliveryTrendCard actual={actual} planned={planned} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 items-stretch gap-6 xl:grid-cols-2">
+          <div className="animate-rise" style={{ animationDelay: '600ms' }}>
+            <OrderStatusCard data={statusData} activeCount={totals.activeOrders} />
+          </div>
+          <div className="animate-rise" style={{ animationDelay: '680ms' }}>
+            <PlantLoadCard data={plantData} />
+          </div>
         </div>
       </div>
     </AppShell>

@@ -20,7 +20,7 @@ export default function Select<T extends string>({ options, value, onChange, cla
         aria-label={ariaLabel}
         value={value}
         onChange={(e) => onChange(e.target.value as T)}
-        className="appearance-none bg-transparent py-2 pr-8 pl-3.5 text-[12.5px] font-medium text-ink-700 outline-none"
+        className="appearance-none bg-transparent py-2 pr-8 pl-3.5 text-[15px] font-semibold text-ink-800 outline-none"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
@@ -28,7 +28,7 @@ export default function Select<T extends string>({ options, value, onChange, cla
           </option>
         ))}
       </select>
-      <ChevronDown size={14} className="pointer-events-none absolute right-2.5 text-ink-400" />
+      <ChevronDown size={14} className="pointer-events-none absolute right-2.5 text-ink-500" />
     </div>
   );
 }

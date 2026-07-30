@@ -54,12 +54,12 @@ export default function Sparkline({ data, uid, fill, text, className = '' }: Spa
     >
       <defs>
         <linearGradient id={`${uid}-liquid`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={fill} stopOpacity="0.30" />
-          <stop offset="55%" stopColor={fill} stopOpacity="0.14" />
-          <stop offset="100%" stopColor={fill} stopOpacity="0.03" />
+          <stop offset="0%" stopColor={fill} stopOpacity="0.26" />
+          <stop offset="60%" stopColor={fill} stopOpacity="0.10" />
+          <stop offset="100%" stopColor={fill} stopOpacity="0.02" />
         </linearGradient>
         <linearGradient id={`${uid}-surface`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={fill} stopOpacity="0.35" />
+          <stop offset="0%" stopColor={fill} stopOpacity="0.55" />
           <stop offset="100%" stopColor={fill} stopOpacity="1" />
         </linearGradient>
         <filter id={`${uid}-glow`} x="-20%" y="-60%" width="140%" height="260%">

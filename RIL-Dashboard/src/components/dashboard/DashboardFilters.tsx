@@ -21,7 +21,7 @@ export default function DashboardFilters({
   onPeriodChange,
 }: DashboardFiltersProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="animate-rise flex flex-wrap items-center gap-3" style={{ animationDelay: '140ms' }}>
       <Select
         ariaLabel="Filter by plant"
         value={plant}

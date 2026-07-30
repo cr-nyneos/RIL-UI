@@ -9,7 +9,10 @@ import {
   Bell,
   BarChart3,
   Settings,
+  LogOut,
+  Warehouse,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 
 interface SidebarProps {
@@ -32,15 +35,21 @@ const PHASE_2_NAV = [
 ];
 
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/login', { replace: true });
+  };
+
   return (
     <aside
-      className={`glass-sidebar sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
+      className={`glass-sidebar animate-slide-left sticky top-4 flex h-[calc(100vh-2rem)] flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
       <div className={`flex items-center gap-2.5 px-4 pt-5 pb-4 ${collapsed ? 'justify-center' : ''}`}>
         <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-500),var(--color-violet-500))] text-sm font-extrabold text-white">
-          N
+         <Warehouse size={20} strokeWidth={2.2} />
         </div>
         {!collapsed && (
           <span className="truncate text-[17px] font-extrabold tracking-tight text-ink-900">NyneOS</span>
@@ -81,21 +90,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           )}
         </div>
         {PHASE_2_NAV.map((item) => (
-          <SidebarItem key={item.label} icon={item.icon} label={item.label} collapsed={collapsed} disabled />
+          <SidebarItem key={item.label} icon={item.icon} label={item.label} collapsed={collapsed} soon />
         ))}
 
-        {!collapsed && (
-          <div className="glass-inset mt-auto mb-1 flex items-center gap-2 rounded-2xl px-3 py-2.5 text-[11.5px] font-medium text-ink-500">
-            <span className="relative flex h-2 w-2 flex-none">
-              <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-75" />
-              <span className="relative h-2 w-2 rounded-full bg-success" />
-            </span>
-            POC · Mock Data
-          </div>
-        )}
+       
       </nav>
 
       <div className="border-t border-glass-hairline px-2.5 py-3">
+        <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
         <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled />
       </div>
     </aside>

@@ -2,10 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Demo from './pages/Demo';
 import RouteStub from './pages/RouteStub';
+import Login from './pages/Login';
 
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="/orders" element={<RouteStub title="Orders" />} />
       <Route path="/orders/:id" element={<RouteStub />} />

@@ -25,8 +25,8 @@ export default function SegmentedControl<T extends string>({
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
-            className={`rounded-lg px-3 py-1.5 text-[12.5px] font-medium transition-colors duration-200 ${
-              active ? 'bg-brand-soft2 text-brand-600' : 'text-ink-500 hover:text-ink-700'
+            className={`rounded-lg px-3 py-1.5 text-[15px] transition-colors duration-200 ${
+              active ? 'bg-brand-soft2 font-bold text-brand-700' : 'font-semibold text-ink-600 hover:text-ink-800'
             }`}
           >
             {opt.label}

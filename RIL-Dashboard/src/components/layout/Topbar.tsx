@@ -14,8 +14,8 @@ export default function Topbar() {
   const pageName = PAGE_NAMES[location.pathname] ?? 'NyneOS';
 
   return (
-    <div className="flex items-center justify-between px-1 py-1">
-      <span className="text-[13px] font-medium text-ink-500">{pageName}</span>
+    <div className="animate-fade flex items-center justify-between px-1 py-1" style={{ animationDelay: '80ms' }}>
+      <span className="text-[15px] font-semibold text-ink-700">{pageName}</span>
 
       <div className="flex items-center gap-3">
         <button

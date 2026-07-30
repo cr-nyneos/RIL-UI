@@ -1,6 +1,6 @@
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 
-export type BloomTone = 'info' | 'success' | 'warning' | 'danger' | 'cyan' | 'violet' | 'none';
+export type BloomTone = 'info' | 'success' | 'warning' | 'danger' | 'cyan' | 'violet' | 'neutral' | 'none';
 
 interface GlassCardProps {
   bloom?: BloomTone;
@@ -17,6 +17,7 @@ const BLOOM_VAR: Record<Exclude<BloomTone, 'none'>, string> = {
   danger: 'var(--bloom-danger)',
   cyan: 'var(--bloom-cyan)',
   violet: 'var(--bloom-violet)',
+  neutral: 'var(--bloom-neutral)',
 };
 
 export default function GlassCard({
