@@ -69,7 +69,7 @@ export default function SidebarGroup({ to, icon: Icon, label, items, collapsed }
         }`}
       >
         <div className="overflow-hidden">
-          <div className="relative mt-0.5 ml-5 flex flex-col gap-0.5 border-l border-[var(--color-border)] pl-2">
+          <div className="relative mt-1 ml-5 flex flex-col gap-0.5 rounded-r-[var(--radius-md)] border-l border-[var(--color-border-strong)] bg-[var(--color-surface-subtle)] py-1 pl-2">
             {items.map((item) => (
               <SidebarItem key={item.to} to={item.to} label={item.label} collapsed={false} end />
             ))}

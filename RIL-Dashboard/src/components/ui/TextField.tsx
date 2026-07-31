@@ -39,7 +39,7 @@ export default function TextField({
         </label>
       )}
       <div
-        className={`focus-bloom relative flex ${height} items-center rounded-[var(--radius-md)] border bg-white ${
+        className={`focus-bloom relative flex ${height} items-center rounded-[var(--radius-md)] border bg-[var(--color-surface-input)] ${
           error ? 'border-danger' : 'border-[var(--color-border)]'
         }`}
       >

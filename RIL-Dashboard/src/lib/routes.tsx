@@ -1,6 +1,7 @@
 import {
   Building2,
   ClipboardPlus,
+  Columns3,
   LayoutDashboard,
   Package,
   ShieldCheck,
@@ -11,6 +12,7 @@ import {
 import type { ReactElement } from 'react';
 import Dashboard from '../pages/Dashboard';
 import CreateOrder from '../pages/CreateOrder';
+import ExecutionBoard from '../pages/ExecutionBoard';
 import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
 import RouteStub from '../pages/RouteStub';
@@ -29,6 +31,7 @@ export interface AppRoute {
 export const APP_ROUTES: AppRoute[] = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard, element: <Dashboard />, nav: true },
   { path: '/orders', label: 'Orders', icon: Package, element: <Orders />, nav: true },
+  { path: '/execution', label: 'Execution Board', icon: Columns3, element: <ExecutionBoard />, nav: true },
   { path: '/orders/create', label: 'Create Order', icon: ClipboardPlus, element: <CreateOrder />, nav: true, navGroup: '/orders' },
   { path: '/orders/dispatch', label: 'Dispatch Workspace', icon: Truck, element: <DispatchWorkspace />, nav: true, navGroup: '/orders' },
   { path: '/orders/:id/gates/:gate', label: 'Gate Workspace', element: <GateWorkspace /> },

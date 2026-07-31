@@ -250,7 +250,7 @@ function WorkflowBreadcrumb({ milestones, activeKey }: { milestones: Milestone[]
           <div key={milestone.key} className="flex items-center gap-2">
             <span
               className={`inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border px-2.5 text-[12px] font-semibold transition-colors ${
-                active ? 'border-brand-600 bg-[var(--wash-brand-active)] text-brand-700' : 'border-[var(--color-border)] bg-white text-ink-600'
+                active ? 'border-brand-600 bg-[var(--color-surface-selected)] text-brand-700' : 'border-[var(--color-border)] bg-[var(--color-surface-section)] text-ink-600'
               }`}
             >
               {milestone.state === 'complete' && <Check size={13} strokeWidth={2.8} />}
@@ -286,7 +286,7 @@ function Checklist({
             className={`focus-bloom flex min-h-11 cursor-pointer items-center gap-3 rounded-[var(--radius-md)] border px-3.5 text-left transition-colors ${
               done
                 ? 'border-[var(--color-success)] bg-[var(--color-success-soft)]'
-                : 'border-[var(--color-border)] bg-white hover:bg-[var(--color-surface-subtle)]'
+                : 'border-[var(--color-border)] bg-[var(--color-surface-section)] hover:bg-[var(--color-surface-hover)]'
             }`}
           >
             <span
@@ -546,7 +546,7 @@ export default function GateWorkspace() {
               <button
                 type="button"
                 onClick={addMockUpload}
-                className="focus-bloom flex min-h-32 w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-subtle)] p-6 text-center transition-colors hover:bg-white"
+                className="focus-bloom flex min-h-32 w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-subtle)] p-6 text-center transition-colors hover:bg-[var(--color-surface-hover)]"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white">
                   <UploadCloud size={20} strokeWidth={2.2} className="text-brand-700" />

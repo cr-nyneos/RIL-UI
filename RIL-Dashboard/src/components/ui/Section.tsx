@@ -8,6 +8,7 @@ interface SectionProps {
   children: ReactNode;
   padded?: boolean;
   className?: string;
+  headClassName?: string;
   bodyClassName?: string;
   style?: CSSProperties;
 }
@@ -20,13 +21,14 @@ export default function Section({
   children,
   padded = true,
   className = '',
+  headClassName = '',
   bodyClassName = '',
   style,
 }: SectionProps) {
   return (
     <section className={`surface-section overflow-hidden ${className}`} style={style}>
       {(title || toolbar) && (
-        <header className="surface-section-head">
+        <header className={`surface-section-head ${headClassName}`}>
           {title && (
             <div className="flex flex-wrap items-center justify-between gap-3 px-5 pt-3.5 pb-3">
               <div className="min-w-0">

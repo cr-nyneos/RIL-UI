@@ -30,7 +30,7 @@ export default function DispatchTimeline() {
             </span>
             <div
               className={`glass-inset flex items-center justify-between gap-3 p-3 transition-all duration-200 ${
-                active ? 'bg-[var(--wash-brand-active)]' : ''
+                active ? 'bg-[var(--color-surface-selected)]' : ''
               }`}
             >
               <span className={`truncate text-body-strong ${active ? 'text-brand-700' : ''}`}>{stage.label}</span>

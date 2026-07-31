@@ -19,7 +19,10 @@ export default function Pagination({ page, pageCount, pageSize, total, onPageCha
   return (
     <div
       className="flex h-14 items-center justify-between px-6"
-      style={{ borderTop: '1px solid var(--color-glass-hairline)' }}
+      style={{
+        borderTop: '1px solid var(--color-border)',
+        background: 'var(--color-brand-soft2)',
+      }}
     >
       <span className="text-meta">
         Showing {first}-{last} of {total}
@@ -44,7 +47,7 @@ export default function Pagination({ page, pageCount, pageSize, total, onPageCha
               size="sm"
               aria-current={n === page ? 'page' : undefined}
               onClick={() => onPageChange(n)}
-              className={`text-[13px] font-bold tabular-nums ${n === page ? 'bg-[var(--wash-brand-active)] text-brand-700' : ''}`}
+              className={`text-[13px] font-bold tabular-nums ${n === page ? 'bg-[var(--color-surface-selected)] text-brand-700' : ''}`}
             >
               {n}
             </Button>

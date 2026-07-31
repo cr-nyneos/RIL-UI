@@ -72,7 +72,7 @@ export default function FloatingTooltip({ open, children, cursor, below, gap = 1
       {open && (
         <motion.div
           ref={ref}
-          className="fixed top-0 left-0 z-60 min-w-42 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-3.5 py-3 pointer-events-none shadow-[0_8px_20px_-8px_rgba(16,24,40,0.20)]"
+          className="fixed top-0 left-0 z-60 min-w-42 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-menu)] px-3.5 py-3 pointer-events-none shadow-[0_8px_20px_-8px_rgba(23,37,84,0.20)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: ready ? 1 : 0, x: left, y: top }}
           exit={{ opacity: 0 }}

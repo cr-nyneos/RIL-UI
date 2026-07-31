@@ -47,7 +47,7 @@ export default function SummaryStrip({ items, onSelect, className = '' }: Summar
                 type="button"
                 onClick={() => onSelect(item.key)}
                 aria-pressed={item.active}
-                className="relative flex min-w-0 flex-1 cursor-pointer flex-col items-start justify-center gap-1 px-5 py-4 text-left transition-colors duration-150 hover:bg-[var(--color-surface-subtle)]"
+                className="relative flex min-w-0 flex-1 cursor-pointer flex-col items-start justify-center gap-1 px-5 py-4 text-left transition-colors duration-150 hover:bg-[var(--color-surface-hover)]"
               >
                 {content}
               </button>

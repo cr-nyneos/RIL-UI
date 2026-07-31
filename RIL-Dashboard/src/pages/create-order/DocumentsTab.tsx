@@ -25,7 +25,7 @@ export default function DocumentsTab({ documents, setDocuments, meaningfulChange
             meaningfulChange();
           }}
         />
-        <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--wash-brand-active)] text-brand-700">
+        <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-surface-selected)] text-brand-700">
           <CloudUpload size={24} strokeWidth={2.2} />
         </span>
         <span className="text-section-title">Upload contract package</span>

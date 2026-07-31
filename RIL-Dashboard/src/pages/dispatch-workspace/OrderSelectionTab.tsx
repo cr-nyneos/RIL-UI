@@ -44,7 +44,7 @@ export default function OrderSelectionTab({ query, setQuery, orders, selectedOrd
                 type="button"
                 onClick={() => onSelect(order)}
                 className={`glass-inset flex min-h-[136px] cursor-pointer flex-col justify-between p-5 text-left transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)] ${
-                  selected ? 'bg-[var(--wash-brand-active)] shadow-[inset_0_0_0_1px_var(--color-glass-hairline-deep)]' : ''
+                  selected ? 'bg-[var(--color-surface-selected)] shadow-[inset_0_0_0_1px_var(--color-glass-hairline-deep)]' : ''
                 }`}
               >
                 <span className="flex w-full items-start justify-between gap-3">

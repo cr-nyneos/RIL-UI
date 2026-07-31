@@ -29,7 +29,7 @@ export default function Modal({
   return createPortal(
     <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
       <div
-        className="animate-fade absolute inset-0 bg-[rgba(16,24,40,0.32)]"
+        className="animate-fade absolute inset-0 bg-[rgba(23,37,84,0.32)]"
         onClick={onClose}
         aria-hidden
       />
@@ -39,7 +39,7 @@ export default function Modal({
         aria-modal="true"
         aria-label={title}
         style={{ width }}
-        className="animate-rise surface-section relative flex max-h-full w-full flex-col overflow-hidden shadow-[0_12px_32px_-12px_rgba(16,24,40,0.30)]"
+        className="animate-modal surface-section relative flex max-h-full w-full flex-col overflow-hidden shadow-[0_12px_32px_-12px_rgba(23,37,84,0.28)]"
       >
         <header className="surface-section-head flex items-start justify-between gap-3 px-5 py-3.5">
           <div className="min-w-0">

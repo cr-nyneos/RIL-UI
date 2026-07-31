@@ -8,31 +8,44 @@
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;
 
-  /* ---- NyneOS enterprise design system ---- */
+  /* ---- NyneOS blue-neutral enterprise design system ---- */
   --font-display2: 'Inter', system-ui, sans-serif;
 
   /* Canvas / surface hierarchy
-     page → section container → component → interactive element */
-  --color-canvas-lilac: #F2F4F7;
-  --color-canvas-mist: #F8F9FB;
-  --color-canvas-blush: #F8F9FB;
+     page → section container → component → interactive element
+     Every surface is a blue-neutral, never a gray. The page carries a
+     near-invisible atmosphere so white containers read as intentional
+     rather than as cards floating on a slab. */
+  --color-canvas-lilac: #EEF5FF;
+  --color-canvas-mist: #F7FAFF;
+  --color-canvas-blush: #FBFCFF;
 
-  --color-surface-page: #F2F4F7;
+  --color-surface-page: #F4F8FF;
   --color-surface-section: #FFFFFF;
-  --color-surface-subtle: #F8F9FB;
-  --color-surface-header: #F4F6F8;
+  --color-surface-subtle: #F7FAFF;
+  --color-surface-header: #F1F6FE;
+  --color-surface-toolbar: #F6FAFF;
+  --color-surface-input: #FBFCFF;
+  --color-surface-menu: #FFFFFF;
+  --color-surface-hover: #EAF4FF;
+  --color-surface-selected: #E5ECFE;
 
-  /* Brand — single primary. Active nav, primary buttons, selected states, focus. */
-  --color-brand-800: #312E81;
-  --color-brand-700: #3F3AC4;
-  --color-brand-600: #4F46E5;
-  --color-brand-500: #6366F1;
-  --color-brand-soft2: #EEF0FE;
+  /* Sidebar surfaces — the rail is a navigation workspace, not a panel */
+  --color-surface-rail: #FBFCFF;
+  --color-surface-rail-mark: #EAF0FF;
+
+  /* Brand — single primary indigo. Active nav, primary buttons, selected
+     states, focus. Cobalt sits underneath it as the pressed tone. */
+  --color-brand-800: #1E3A8A;
+  --color-brand-700: #2745C7;
+  --color-brand-600: #365CF5;
+  --color-brand-500: #5B7CF7;
+  --color-brand-soft2: #EAF0FF;
 
   /* Retained aliases — resolved to the single brand so no second accent survives */
-  --color-aqua-400: #4F46E5;
-  --color-liquid-blue-500: #4F46E5;
-  --color-violet-500: #4F46E5;
+  --color-aqua-400: #365CF5;
+  --color-liquid-blue-500: #365CF5;
+  --color-violet-500: #365CF5;
 
   /* Data hues — categorical encoding only (charts), never decoration */
   --color-data-blue: #3B6FD4;
@@ -48,33 +61,34 @@
   --color-warning-soft: #FFFAEB;
   --color-danger: #B42318;
   --color-danger-soft: #FEF3F2;
-  --color-info: #4F46E5;
-  --color-info-soft: #EEF0FE;
+  --color-info: #365CF5;
+  --color-info-soft: #EAF0FF;
 
   /* Legacy accent aliases — collapsed onto brand / neutral */
-  --color-cyan: #3F3AC4;
-  --color-cyan-soft: #EEF0FE;
-  --color-violet: #3F3AC4;
-  --color-violet-soft: #EEF0FE;
+  --color-cyan: #2745C7;
+  --color-cyan-soft: #EAF0FF;
+  --color-violet: #2745C7;
+  --color-violet-soft: #EAF0FF;
 
-  /* Ink scale — enterprise neutrals */
-  --color-ink-900: #101828;
-  --color-ink-800: #1D2939;
-  --color-ink-700: #344054;
-  --color-ink-600: #475467;
-  --color-ink-500: #667085;
-  --color-ink-400: #98A2B3;
-  --color-ink-300: #D0D5DD;
+  /* Ink scale — deep navy → slate blue. No neutral gray type anywhere:
+     titles carry navy weight, descriptions stay calm in slate. */
+  --color-ink-900: #172554;
+  --color-ink-800: #1E3163;
+  --color-ink-700: #334155;
+  --color-ink-600: #475569;
+  --color-ink-500: #64748B;
+  --color-ink-400: #94A3B8;
+  --color-ink-300: #C7D5EE;
 
   /* Surfaces + borders (names kept for compatibility; values are now opaque) */
   --color-glass-fill: #FFFFFF;
-  --color-glass-fill-deep: #F8F9FB;
-  --color-glass-edge: #E4E7EC;
-  --color-glass-hairline: #EAECF0;
-  --color-glass-hairline-deep: #D0D5DD;
+  --color-glass-fill-deep: #F7FAFF;
+  --color-glass-edge: #DBE5F7;
+  --color-glass-hairline: #E9EFFB;
+  --color-glass-hairline-deep: #C4D4F0;
 
-  --color-border: #E4E7EC;
-  --color-border-strong: #D0D5DD;
+  --color-border: #DBE5F7;
+  --color-border-strong: #BFD0EE;
 
   /* Enterprise radius scale — one rhythm across cards, inputs, tables, buttons */
   --radius-sm: 4px;
@@ -85,43 +99,44 @@
   --radius-3xl: 10px;
 
   --gradient-liquid: var(--color-brand-600);
-  --wash-brand-hover: rgba(79, 70, 229, 0.05);
-  --wash-brand-active: rgba(79, 70, 229, 0.10);
+  --wash-brand-hover: rgba(54, 92, 245, 0.07);
+  --wash-brand-active: rgba(54, 92, 245, 0.13);
 
-  /* Elevation — thin border does the work, shadow only confirms the plane */
-  --shadow-glass: 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-glass-hover: 0 1px 3px rgba(16, 24, 40, 0.08);
+  /* Elevation — thin border does the work, shadow only confirms the plane.
+     Shadows are tinted navy so they sit inside the blue atmosphere. */
+  --shadow-glass: 0 1px 2px rgba(23, 37, 84, 0.04);
+  --shadow-glass-hover: 0 1px 3px rgba(23, 37, 84, 0.08);
 
   /* KPI tokens — value text stays neutral; colour reserved for exceptions */
-  --color-kpi-brand-fill: #4F46E5;
-  --color-kpi-brand-text: #101828;
-  --color-kpi-cyan-fill: #98A2B3;
-  --color-kpi-cyan-text: #101828;
+  --color-kpi-brand-fill: #365CF5;
+  --color-kpi-brand-text: #172554;
+  --color-kpi-cyan-fill: #94A3B8;
+  --color-kpi-cyan-text: #172554;
   --color-kpi-danger-fill: #B42318;
   --color-kpi-danger-text: #B42318;
   --color-kpi-warning-fill: #B54708;
   --color-kpi-warning-text: #B54708;
-  --color-kpi-violet-fill: #98A2B3;
-  --color-kpi-violet-text: #101828;
-  --color-kpi-neutral-fill: #98A2B3;
-  --color-kpi-neutral-text: #101828;
-  --color-kpi-neutral-icon: #475467;
+  --color-kpi-violet-fill: #94A3B8;
+  --color-kpi-violet-text: #172554;
+  --color-kpi-neutral-fill: #94A3B8;
+  --color-kpi-neutral-text: #172554;
+  --color-kpi-neutral-icon: #475569;
 
   /* Chip backgrounds */
-  --color-chip-neutral: #F2F4F7;
+  --color-chip-neutral: #EAF4FF;
   --color-chip-danger: #FEF3F2;
   --color-chip-warning: #FFFAEB;
 
   /* Sidebar type tokens */
-  --color-sidebar-ink: #344054;
-  --color-sidebar-icon: #667085;
-  --color-sidebar-hover-ink: #101828;
-  --color-sidebar-group-label: #667085;
+  --color-sidebar-ink: #334155;
+  --color-sidebar-icon: #64748B;
+  --color-sidebar-hover-ink: #172554;
+  --color-sidebar-group-label: #64748B;
 }
 
 :root {
   color-scheme: light;
-  --grid-line-color: #EAECF0;
+  --grid-line-color: #E9EFFB;
 
   /* Bloom tints retired — kept as transparent no-ops for any stale references */
   --bloom-brand: transparent;
@@ -134,12 +149,23 @@
 }
 
 /* ---------------------------------------------------------------- */
-/* Application canvas — a flat neutral page, no texture, no aurora   */
+/* Application canvas — one continuous workspace atmosphere.         */
+/* A cool blue wash cools at the top edge and resolves toward white  */
+/* below. It should be felt, not noticed: it gives white containers  */
+/* something to sit against so they read as placed, not floating.    */
 /* ---------------------------------------------------------------- */
 .app-canvas {
   position: relative;
   min-height: 100vh;
   background-color: var(--color-surface-page);
+  background-image: linear-gradient(
+    180deg,
+    #EAF2FF 0%,
+    #F2F7FF 22%,
+    #F8FBFF 55%,
+    #FBFCFF 100%
+  );
+  background-attachment: fixed;
   font-family: var(--font-display2);
 }
 
@@ -166,7 +192,7 @@
 
   .glass-interactive:hover {
     border-color: var(--color-border-strong);
-    background: var(--color-surface-section);
+    background: var(--color-surface-hover);
   }
 
   /* Tier 3 — nested panels, legend rows, chips, inputs */
@@ -184,15 +210,33 @@
     box-shadow: var(--shadow-glass);
   }
 
-  /* Section header band — visually anchors everything beneath it */
+  /* Section header band — visually anchors everything beneath it.
+     Every major container earns one: header strip → divider → content.
+     The soft azure fill is what separates a container from its content,
+     so structure never depends on shadow alone. */
   .surface-section-head {
     background: var(--color-surface-header);
     border-bottom: 1px solid var(--color-border);
   }
 
+  /* Navigation rail — a workspace surface, cooler than the containers
+     it sits beside so the eye reads it as chrome, not as content. */
+  .surface-rail {
+    background: var(--color-surface-rail);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Brand mark band at the head of the rail */
+  .surface-rail-mark {
+    background: var(--color-surface-rail-mark);
+    border-bottom: 1px solid var(--color-border);
+  }
+
   /* Toolbar band inside a section (filters, search, tabs) */
   .surface-toolbar {
-    background: var(--color-surface-subtle);
+    background: var(--color-surface-toolbar);
     border-bottom: 1px solid var(--color-border);
   }
 
@@ -300,10 +344,10 @@
 /* Sidebar nav item states                                           */
 /* ---------------------------------------------------------------- */
 .sidebar-item-hover:hover {
-  background: var(--wash-brand-hover);
+  background: var(--color-surface-hover);
 }
 .sidebar-item-active {
-  background: var(--wash-brand-active);
+  background: var(--color-surface-selected);
 }
 .sidebar-item-indicator {
   background: var(--color-brand-600);
@@ -512,6 +556,38 @@
 }
 
 /* ---------------------------------------------------------------- */
+/* Overlay motion — dialogs, drawers, menus                          */
+/* Short, damped, and barely noticed. Nothing bounces.               */
+/* ---------------------------------------------------------------- */
+
+/* Modal — fade with a hair of scale, so it arrives rather than pops */
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-modal {
+  animation: modal-in .18s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* Drawer — enters from the edge it is docked to */
+@keyframes drawer-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: none; }
+}
+.animate-drawer {
+  animation: drawer-in-right .2s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* Dropdowns, menus, popovers — fade plus a short lift */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-menu {
+  animation: menu-in .16s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* ---------------------------------------------------------------- */
 /* Shared button craft — specular / sweep decoration removed         */
 /* ---------------------------------------------------------------- */
 .button-specular::before { content: none; }
@@ -536,7 +612,7 @@
 /* Data table — header, rows and footer read as one object           */
 /* ---------------------------------------------------------------- */
 .dt-head {
-  background: var(--color-surface-header);
+  background: var(--color-brand-soft2);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -571,7 +647,7 @@
 
 .dt-row:hover,
 .dt-row:focus-visible {
-  background: var(--color-surface-subtle);
+  background: var(--color-surface-hover);
   z-index: 30;
 }
 .dt-row:focus-visible {
@@ -581,12 +657,20 @@
 .dt-row:hover::before,
 .dt-row:focus-visible::before { transform: scaleX(1); }
 
+/* Selected row — light indigo fill with the brand rule held open, so
+   selection persists after the pointer leaves and never reads as hover. */
+.dt-row-selected,
+.dt-row-selected:hover {
+  background: var(--color-surface-selected);
+}
+.dt-row-selected::before { transform: scaleX(1); }
+
 /* ---------------------------------------------------------------- */
 /* StageRail — current-segment marker + inline tooltip               */
 /* ---------------------------------------------------------------- */
 @keyframes gate-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.28); }
-  70%, 100% { box-shadow: 0 0 0 4px rgba(79, 70, 229, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(54, 92, 245, 0.28); }
+  70%, 100% { box-shadow: 0 0 0 4px rgba(54, 92, 245, 0); }
 }
 @keyframes gate-pulse-danger {
   0%   { box-shadow: 0 0 0 0 rgba(180, 35, 24, 0.28); }
@@ -600,7 +684,7 @@
   border: 1px solid var(--color-ink-800);
   border-radius: var(--radius-md);
   color: #FFFFFF;
-  box-shadow: 0 4px 12px -4px rgba(16, 24, 40, 0.24);
+  box-shadow: 0 4px 12px -4px rgba(23, 37, 84, 0.26);
 }
 
 /* Tabs — a single indicator that slides between tabs */
@@ -621,7 +705,7 @@
 .focus-bloom:focus {
   outline: none;
   border-color: var(--color-brand-600);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
+  box-shadow: 0 0 0 3px rgba(54, 92, 245, 0.16);
 }
 
 @media (prefers-reduced-motion: reduce) {

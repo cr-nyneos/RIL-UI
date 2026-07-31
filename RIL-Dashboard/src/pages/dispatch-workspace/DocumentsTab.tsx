@@ -38,11 +38,11 @@ export default function DocumentsTab({ documents, setDocuments, meaningfulChange
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         className={`glass-inset mb-5 flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--color-glass-hairline-deep)] p-8 text-center transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--wash-brand-hover)] ${
-          dragging ? '-translate-y-px bg-[var(--wash-brand-active)]' : ''
+          dragging ? '-translate-y-px bg-[var(--color-surface-selected)]' : ''
         }`}
       >
         <input type="file" multiple className="sr-only" onChange={uploadAll} />
-        <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--wash-brand-active)] text-brand-700">
+        <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-surface-selected)] text-brand-700">
           <CloudUpload size={24} strokeWidth={2.2} />
         </span>
         <span className="text-section-title">{dragging ? 'Drop to upload dispatch package' : 'Drag and drop dispatch package'}</span>

@@ -364,6 +364,7 @@ export default function DispatchWorkspace() {
           }
           padded={false}
           className="animate-rise"
+          headClassName="bg-[var(--color-brand-soft2)]"
           style={{ animationDelay: '60ms' }}
         >
           <StepNavigation
@@ -404,8 +405,8 @@ export default function DispatchWorkspace() {
         </div>
       </div>
 
-      <div className="sticky bottom-4 z-20">
-        <GlassCard className="p-3 shadow-[0_-2px_8px_-4px_rgba(16,24,40,0.12)]">
+      <div className="sticky bottom-0 z-20 -mb-10">
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] p-3">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <Button
               variant="secondary"
@@ -445,12 +446,12 @@ export default function DispatchWorkspace() {
               )}
             </div>
           </div>
-        </GlassCard>
+        </div>
       </div>
 
       {showLeaveDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(16,24,40,0.40)] p-6">
-          <GlassCard className="w-full max-w-[460px] p-5 shadow-[0_12px_32px_-8px_rgba(16,24,40,0.24)]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(23,37,84,0.40)] p-6">
+          <GlassCard className="w-full max-w-[460px] p-5 shadow-[0_12px_32px_-8px_rgba(23,37,84,0.24)]">
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
                 <div className="text-section-title">Unsaved changes detected.</div>

@@ -40,7 +40,7 @@ export default function WorkflowTab({ contractType, workflow, totalDuration, wor
         {workflow.map((milestone, index) => (
           <GlassCard key={milestone.label} interactive className="min-h-[164px] p-5">
             <div className="mb-4 flex items-center justify-between">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--wash-brand-active)] text-body-strong text-brand-700 tabular-nums">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-surface-selected)] text-body-strong text-brand-700 tabular-nums">
                 {index + 1}
               </span>
               <StatusBadge status={index === 0 ? 'Scheduled' : 'Pending'} size="sm" />

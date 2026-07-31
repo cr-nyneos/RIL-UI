@@ -35,7 +35,7 @@ export default function GreetingHero() {
           <Link
             key={s.label}
             to={s.href}
-            className="flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-3 text-[13px] font-medium text-ink-700 transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-subtle)]"
+            className="flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-input)] px-3 text-[13px] font-medium text-ink-700 transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-hover)]"
           >
             <span className={`h-1.5 w-1.5 flex-none rounded-full ${TONE_DOT[s.tone]}`} />
             <span className="font-bold tabular-nums text-ink-900">{s.count}</span>

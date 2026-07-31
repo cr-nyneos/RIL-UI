@@ -37,10 +37,10 @@ export default function StepNavigation<K extends string>({
             onClick={() => onStepChange(step.key)}
             className={`relative flex h-16 items-center gap-3 border-b border-[var(--color-border)] px-4 text-left transition-colors duration-150 last:border-b-0 lg:border-r lg:border-b-0 lg:last:border-r-0 ${
               active
-                ? 'bg-[var(--wash-brand-active)]'
+                ? 'bg-[var(--color-surface-selected)]'
                 : locked
-                  ? 'cursor-not-allowed bg-white'
-                  : 'bg-white hover:bg-[var(--color-surface-subtle)]'
+                  ? 'cursor-not-allowed bg-[var(--color-surface-section)]'
+                  : 'bg-[var(--color-surface-section)] hover:bg-[var(--color-surface-hover)]'
             }`}
           >
             {active && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-brand-600" />}

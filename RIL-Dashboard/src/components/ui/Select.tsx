@@ -22,11 +22,13 @@ export default function Select<T extends string>({
       <SelectPrimitive.Trigger
         aria-label={ariaLabel}
         className={`cursor-pointer
-          inline-flex h-10 items-center justify-between gap-3
+          inline-flex h-10 min-w-0 items-center justify-between gap-2
+          overflow-hidden
+          whitespace-nowrap
           rounded-[var(--radius-md)]
           focus-bloom
           border border-[var(--color-border)]
-          bg-white
+          bg-[var(--color-surface-input)]
           px-3.5
           text-[14px]
           font-semibold
@@ -38,9 +40,11 @@ export default function Select<T extends string>({
           ${className}
         `}
       >
-        <SelectPrimitive.Value />
+        <span className="min-w-0 flex-1 truncate text-left">
+          <SelectPrimitive.Value />
+        </span>
 
-        <SelectPrimitive.Icon>
+        <SelectPrimitive.Icon className="shrink-0">
           <ChevronDown
             size={17}
             strokeWidth={2.2}
@@ -58,10 +62,9 @@ export default function Select<T extends string>({
             overflow-hidden
             rounded-[var(--radius-md)]
             border border-[var(--color-border)]
-            bg-white
-            shadow-[0_8px_20px_-8px_rgba(16,24,40,0.16)]
-            animate-in
-            fade-in
+            bg-[var(--color-surface-menu)]
+            shadow-[0_8px_20px_-8px_rgba(23,37,84,0.18)]
+            animate-menu
           "
         >
           <SelectPrimitive.Viewport className="p-1">
@@ -84,9 +87,9 @@ export default function Select<T extends string>({
                   outline-none
                   transition-colors
                   duration-150
-                  hover:bg-[var(--color-surface-subtle)]
-                  focus:bg-[var(--color-surface-subtle)]
-                  data-[state=checked]:bg-[var(--wash-brand-active)]
+                  hover:bg-[var(--color-surface-hover)]
+                  focus:bg-[var(--color-surface-hover)]
+                  data-[state=checked]:bg-[var(--color-surface-selected)]
                   data-[state=checked]:font-semibold
                   data-[state=checked]:text-brand-700
                 "

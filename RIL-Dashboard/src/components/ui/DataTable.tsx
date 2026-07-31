@@ -144,12 +144,12 @@ export default function DataTable<T>({
                   onClick={onRowClick ? () => onRowClick(row) : undefined}
                   onKeyDown={(event) => handleKeyDown(event, row)}
                   className={`dt-row grid items-center ${rowHeight} ${onRowClick ? 'dt-row-clickable' : ''} ${
-                    stagger ? 'animate-rise' : ''
-                  }`}
+                    expanded ? 'dt-row-selected' : ''
+                  } ${stagger ? 'animate-rise' : ''}`}
                   style={{
                     gridTemplateColumns: template,
                     ...(stagger
-                      ? { animationDelay: `${300 + Math.min(rowIndex, STAGGER_CAP) * 28}ms` }
+                      ? { animationDelay: `${240 + Math.min(rowIndex, STAGGER_CAP) * 15}ms` }
                       : {}),
                   }}
                 >

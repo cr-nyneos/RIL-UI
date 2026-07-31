@@ -20,7 +20,7 @@ export default function Drawer({ open, title, description, onClose, footer, chil
   return createPortal(
     <div className="fixed inset-0 z-70 flex justify-end">
       <div
-        className="animate-fade absolute inset-0 bg-[rgba(16,24,40,0.32)]"
+        className="animate-fade absolute inset-0 bg-[rgba(23,37,84,0.32)]"
         onClick={onClose}
         aria-hidden
       />
@@ -29,7 +29,7 @@ export default function Drawer({ open, title, description, onClose, footer, chil
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="animate-slide-left relative flex h-full w-[420px] max-w-full flex-col border-l border-[var(--color-border)] bg-[var(--color-surface-section)] shadow-[0_8px_28px_-12px_rgba(16,24,40,0.28)]"
+        className="animate-drawer relative flex h-full w-[420px] max-w-full flex-col border-l border-[var(--color-border)] bg-[var(--color-surface-section)] shadow-[-8px_0_28px_-12px_rgba(23,37,84,0.24)]"
       >
         <header className="surface-section-head flex items-start justify-between gap-3 px-5 py-3.5">
           <div className="min-w-0">

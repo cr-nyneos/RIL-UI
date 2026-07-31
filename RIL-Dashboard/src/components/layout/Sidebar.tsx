@@ -33,12 +33,12 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <aside
-      className={`glass-raised animate-slide-left flex h-full flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
+      className={`surface-rail animate-slide-left flex h-full flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
         collapsed ? 'w-[76px]' : 'w-[248px]'
       }`}
     >
       <div
-        className={`flex h-16 flex-none items-center border-b border-[var(--color-border)] ${
+        className={`surface-rail-mark flex h-16 flex-none items-center ${
           collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'
         }`}
       >
@@ -98,7 +98,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="flex-none border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-2.5 py-2.5">
+      <div className="flex-none border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] px-2.5 py-2.5">
         <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled />
         <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
       </div>

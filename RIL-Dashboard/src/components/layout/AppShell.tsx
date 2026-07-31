@@ -11,7 +11,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
     <div className="app-canvas h-screen overflow-hidden">
       <div className="mx-auto flex h-full max-w-[1600px] gap-4 px-4 py-4 sm:px-6">
         <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} />
-        <div className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+        <div className="-mr-4 min-w-0 flex-1 overflow-x-hidden overflow-y-auto pr-4 sm:-mr-6 sm:pr-6">
           {/* <Topbar /> */}
           <main className="animate-page pb-10">{children}</main>
         </div>

@@ -56,6 +56,7 @@ export default function Dashboard() {
           padded={false}
           bodyClassName="p-4"
           className="animate-rise"
+          headClassName="bg-[var(--color-brand-soft2)]"
           style={{ animationDelay: '60ms' }}
         >
           <KpiRow totals={totals} />

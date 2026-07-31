@@ -323,7 +323,7 @@ export default function PieChart({
               className={`flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3 py-2 transition-[background-color,border-color,opacity] duration-200 ${
                 highlight
                   ? 'border-[var(--color-border)] bg-[var(--color-surface-subtle)]'
-                  : 'border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-surface-subtle)]'
+                  : 'border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]'
               } ${dim ? 'opacity-45' : ''}`}
               onMouseEnter={(e) => setHover(s.index, e)}
               onMouseMove={moveHover}

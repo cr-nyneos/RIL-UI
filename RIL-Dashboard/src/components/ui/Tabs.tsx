@@ -83,7 +83,7 @@ export default function Tabs({
       {variant === 'pill' && (
         <span
           aria-hidden
-          className="tab-pill absolute top-1 bottom-1 left-0 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white"
+          className="tab-pill absolute top-1 bottom-1 left-0 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-selected)]"
           style={{
             transform: `translateX(${pill?.left ?? 0}px)`,
             width: pill?.width ?? 0,
@@ -112,7 +112,7 @@ export default function Tabs({
             } ${
               isActive
                 ? `${variant === 'segmented' ? 'bg-brand-600 text-white' : 'text-brand-700'} font-bold`
-                : 'font-semibold text-ink-600 hover:text-ink-900'
+                : 'font-semibold text-ink-600 hover:bg-[var(--color-surface-hover)] hover:text-ink-900'
             }`}
           >
             <span>{tab.label}</span>

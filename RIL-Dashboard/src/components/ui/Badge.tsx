@@ -34,7 +34,7 @@ export default function Badge({
   const tokens = toneToken(tone);
   const style = {
     color: tokens.text,
-    background: variant === 'outline' ? 'transparent' : variant === 'glass' ? 'var(--color-surface-subtle)' : tokens.soft,
+    background: variant === 'outline' ? 'transparent' : variant === 'glass' ? 'var(--color-chip-neutral)' : tokens.soft,
     borderColor: variant === 'glass' ? 'var(--color-border)' : tokens.border,
   } as CSSProperties;
 
