@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Demo from './pages/Demo';
@@ -11,8 +11,11 @@ import LoadingScreen2 from './components/LoadingScreen2.tsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const didRedirect = useRef(false);
 
   useEffect(() => {
+    if (didRedirect.current) return;
+    didRedirect.current = true;
     navigate('/login', { replace: true });
   }, [navigate]);
 
