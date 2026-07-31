@@ -1,5 +1,7 @@
+import { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
+import SidebarFlyout from './SidebarFlyout';
 
 interface SidebarItemProps {
   to?: string;
@@ -14,8 +16,14 @@ interface SidebarItemProps {
 }
 
 export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled, soon, nested, end, onClick }: SidebarItemProps) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [tipAnchor, setTipAnchor] = useState<DOMRect | null>(null);
+
   const content = (isActive: boolean) => (
     <div
+      ref={rowRef}
+      onMouseEnter={() => collapsed && setTipAnchor(rowRef.current?.getBoundingClientRect() ?? null)}
+      onMouseLeave={() => setTipAnchor(null)}
       className={`group relative flex items-center gap-3 rounded-[var(--radius-md)] py-2 text-[14px] transition-colors duration-150 ${
         nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
@@ -56,10 +64,12 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
           Soon
         </span>
       )}
-      {collapsed && (
-        <span className="pointer-events-none absolute left-full z-40 ml-3 rounded-[var(--radius-sm)] bg-ink-900 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-          {label}
-        </span>
+      {collapsed && tipAnchor && (
+        <SidebarFlyout anchor={tipAnchor}>
+          <span className="block rounded-[var(--radius-sm)] bg-ink-900 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-white shadow-[var(--shadow-glass)]">
+            {label}
+          </span>
+        </SidebarFlyout>
       )}
     </div>
   );

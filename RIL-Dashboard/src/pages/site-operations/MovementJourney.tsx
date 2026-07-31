@@ -106,25 +106,27 @@ export default function MovementJourney({ movement, expanded, onToggle, highligh
           : style
       }
     >
-      <div className="grid gap-5">
-        <KeyValue
-          columns={4}
-          items={[
-            { label: 'Movement', value: movement.id },
-            { label: 'Driver', value: movement.driver },
-            { label: 'Driver Contact', value: movement.driverContact },
-            { label: 'Transporter', value: `${movement.transporter} · ${movement.vehicleType}` },
-            { label: 'Security Pass', value: `${movement.pass.id} · ${movement.pass.status}` },
-            { label: 'Gross / Tare', value: `${kilograms(movement.weighment.grossKg)} / ${kilograms(movement.weighment.tareKg)}` },
-            { label: 'Net Weight', value: kilograms(net) },
-            { label: 'Labour In / Out', value: `${movement.labourIn} / ${movement.labourOut}` },
-            { label: 'Material', value: movement.material, span: 2 },
-            { label: 'Remarks', value: movement.remarks ?? '—', span: 2 },
-          ]}
-        />
+      <div className="grid gap-4">
+        <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-section)] p-4">
+          <KeyValue
+            columns={4}
+            items={[
+              { label: 'Movement', value: movement.id },
+              { label: 'Driver', value: movement.driver },
+              { label: 'Driver Contact', value: movement.driverContact },
+              { label: 'Transporter', value: `${movement.transporter} · ${movement.vehicleType}` },
+              { label: 'Security Pass', value: `${movement.pass.id} · ${movement.pass.status}` },
+              { label: 'Gross / Tare', value: `${kilograms(movement.weighment.grossKg)} / ${kilograms(movement.weighment.tareKg)}` },
+              { label: 'Net Weight', value: kilograms(net) },
+              { label: 'Labour In / Out', value: `${movement.labourIn} / ${movement.labourOut}` },
+              { label: 'Material', value: movement.material, span: 2 },
+              { label: 'Remarks', value: movement.remarks ?? '—', span: 2 },
+            ]}
+          />
+        </div>
 
         {movement.photos.length > 0 && (
-          <div>
+          <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-section)] p-4">
             <div className="text-table-head mb-2">Site Photographs</div>
             <div className="flex flex-wrap gap-2">
               {movement.photos.map((photo) => (
@@ -136,7 +138,7 @@ export default function MovementJourney({ movement, expanded, onToggle, highligh
           </div>
         )}
 
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-2">
           <div>
             <div className="text-table-head mb-2">Associated Documents</div>
             <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-section)]">

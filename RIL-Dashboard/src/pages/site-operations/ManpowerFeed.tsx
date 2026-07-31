@@ -81,7 +81,7 @@ function ManpowerRow({
 
       <div className={`accordion-grid grid ${expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
         <div className="overflow-hidden">
-          <div className="border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-5 py-5">
+          <div className="border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] px-5 py-5">
             <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
               <KeyValue
                 columns={2}

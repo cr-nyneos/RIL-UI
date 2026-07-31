@@ -23,7 +23,7 @@ export default function StepNavigation<K extends string>({
   className = '',
 }: StepNavigationProps<K>) {
   return (
-    <div className={`grid grid-cols-1 lg:grid-cols-5 ${className}`}>
+    <div className={`grid grid-cols-1 lg:auto-cols-fr lg:grid-flow-col ${className}`}>
       {steps.map((step, index) => {
         const locked = index > highestUnlockedIndex;
         const active = activeStep === step.key;

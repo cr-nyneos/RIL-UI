@@ -1,8 +1,18 @@
 import { useState, type ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 export default function AppShell({ children }: { children: ReactNode }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const { pathname } = useLocation();
+  const [collapsed, setCollapsed] = useState(true);
+  const [lastPathname, setLastPathname] = useState(pathname);
+
+  /* The rail re-collapses on every navigation; it only stays open for as long
+     as the user keeps working on the page where they expanded it. */
+  if (lastPathname !== pathname) {
+    setLastPathname(pathname);
+    if (!collapsed) setCollapsed(true);
+  }
 
   return (
     /* Fixed-height shell: the rail never scrolls, only the content column does.

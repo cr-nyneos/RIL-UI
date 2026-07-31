@@ -8,6 +8,7 @@ interface SelectProps<T extends string> {
   onChange: (value: T) => void;
   className?: string;
   ariaLabel?: string;
+  placeholder?: string;
 }
 
 export default function Select<T extends string>({
@@ -16,9 +17,10 @@ export default function Select<T extends string>({
   onChange,
   className = '',
   ariaLabel,
+  placeholder,
 }: SelectProps<T>) {
   return (
-    <SelectPrimitive.Root value={value} onValueChange={(v) => onChange(v as T)}>
+    <SelectPrimitive.Root value={value || undefined} onValueChange={(v) => onChange(v as T)}>
       <SelectPrimitive.Trigger
         aria-label={ariaLabel}
         className={`cursor-pointer
@@ -41,7 +43,7 @@ export default function Select<T extends string>({
         `}
       >
         <span className="min-w-0 flex-1 truncate text-left">
-          <SelectPrimitive.Value />
+          <SelectPrimitive.Value placeholder={placeholder} />
         </span>
 
         <SelectPrimitive.Icon className="shrink-0">

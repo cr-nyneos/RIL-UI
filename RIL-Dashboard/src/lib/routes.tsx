@@ -7,9 +7,11 @@ import {
   ShieldCheck,
   Truck,
   Wallet,
+  Warehouse,
   type LucideIcon,
 } from 'lucide-react';
 import type { ReactElement } from 'react';
+import Approvals from '../pages/Approvals';
 import Dashboard from '../pages/Dashboard';
 import CreateOrder from '../pages/CreateOrder';
 import ExecutionBoard from '../pages/ExecutionBoard';
@@ -18,6 +20,8 @@ import OrderDetail from '../pages/OrderDetail';
 import RouteStub from '../pages/RouteStub';
 import DispatchWorkspace from '../pages/DispatchWorkspace';
 import GateWorkspace from '../pages/GateWorkspace';
+import RecordMovement from '../pages/RecordMovement';
+import SiteOperations from '../pages/SiteOperations';
 
 export interface AppRoute {
   path: string;
@@ -32,11 +36,13 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard, element: <Dashboard />, nav: true },
   { path: '/orders', label: 'Orders', icon: Package, element: <Orders />, nav: true },
   { path: '/execution', label: 'Execution Board', icon: Columns3, element: <ExecutionBoard />, nav: true },
+  { path: '/site-operations', label: 'Site Operations', icon: Warehouse, element: <SiteOperations />, nav: true },
+  { path: '/site-operations/new', label: 'Record Movement', element: <RecordMovement /> },
   { path: '/orders/create', label: 'Create Order', icon: ClipboardPlus, element: <CreateOrder />, nav: true, navGroup: '/orders' },
   { path: '/orders/dispatch', label: 'Dispatch Workspace', icon: Truck, element: <DispatchWorkspace />, nav: true, navGroup: '/orders' },
   { path: '/orders/:id/gates/:gate', label: 'Gate Workspace', element: <GateWorkspace /> },
   { path: '/orders/:id', label: 'Order Detail', element: <OrderDetail /> },
-  { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <RouteStub title="Approvals" />, nav: true },
+  { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <Approvals />, nav: true },
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <RouteStub title="Vendors" />, nav: true },
   { path: '/payments', label: 'Payments', icon: Wallet, element: <RouteStub title="Payments" />, nav: true },
 ];

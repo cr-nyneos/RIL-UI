@@ -193,7 +193,11 @@ function WorkflowRail({ item }: { item: BoardOrder }) {
                 aria-label={`${item.order.id} ${stage.label}`}
                 onClick={(event) => {
                   event.stopPropagation();
-                  if (current) navigate(`/orders/${item.order.id}/gates/${stage.key}`);
+                  if (current) {
+                    navigate(`/orders/${item.order.id}/gates/${stage.key}`, {
+                      state: { from: '/execution', fromLabel: 'Execution Board' },
+                    });
+                  }
                 }}
                 disabled={!current}
                 className={`flex h-7 w-7 items-center justify-center rounded-full border-2 bg-white transition-[border-color,background-color,box-shadow,transform] duration-200 ${

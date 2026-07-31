@@ -35,6 +35,20 @@ function seed(order: Order): OrderDetail {
   return detail;
 }
 
+/** Seeds and returns the detail record for one order — the approvals queue
+ *  derives every pending decision from these milestones. */
+export function orderDetailFor(order: Order): OrderDetail {
+  return seed(order);
+}
+
+export function subscribeOrderDetail(listener: () => void): () => void {
+  return subscribe(listener);
+}
+
+export function orderDetailVersion(): number {
+  return version;
+}
+
 /** Every quantity on the Deliveries tab derives from these records. */
 export function deliveryTotals(shipments: Shipment[]): DeliveryTotals {
   const totals = shipments.reduce(
@@ -227,6 +241,69 @@ export function completeGate({ orderId, gateKey, actor, note, documents = [] }: 
 
   details.set(orderId, { ...detail });
   updateRegisterOrder(orderId, updatedMilestones);
+  emit();
+}
+
+export interface GateDecisionPayload {
+  orderId: string;
+  gateKey: string;
+  decision: 'reject' | 'escalate';
+  actor: string;
+  note: string;
+}
+
+const RETURNED_DEPENDENCY = 'Reviewer decision cleared';
+
+/**
+ * A rejected gate is held open and blocked with the reviewer's reason as its
+ * unmet dependency; an escalated gate keeps running under review. Both write
+ * an activity entry — RIL.md §8.
+ */
+export function recordGateDecision({ orderId, gateKey, decision, actor, note }: GateDecisionPayload) {
+  const detail = details.get(orderId);
+  if (!detail) return;
+
+  const index = detail.milestones.findIndex((milestone) => milestone.key === gateKey);
+  if (index < 0) return;
+
+  const timestamp = nextTimestamp(detail);
+  const at = timestamp.slice(0, 10);
+  const current = detail.milestones[index];
+
+  detail.milestones = detail.milestones.map((milestone, milestoneIndex) => {
+    if (milestoneIndex !== index) return milestone;
+
+    if (decision === 'reject') {
+      return {
+        ...milestone,
+        state: 'blocked' as const,
+        dependencies: [
+          ...(milestone.dependencies ?? []).filter((dependency) => dependency.label !== RETURNED_DEPENDENCY),
+          { label: RETURNED_DEPENDENCY, met: false, reason: note },
+        ],
+        history: [...(milestone.history ?? []), { at, note: `${milestone.label} returned by ${actor} — ${note}` }],
+      };
+    }
+
+    return {
+      ...milestone,
+      escalated: true,
+      history: [...(milestone.history ?? []), { at, note: `${milestone.label} escalated by ${actor} — ${note}` }],
+    };
+  });
+
+  detail.activity = [
+    {
+      id: `${orderId}-act-decision-${detail.activity.length + 1}`,
+      actor,
+      action: `${decision === 'reject' ? 'returned' : 'escalated'} ${current.label} — ${note}`,
+      timestamp,
+      type: 'gate',
+    },
+    ...detail.activity,
+  ];
+
+  details.set(orderId, { ...detail });
   emit();
 }
 

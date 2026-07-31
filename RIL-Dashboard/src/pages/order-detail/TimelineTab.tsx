@@ -45,7 +45,11 @@ export default function TimelineTab({ detail, orderId }: TimelineTabProps) {
               variant="ghost"
               size="sm"
               className="cursor-pointer"
-              onClick={() => navigate(`/orders/${orderId}/gates/${node.key}`)}
+              onClick={() =>
+                navigate(`/orders/${orderId}/gates/${node.key}`, {
+                  state: { from: `/orders/${orderId}?tab=timeline`, fromLabel: 'Order' },
+                })
+              }
             >
               Details
             </Button>

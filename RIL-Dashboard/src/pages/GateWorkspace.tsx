@@ -14,7 +14,7 @@ import {
   UploadCloud,
   X,
 } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import AppShell from '../components/layout/AppShell';
 import ActivityFeed from '../components/ui/ActivityFeed';
@@ -399,8 +399,13 @@ function DependencyEngine({
 
 export default function GateWorkspace() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id, gate } = useParams<{ id: string; gate: string }>();
   const gateKey = normalizeGate(gate);
+  // The workspace opens from several places — it returns to the one it came from.
+  const origin = location.state as { from?: string; fromLabel?: string } | null;
+  const backTo = origin?.from ?? `/orders/${id}?tab=timeline`;
+  const backLabel = `Back to ${origin?.fromLabel ?? 'Order'}`;
   const { order, detail } = useOrderDetail(id);
   const milestone = detail?.milestones.find((candidate) => candidate.key === gateKey);
   const config = GATE_CONFIG[gateKey];
@@ -451,8 +456,11 @@ export default function GateWorkspace() {
     });
   }
 
+  const activeOrder = order;
+  const activeMilestone = milestone;
+
   function addMockUpload() {
-    const next = config.requiredDocuments[files.length] ?? `${milestone.label} Evidence ${files.length + 1}`;
+    const next = config.requiredDocuments[files.length] ?? `${activeMilestone.label} Evidence ${files.length + 1}`;
     setFiles((current) => [...current, next]);
   }
 
@@ -461,21 +469,21 @@ export default function GateWorkspace() {
     setSubmitting(true);
     window.setTimeout(() => {
       completeGate({
-        orderId: order.id,
-        gateKey: milestone.key,
+        orderId: activeOrder.id,
+        gateKey: activeMilestone.key,
         actor: owner.name,
         note: comment,
         documents: files.length > 0 ? files : config.requiredDocuments,
       });
       setSuccess(true);
-      setToast(`${milestone.label} completed. Next gate unlocked.`);
-      window.setTimeout(() => navigate(`/orders/${order.id}?tab=timeline`), 900);
+      setToast(`${activeMilestone.label} completed. Next gate unlocked.`);
+      window.setTimeout(() => navigate(backTo), 900);
     }, 650);
   }
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-4 pb-20">
+      <div className="flex flex-col gap-4">
         <header className="surface-section overflow-hidden">
           <div className="surface-section-head px-5 py-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
@@ -484,10 +492,10 @@ export default function GateWorkspace() {
                   variant="ghost"
                   size="sm"
                   icon={<ArrowLeft size={16} strokeWidth={2.3} />}
-                  onClick={() => navigate(`/orders/${order.id}?tab=timeline`)}
+                  onClick={() => navigate(backTo)}
                   className="mb-2 cursor-pointer"
                 >
-                  Back to Order
+                  {backLabel}
                 </Button>
                 <div className="flex min-w-0 flex-wrap items-center gap-2">
                   <h1 className="text-page-title truncate">{order.id}</h1>
@@ -660,14 +668,14 @@ export default function GateWorkspace() {
           </div>
         )}
 
-        <div className="fixed right-4 bottom-4 left-4 z-40">
-          <div className="surface-section mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <div className="sticky bottom-0 z-20 -mb-10">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] p-3">
             <div className="flex items-center gap-2 text-meta">
-              <Clock3 size={15} strokeWidth={2.3} />
-              Draft is held in memory for this browser session.
+              {/* <Clock3 size={15} strokeWidth={2.3} />
+              Draft is held in memory for this browser session. */}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Button variant="secondary" onClick={() => navigate(`/orders/${order.id}?tab=timeline`)}>
+              <Button variant="secondary" onClick={() => navigate(backTo)}>
                 Cancel
               </Button>
               <Button variant="secondary" icon={<FileUp size={15} />} onClick={() => setToast('Draft saved in memory for the POC.')}>

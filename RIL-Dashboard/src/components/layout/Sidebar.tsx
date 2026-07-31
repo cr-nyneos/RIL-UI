@@ -65,7 +65,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </Button>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden px-2.5 py-3">
+      <nav className="scrollbar-subtle flex flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden px-2.5 py-3">
         {!collapsed && (
           <span className="mb-1.5 px-3 text-[11px] font-bold tracking-[0.08em] text-sidebar-group-label uppercase">
             Operations

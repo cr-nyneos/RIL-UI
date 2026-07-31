@@ -126,41 +126,42 @@ export default function JourneyCard({
             {note.text}
           </p>
         )}
+      </div>
 
-        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-[var(--color-glass-hairline)] pt-4">
-          <dl className="grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
-            {facts.map((fact) => (
-              <div key={fact.label} className="min-w-0">
-                <dt className="text-table-head">{fact.label}</dt>
-                <dd className="mt-1 truncate text-[13px] leading-5 font-semibold text-ink-800 tabular-nums">
-                  {fact.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+      {/* Footer band — the operational facts and the next action sit on their
+          own blue surface so the card reads as head, journey, then action. */}
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-[var(--color-border)] bg-[var(--color-surface-header)] px-5 py-3.5">
+        <dl className="grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
+          {facts.map((fact) => (
+            <div key={fact.label} className="min-w-0">
+              <dt className="text-table-head">{fact.label}</dt>
+              <dd className="mt-1 text-[13px] leading-5 font-semibold text-ink-900 tabular-nums">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
 
-          {onOpen && (
-            <Button
-              variant="link"
-              icon={<ArrowRight size={15} strokeWidth={2.4} />}
-              iconPosition="right"
-              onClick={(event) => {
-                event.stopPropagation();
-                onOpen();
-              }}
-              className="flex-none cursor-pointer"
-            >
-              {openLabel}
-            </Button>
-          )}
-        </div>
+        {onOpen && (
+          <Button
+            variant="secondary"
+            size="sm"
+            icon={<ArrowRight size={15} strokeWidth={2.4} />}
+            iconPosition="right"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpen();
+            }}
+            className="flex-none cursor-pointer bg-[var(--color-surface-section)]"
+          >
+            {openLabel}
+          </Button>
+        )}
       </div>
 
       {children && (
         <div className={`accordion-grid grid ${expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
           <div className="overflow-hidden">
             <div
-              className="border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-5"
+              className="border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] p-5"
               onClick={(event) => event.stopPropagation()}
               role="presentation"
             >

@@ -23,6 +23,8 @@ export interface Milestone {
   detail?: string;
   documents?: string[];
   history?: { at: string; note: string }[];
+  /** Raised from the approvals queue — the gate stays open, but under review. */
+  escalated?: boolean;
 }
 
 export type ShipmentMode = 'Road' | 'Air' | 'Sea';
