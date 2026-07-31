@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import { FileBadge, FileCheck2, FileSpreadsheet, FileText, Receipt, ShieldCheck } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Badge from './Badge';
@@ -29,6 +30,10 @@ function iconFor(type: string): LucideIcon {
   return TYPE_ICON.find((entry) => key.includes(entry.match))?.icon ?? FileText;
 }
 
+function TypeIcon({ type }: { type: string }) {
+  return createElement(iconFor(type), { size: 15, strokeWidth: 2.2, className: 'text-ink-600' });
+}
+
 export default function DocumentRow({
   name,
   type,
@@ -38,8 +43,7 @@ export default function DocumentRow({
   size,
   onView,
 }: DocumentRowProps) {
-  const Icon = iconFor(type);
-  const meta = [type, uploadedBy, uploadedAt, size].filter(Boolean).join(' · ');
+  const meta =[type, uploadedBy, uploadedAt, size].filter(Boolean).join(' · ');
 
   return (
     <div className="flex h-14 items-center gap-3.5 border-b border-[var(--color-glass-hairline)] px-5 last:border-b-0">
@@ -47,7 +51,7 @@ export default function DocumentRow({
         className="flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)]"
         style={{ background: 'var(--color-surface-subtle)' }}
       >
-        <Icon size={15} strokeWidth={2.2} className="text-ink-600" />
+        <TypeIcon type={type} />
       </span>
 
       <div className="min-w-0 flex-1">

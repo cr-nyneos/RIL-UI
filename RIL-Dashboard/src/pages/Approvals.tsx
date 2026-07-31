@@ -13,7 +13,7 @@ import SummaryStrip from '../components/ui/SummaryStrip';
 import Tabs from '../components/ui/Tabs';
 import Toast from '../components/ui/Toast';
 
-import { CURRENT_USER, submitDecision, useApprovals } from '../lib/approvalsStore';
+import { submitDecision, useApprovals } from '../lib/approvalsStore';
 import { ORDER_PLANTS } from '../lib/mockData/orders';
 import type { DecisionAction, DecisionSubmission, DecisionTrack, PendingDecision } from '../lib/types/approvals';
 import DecisionItem from './approvals/DecisionItem';

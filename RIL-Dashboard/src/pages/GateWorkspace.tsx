@@ -5,7 +5,6 @@ import {
   Check,
   CheckCircle2,
   Circle,
-  Clock3,
   FileUp,
   Lock,
   MessageSquareText,

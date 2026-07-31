@@ -7,7 +7,6 @@ import type { ManpowerRecord, Movement } from '../../lib/types/siteOps';
 
 export function MovementContext({
   movements,
-  averageDwellMinutes,
 }: {
   movements: Movement[];
   averageDwellMinutes: number | null;
