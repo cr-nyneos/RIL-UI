@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import Drawer from '../../components/ui/Drawer';
 import DocumentRow from '../../components/ui/DocumentRow';
@@ -16,9 +17,11 @@ const STATE_LABEL: Record<Milestone['state'], string> = {
 
 interface TimelineTabProps {
   detail: OrderDetail;
+  orderId: string;
 }
 
-export default function TimelineTab({ detail }: TimelineTabProps) {
+export default function TimelineTab({ detail, orderId }: TimelineTabProps) {
+  const navigate = useNavigate();
   const [openKey, setOpenKey] = useState<string | null>(null);
   const open = detail.milestones.find((milestone) => milestone.key === openKey) ?? null;
 
@@ -38,7 +41,12 @@ export default function TimelineTab({ detail }: TimelineTabProps) {
         <Timeline
           nodes={nodes}
           renderAction={(node) => (
-            <Button variant="ghost" size="sm" className="cursor-pointer" onClick={() => setOpenKey(node.key)}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="cursor-pointer"
+              onClick={() => navigate(`/orders/${orderId}/gates/${node.key}`)}
+            >
               Details
             </Button>
           )}

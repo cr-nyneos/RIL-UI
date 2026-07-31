@@ -15,6 +15,7 @@ import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
 import RouteStub from '../pages/RouteStub';
 import DispatchWorkspace from '../pages/DispatchWorkspace';
+import GateWorkspace from '../pages/GateWorkspace';
 
 export interface AppRoute {
   path: string;
@@ -30,6 +31,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/orders', label: 'Orders', icon: Package, element: <Orders />, nav: true },
   { path: '/orders/create', label: 'Create Order', icon: ClipboardPlus, element: <CreateOrder />, nav: true, navGroup: '/orders' },
   { path: '/orders/dispatch', label: 'Dispatch Workspace', icon: Truck, element: <DispatchWorkspace />, nav: true, navGroup: '/orders' },
+  { path: '/orders/:id/gates/:gate', label: 'Gate Workspace', element: <GateWorkspace /> },
   { path: '/orders/:id', label: 'Order Detail', element: <OrderDetail /> },
   { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <RouteStub title="Approvals" />, nav: true },
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <RouteStub title="Vendors" />, nav: true },
@@ -65,6 +67,7 @@ export const PRIMARY_NAV: NavEntry[] = APP_ROUTES.filter(
 export function pageName(pathname: string): string {
   const exact = APP_ROUTES.find((route) => route.path === pathname);
   if (exact) return exact.label;
+  if (pathname.includes('/gates/')) return 'Gate Workspace';
   if (pathname.startsWith('/orders/')) return 'Order Detail';
   return 'NyneOS';
 }

@@ -88,7 +88,7 @@ function renderTab(
       return <ActivityTab detail={detail} />;
     case 'timeline':
     default:
-      return <TimelineTab detail={detail} />;
+      return <TimelineTab detail={detail} orderId={orderId} />;
   }
 }
 

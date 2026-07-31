@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react';
 import { getOrders } from './orderStore';
 import { buildDemoOrderDetail, buildOrderDetail, DEMO_ORDER_ID } from './mockData/orderDetail';
 import type { Order } from './types/order';
-import type { DeliveryTotals, OrderDetail, Shipment } from './types/orderDetail';
+import type { DeliveryTotals, Milestone, OrderDetail, Shipment } from './types/orderDetail';
 
 const details = new Map<string, OrderDetail>();
 const listeners = new Set<() => void>();
@@ -108,6 +108,125 @@ export function reassignStakeholder({ orderId, gateKey, owner, actor, reason }: 
   ];
 
   details.set(orderId, { ...detail });
+  emit();
+}
+
+function updateRegisterOrder(orderId: string, milestones: Milestone[]) {
+  const order = getOrders().find((candidate) => candidate.id === orderId);
+  if (!order) return;
+
+  const closed = milestones.filter((milestone) => milestone.state === 'complete').length;
+  const active = milestones.find((milestone) => milestone.state === 'current' || milestone.state === 'blocked');
+
+  order.progress = Math.round((closed / milestones.length) * 100);
+  order.status = closed === milestones.length ? 'Delivered / Complete' : active ? `${active.label} in Progress` : 'In Progress';
+  order.gates = order.gates.map((gate) => {
+    const milestone = milestones.find((candidate) => candidate.key === gate.key);
+    return {
+      ...gate,
+      state: milestone?.state === 'complete' ? 'done' : milestone?.state === 'current' || milestone?.state === 'blocked' ? 'current' : 'locked',
+    };
+  });
+}
+
+export interface CompleteGatePayload {
+  orderId: string;
+  gateKey: string;
+  actor: string;
+  note?: string;
+  documents?: string[];
+}
+
+export function completeGate({ orderId, gateKey, actor, note, documents = [] }: CompleteGatePayload) {
+  const detail = details.get(orderId);
+  if (!detail) return;
+
+  const index = detail.milestones.findIndex((milestone) => milestone.key === gateKey);
+  if (index < 0) return;
+
+  const timestamp = nextTimestamp(detail);
+  const closedDate = timestamp.slice(0, 10);
+  const current = detail.milestones[index];
+  const next = detail.milestones[index + 1];
+
+  const updatedMilestones = detail.milestones.map((milestone, milestoneIndex) => {
+    if (milestoneIndex === index) {
+      const mergedDocuments = Array.from(new Set([...(milestone.documents ?? []), ...documents]));
+      return {
+        ...milestone,
+        state: 'complete' as const,
+        timestamp: closedDate,
+        documents: mergedDocuments.length > 0 ? mergedDocuments : milestone.documents,
+        dependencies: (milestone.dependencies ?? []).map((dependency) => ({ ...dependency, met: true, reason: undefined })),
+        detail: note?.trim() || milestone.detail || `${milestone.label} completed in the Gate Workspace.`,
+        history: [
+          ...(milestone.history ?? []),
+          { at: closedDate, note: `${milestone.label} completed by ${actor}.` },
+        ],
+      };
+    }
+
+    if (milestoneIndex === index + 1 && milestone.state === 'locked') {
+      return {
+        ...milestone,
+        state: 'current' as const,
+        dependencies: (milestone.dependencies ?? []).map((dependency, dependencyIndex) =>
+          dependencyIndex === 0 ? { ...dependency, met: true, reason: undefined } : dependency,
+        ),
+        history: [
+          ...(milestone.history ?? []),
+          { at: closedDate, note: `${milestone.label} unlocked after ${current.label} closed.` },
+        ],
+      };
+    }
+
+    return milestone;
+  });
+
+  detail.milestones = updatedMilestones;
+
+  const newDocuments = documents.map((name, documentIndex) => ({
+    id: `${orderId}-${gateKey}-workspace-doc-${detail.documents.length + documentIndex + 1}`,
+    name,
+    type: 'Gate Evidence',
+    status: 'Submitted',
+    uploadedBy: actor,
+    uploadedAt: closedDate,
+    size: 'POC',
+  }));
+
+  if (newDocuments.length > 0) {
+    detail.documents = [...newDocuments, ...detail.documents];
+  }
+
+  detail.activity = [
+    {
+      id: `${orderId}-act-gate-workspace-${detail.activity.length + 1}`,
+      actor,
+      action: `completed ${current.label}${next ? ` and unlocked ${next.label}` : ''}`,
+      timestamp,
+      type: 'gate',
+    },
+    ...detail.activity,
+  ];
+
+  detail.pcfArtifacts = detail.pcfArtifacts.map((artifact, artifactIndex) =>
+    artifact.status === 'Pending' && artifactIndex <= index + 1
+      ? { ...artifact, status: 'Collected' as const, uploadedBy: actor, uploadedAt: closedDate }
+      : artifact,
+  );
+
+  if (gateKey === 'payment') {
+    detail.scf = {
+      ...detail.scf,
+      status: 'Financed',
+      financedCr: detail.invoices[0]?.amountCr ?? null,
+      blockedReason: null,
+    };
+  }
+
+  details.set(orderId, { ...detail });
+  updateRegisterOrder(orderId, updatedMilestones);
   emit();
 }
 
