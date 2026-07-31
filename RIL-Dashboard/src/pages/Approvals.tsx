@@ -33,9 +33,9 @@ const TRACK_OPTIONS: { value: TrackFilter; label: string }[] = [
 ];
 
 const GROUPS: { key: PendingDecision['urgency']; label: string; description: string }[] = [
-  { key: 'breached', label: 'Needs A Decision Now', description: 'Past the decision target or held by a blocked gate' },
-  { key: 'today', label: 'Due Today', description: 'The window closes at end of day' },
-  { key: 'scheduled', label: 'Scheduled', description: 'Inside the decision window' },
+  { key: 'breached', label: 'Needs A Decision Now',description:'' },
+  { key: 'today', label: 'Due Today', description: '' },
+  { key: 'scheduled', label: 'Scheduled', description: '' },
 ];
 
 const ACTION_TOAST: Record<DecisionAction, (decision: PendingDecision, submission: DecisionSubmission) => string> = {
@@ -147,7 +147,7 @@ export default function Approvals() {
 
   const tabs = [
     { key: 'all', label: 'All', count: scoped.length },
-    { key: 'mine', label: 'Mine', count: scoped.filter((decision) => decision.mine).length },
+    // { key: 'mine', label: 'Mine', count: scoped.filter((decision) => decision.mine).length },
     { key: 'team', label: 'My Team', count: scoped.filter((decision) => decision.myTeam).length },
     {
       key: 'urgent',
@@ -206,9 +206,9 @@ export default function Approvals() {
               </>
             }
           />
-          <p className="text-meta mt-1">
+          {/* <p className="text-meta mt-1">
             Decisions waiting on {CURRENT_USER.name} and the {CURRENT_USER.role.toLowerCase()} team.
-          </p>
+          </p> */}
         </div>
 
         <Section padded={false} className="animate-rise" style={{ animationDelay: '60ms' }}>
@@ -274,7 +274,7 @@ export default function Approvals() {
               <Section>
                 <EmptyState
                   title="Nothing waiting on you"
-                  description="Every decision in this view has been settled. Adjust the filters to see the wider queue."
+                  // description="Every decision in this view has been settled. Adjust the filters to see the wider queue."
                 />
               </Section>
             )}
