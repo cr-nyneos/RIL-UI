@@ -157,7 +157,7 @@ export default function DecisionCard({
             <div key={fact.label} className="min-w-0">
               <dt className="text-table-head">{fact.label}</dt>
               <dd
-                className="mt-1 text-[13px] leading-5 font-semibold tabular-nums"
+                className="mt-1 text-[13px] leading-5 font-bold tabular-nums"
                 style={{ color: fact.tone ? toneToken(fact.tone).text : 'var(--color-ink-900)' }}
               >
                 {fact.value}

@@ -202,9 +202,9 @@ export default function RecordMovement() {
             Back to Site Operations
           </Button>
           <PageHeader title="Record Movement" actions={<Badge variant="glass">{movementId}</Badge>} />
-          <p className="text-meta mt-1">
+          {/* <p className="text-meta mt-1">
             Capture a gate movement with its vehicle, weighment, security clearance and manpower.
-          </p>
+          </p> */}
         </div>
 
         <Section

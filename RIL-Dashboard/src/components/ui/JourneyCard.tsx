@@ -135,7 +135,7 @@ export default function JourneyCard({
           {facts.map((fact) => (
             <div key={fact.label} className="min-w-0">
               <dt className="text-table-head">{fact.label}</dt>
-              <dd className="mt-1 text-[13px] leading-5 font-semibold text-ink-900 tabular-nums">{fact.value}</dd>
+              <dd className="mt-1 text-[13px] leading-5 font-bold text-ink-900 tabular-nums">{fact.value}</dd>
             </div>
           ))}
         </dl>

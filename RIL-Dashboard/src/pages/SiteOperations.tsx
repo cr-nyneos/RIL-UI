@@ -173,9 +173,9 @@ export default function SiteOperations() {
               </>
             }
           />
-          <p className="text-meta mt-1">
+          {/* <p className="text-meta mt-1">
             Live vehicle, material and manpower movement across every plant gate.
-          </p>
+          </p> */}
         </div>
 
         <Section

@@ -25,7 +25,7 @@ export function MovementContext({
     <>
       <Section
         title="On Site Now"
-        description={`Longest dwell first · average ${formatDuration(averageDwellMinutes)}`}
+        // description={`Longest dwell first · average ${formatDuration(averageDwellMinutes)}`}
         padded={false}
       >
         {onSite.length ? (

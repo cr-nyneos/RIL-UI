@@ -253,7 +253,7 @@ export default function Approvals() {
                 <section key={group.key} className="flex flex-col gap-3">
                   <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 px-1">
                     <h2 className="text-[15px] leading-5 font-bold tracking-[-0.01em] text-ink-900">{group.label}</h2>
-                    <span className="text-[13px] leading-5 font-bold text-ink-500 tabular-nums">
+                    <span className="text-[13px] leading-5 font-bold text-ink-800 tabular-nums">
                       {group.items.length}
                     </span>
                     <span className="text-meta">{group.description}</span>

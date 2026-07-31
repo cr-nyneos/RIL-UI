@@ -68,7 +68,7 @@ export default function ExceptionFlags({ flags }: ExceptionFlagsProps) {
               <div className="glass-tooltip pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 w-max max-w-[220px] -translate-x-1/2 px-2.5 py-1.5">
                 <div className="text-[12px] font-bold text-ink-800">{LABEL[flag.type]}</div>
                 {flag.detail && (
-                  <div className="text-[11px] leading-4 font-medium text-ink-500">{flag.detail}</div>
+                  <div className="text-[11px] leading-4 font-semibold text-ink-700">{flag.detail}</div>
                 )}
               </div>
             )}

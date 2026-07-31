@@ -207,7 +207,7 @@ function WorkflowRail({ item }: { item: BoardOrder }) {
               >
                 <span className={`h-2 w-2 rounded-full ${complete || current ? 'bg-white' : 'bg-[var(--color-border-strong)]'}`} />
               </button>
-              <span className={`max-w-full truncate text-center text-[11px] leading-4 ${current ? 'font-bold text-ink-900' : 'font-semibold text-ink-500'}`}>
+              <span className={`max-w-full truncate text-center text-[11px] leading-4 ${current ? 'font-bold text-ink-900' : 'font-bold text-ink-700'}`}>
                 {stage.short}
               </span>
             </div>
@@ -281,7 +281,7 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
       >
         <div className="flex min-w-0 items-center gap-1.5">
           {needsAttention && <StatusIcon size={14} strokeWidth={2.4} style={{ color: meta.accent }} />}
-          <p className={`truncate text-[13px] font-medium ${needsAttention ? '' : 'text-ink-500'}`} style={needsAttention ? { color: meta.accent } : undefined}>
+          <p className={`truncate text-[13px] font-semibold ${needsAttention ? '' : 'text-ink-800'}`} style={needsAttention ? { color: meta.accent } : undefined}>
             {needsAttention ? `${meta.label} — ${item.reason}` : item.reason}
           </p>
         </div>
@@ -378,7 +378,7 @@ export default function ExecutionBoard() {
       <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader title="Execution Board" />
-          <p className="text-meta mt-1">Portfolio-wide tracker for order movement, blocked gates and execution ownership.</p>
+          {/* <p className="text-meta mt-1">Portfolio-wide tracker for order movement, blocked gates and execution ownership.</p> */}
         </div>
 
         <Section
@@ -416,7 +416,7 @@ export default function ExecutionBoard() {
             {summary.map((item) => (
               <div key={item.label} className="flex items-baseline gap-1.5">
                 <span className="text-[16px] font-bold tabular-nums text-ink-900">{item.value}</span>
-                <span className={`text-[12px] font-semibold ${item.tone === 'danger' ? 'text-danger' : item.tone === 'warning' ? 'text-warning' : item.tone === 'success' ? 'text-success' : 'text-ink-500'}`}>
+                <span className={`text-[12px] font-semibold ${item.tone === 'danger' ? 'text-danger' : item.tone === 'warning' ? 'text-warning' : item.tone === 'success' ? 'text-success' : 'text-ink-700'}`}>
                   {item.label}
                 </span>
               </div>
@@ -427,7 +427,7 @@ export default function ExecutionBoard() {
         <div className="animate-rise" style={{ animationDelay: '120ms' }}>
           <div className="mb-3 px-1">
             <h2 className="text-[15px] font-bold text-ink-900">Execution Tracker</h2>
-            <p className="text-meta mt-0.5">Each card shows the active gate, expected completion and next action.</p>
+            {/* <p className="text-meta mt-0.5">Each card shows the active gate, expected completion and next action.</p> */}
           </div>
 
           <div className="flex flex-col gap-3 animate-fade-fast">

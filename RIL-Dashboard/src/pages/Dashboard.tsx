@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 import AppShell from '../components/layout/AppShell';
 // import GreetingHero from '../components/dashboard/GreetingHero';
 import DashboardFilters from '../components/dashboard/DashboardFilters';
@@ -7,6 +9,7 @@ import OrderStatusCard from '../components/dashboard/OrderStatusCard';
 import PlantLoadCard from '../components/dashboard/PlantLoadCard';
 import DeliveryTrendCard from '../components/dashboard/DeliveryTrendCard';
 import Section from '../components/ui/Section';
+import Button from '../components/ui/Button';
 import { MONTHLY_DELIVERIES_ACTUAL, MONTHLY_DELIVERIES_PLANNED } from '../lib/mockData/dashboard';
 import {  computeFilteredTotals,  computeFilteredStatusDistribution, computeFilteredPlantSegments,
   type PlantFilter,
@@ -37,21 +40,27 @@ export default function Dashboard() {
     <AppShell>
       <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
+          
           <GreetingHero />
         </div>
 
         <Section
           title="Global Overview"
-          description="Portfolio position across the selected plant, contract type and period."
+          // description="Portfolio position across the selected plant, contract type and period."
           toolbar={
-            <DashboardFilters
-              plant={plant}
-              onPlantChange={setPlant}
-              contractType={contractType}
-              onContractTypeChange={setContractType}
-              period={period}
-              onPeriodChange={setPeriod}
-            />
+            <div className="flex w-full flex-wrap items-center justify-between gap-2.5">
+              <DashboardFilters
+                plant={plant}
+                onPlantChange={setPlant}
+                contractType={contractType}
+                onContractTypeChange={setContractType}
+                period={period}
+                onPeriodChange={setPeriod}
+              />
+              <Button as={Link} to="/orders/create" variant="primary" size="md" icon={<Plus size={16} />}>
+                Create Order
+              </Button>
+            </div>
           }
           padded={false}
           bodyClassName="p-4"
@@ -66,9 +75,9 @@ export default function Dashboard() {
           <div className="mt-1 flex flex-wrap items-center justify-between gap-3 px-1 pt-4">
             <div className="min-w-0">
               <h3 className="text-section-title truncate">Delivery Trends</h3>
-              <p className="text-meta mt-0.5 truncate">
+              {/* <p className="text-meta mt-0.5 truncate">
                 Planned against actual deliveries over the selected period.
-              </p>
+              </p> */}
             </div>
             <span className="text-pill">{period === '3m' ? 'LAST 3 MONTHS' : 'LAST 6 MONTHS'}</span>
           </div>
@@ -79,7 +88,7 @@ export default function Dashboard() {
 
         <Section
           title="Portfolio Analytics"
-          description="Pipeline composition and site level load."
+          // description="Pipeline composition and site level load."
           padded={false}
           className="animate-rise"
           style={{ animationDelay: '180ms' }}

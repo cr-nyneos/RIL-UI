@@ -54,7 +54,7 @@ function ManpowerRow({
               {record.enteredToday} entered
             </span>
             <span className="text-meta flex items-center gap-1 tabular-nums">
-              <ArrowUpRight size={13} strokeWidth={2.4} className="text-ink-400" />
+              <ArrowUpRight size={13} strokeWidth={2.4} className="text-ink-700" />
               {record.exitedToday} exited
             </span>
           </div>

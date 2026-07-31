@@ -39,7 +39,7 @@ const TOKENS: Record<Tone, ToneTokens> = {
     border: 'rgba(244,63,94,0.18)',
   },
   neutral: {
-    text: 'var(--color-ink-600)',
+    text: 'var(--color-ink-700)',
     fill: 'var(--color-ink-400)',
     soft: 'var(--color-chip-neutral)',
     border: 'var(--color-glass-hairline-deep)',

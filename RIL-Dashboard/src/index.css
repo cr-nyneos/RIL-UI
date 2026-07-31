@@ -260,8 +260,8 @@
 @utility text-subtitle {
   font-size: 13px;
   line-height: 20px;
-  font-weight: 500;
-  color: var(--color-ink-500);
+  font-weight: 600;
+  color: var(--color-ink-700);
 }
 
 @utility text-eyebrow {
@@ -269,7 +269,7 @@
   line-height: 16px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--color-ink-500);
+  color: var(--color-ink-700);
 }
 
 @utility text-pill {
@@ -324,14 +324,14 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-ink-500);
+  color: var(--color-ink-700);
 }
 
 @utility text-meta {
   font-size: 12px;
   line-height: 18px;
-  font-weight: 500;
-  color: var(--color-ink-500);
+  font-weight: 600;
+  color: var(--color-ink-700);
 }
 
 @utility text-badge {
