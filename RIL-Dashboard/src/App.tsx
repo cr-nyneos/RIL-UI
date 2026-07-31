@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Demo from './pages/Demo';
 import RouteStub from './pages/RouteStub';
@@ -10,6 +10,7 @@ import LoadingScreen2 from './components/LoadingScreen2.tsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,7 +22,14 @@ function App() {
         <Route path="/demo" element={<Demo />} />
         <Route path="*" element={<RouteStub title="Not Found" />} />
       </Routes>
-      {loading && <LoadingScreen2 onComplete={() => setLoading(false)} />}
+      {loading && (
+        <LoadingScreen2
+          onComplete={() => {
+            setLoading(false);
+            navigate('/login', { replace: true });
+          }}
+        />
+      )}
     </>
   );
 }
