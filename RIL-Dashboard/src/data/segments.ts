@@ -12,6 +12,10 @@ export interface Segment {
   /** Fuller label used in the doughnut legend & center panel. */
   fullLabel: string;
   value: number;
+ 
+  breakdown?: number[];
+  
+  breakdownLabels?: string[];
   /** YoY % change; sign drives the trend arrow. */
   trend: number;
   description: string;

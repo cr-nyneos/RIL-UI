@@ -18,7 +18,7 @@ import type { Segment } from '../../data/segments';
 import type { LinePoint } from '../../components/LineChart';
 
 export type ContractType = 'Manufactured' | 'Material';
-export type PlantId = 'jamnagar' | 'dahej' | 'hazira' | 'nagothane' | 'silvassa';
+export type PlantId = 'Jamnagar' | 'Delhi' | 'Hyderabad' | 'Nagpur' | 'Surat';
 
 export interface PlantBreakdown {
   id: PlantId;
@@ -33,22 +33,22 @@ export interface PlantBreakdown {
 }
 
 export const PLANTS: { id: PlantId; label: string }[] = [
-  { id: 'jamnagar', label: 'Jamnagar' },
-  { id: 'dahej', label: 'Dahej' },
-  { id: 'hazira', label: 'Hazira' },
-  { id: 'nagothane', label: 'Nagothane' },
-  { id: 'silvassa', label: 'Silvassa' },
+  { id: 'Jamnagar', label: 'Jamnagar' },
+  { id: 'Delhi', label: 'Delhi' },
+  { id: 'Hyderabad', label: 'Hyderabad' },
+  { id: 'Nagpur', label: 'Nagpur' },
+  { id: 'Surat', label: 'Surat' },
 ];
 
 // Per-plant breakdown of every headline metric — sums to the Part 6 totals
 // (42 active, 11 in transit, 5 delayed, 4 governance approvals, ₹4.2 Cr
 // pending payments, 26 Manufactured / 16 Material).
 export const PLANT_BREAKDOWN: PlantBreakdown[] = [
-  { id: 'jamnagar', plant: 'Jamnagar', activeOrders: 14, inTransit: 4, delayed: 2, governanceApprovals: 2, pendingPaymentsCr: 1.6, manufactured: 9, material: 5 },
-  { id: 'dahej', plant: 'Dahej', activeOrders: 9, inTransit: 3, delayed: 2, governanceApprovals: 1, pendingPaymentsCr: 1.0, manufactured: 4, material: 5 },
-  { id: 'hazira', plant: 'Hazira', activeOrders: 8, inTransit: 2, delayed: 1, governanceApprovals: 1, pendingPaymentsCr: 0.8, manufactured: 6, material: 2 },
-  { id: 'nagothane', plant: 'Nagothane', activeOrders: 6, inTransit: 1, delayed: 0, governanceApprovals: 0, pendingPaymentsCr: 0.5, manufactured: 4, material: 2 },
-  { id: 'silvassa', plant: 'Silvassa', activeOrders: 5, inTransit: 1, delayed: 0, governanceApprovals: 0, pendingPaymentsCr: 0.3, manufactured: 3, material: 2 },
+  { id: 'Jamnagar', plant: 'Jamnagar', activeOrders: 14, inTransit: 4, delayed: 2, governanceApprovals: 2, pendingPaymentsCr: 1.6, manufactured: 9, material: 5 },
+  { id: 'Delhi', plant: 'Delhi', activeOrders: 9, inTransit: 3, delayed: 2, governanceApprovals: 1, pendingPaymentsCr: 1.0, manufactured: 4, material: 5 },
+  { id: 'Hyderabad', plant: 'Hyderabad', activeOrders: 8, inTransit: 2, delayed: 1, governanceApprovals: 1, pendingPaymentsCr: 0.8, manufactured: 6, material: 2 },
+  { id: 'Nagpur', plant: 'Nagpur', activeOrders: 6, inTransit: 1, delayed: 0, governanceApprovals: 0, pendingPaymentsCr: 0.5, manufactured: 4, material: 2 },
+  { id: 'Surat', plant: 'Surat', activeOrders: 5, inTransit: 1, delayed: 0, governanceApprovals: 0, pendingPaymentsCr: 0.3, manufactured: 3, material: 2 },
 ];
 
 // ---- KPI sparklines (7-point illustrative trend leading to today's value) ----
@@ -72,11 +72,11 @@ export const STATUS_SEGMENTS: Segment[] = [
 
 // ---- Orders by Plant (vessel bar) — locked hue per plant ----
 export const PLANT_SEGMENTS: Segment[] = [
-  { key: 'jamnagar', label: 'Jamnagar', fullLabel: 'Jamnagar', value: 14, trend: 5.2, description: 'Largest active site load across the network.', from: '#93C5FD', to: '#1D4ED8', glow: '#3B82F6', icon: Factory },
-  { key: 'dahej', label: 'Dahej', fullLabel: 'Dahej', value: 9, trend: -2.1, description: 'Material-heavy site with two delayed orders.', from: '#F3B69C', to: '#B14A2A', glow: '#DE7356', icon: Anchor },
-  { key: 'hazira', label: 'Hazira', fullLabel: 'Hazira', value: 8, trend: 1.4, description: 'Balanced manufactured/material mix.', from: '#6EE7B7', to: '#047857', glow: '#10B981', icon: Warehouse },
-  { key: 'nagothane', label: 'Nagothane', fullLabel: 'Nagothane', value: 6, trend: 0.6, description: 'Steady load, no delays this cycle.', from: '#FCD34D', to: '#B45309', glow: '#EAA640', icon: Building2 },
-  { key: 'silvassa', label: 'Silvassa', fullLabel: 'Silvassa', value: 5, trend: 2.0, description: 'Smallest site by order count.', from: '#F3B8CB', to: '#9F4C6E', glow: '#D68BA4', icon: Boxes },
+  { key: 'Jamnagar', label: 'Jamnagar', fullLabel: 'Jamnagar', value: 14, trend: 5.2, description: 'Largest active site load across the network.', from: '#93C5FD', to: '#1D4ED8', glow: '#3B82F6', icon: Factory },
+  { key: 'Delhi', label: 'Delhi', fullLabel: 'Delhi', value: 9, trend: -2.1, description: 'Material-heavy site with two delayed orders.', from: '#F3B69C', to: '#B14A2A', glow: '#DE7356', icon: Anchor },
+  { key: 'Hyderabad', label: 'Hyderabad', fullLabel: 'Hyderabad', value: 8, trend: 1.4, description: 'Balanced manufactured/material mix.', from: '#6EE7B7', to: '#047857', glow: '#10B981', icon: Warehouse },
+  { key: 'Nagpur', label: 'Nagpur', fullLabel: 'Nagpur', value: 6, trend: 0.6, description: 'Steady load, no delays this cycle.', from: '#FCD34D', to: '#B45309', glow: '#EAA640', icon: Building2 },
+  { key: 'Surat', label: 'Surat', fullLabel: 'Surat', value: 5, trend: 2.0, description: 'Smallest site by order count.', from: '#F3B8CB', to: '#9F4C6E', glow: '#D68BA4', icon: Boxes },
 ];
 
 // ---- Monthly Deliveries — planned vs actual (last 6 months) ----

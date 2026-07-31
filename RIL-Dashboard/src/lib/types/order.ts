@@ -1,6 +1,6 @@
 export type ContractType = 'Manufactured' | 'Material';
 
-export type Plant = 'Jamnagar' | 'Dahej' | 'Hazira' | 'Nagothane' | 'Silvassa';
+export type Plant = 'Jamnagar' | 'Delhi' | 'Hyderabad' | 'Nagpur' | 'Surat';
 
 export type GateState = 'done' | 'current' | 'locked';
 

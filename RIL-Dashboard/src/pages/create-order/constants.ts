@@ -24,10 +24,10 @@ export const VENDOR_OPTIONS = [
 export const PLANT_OPTIONS = [
   { value: '', label: 'Select plant' },
   { value: 'Jamnagar', label: 'Jamnagar' },
-  { value: 'Dahej', label: 'Dahej' },
-  { value: 'Hazira', label: 'Hazira' },
-  { value: 'Nagothane', label: 'Nagothane' },
-  { value: 'Silvassa', label: 'Silvassa' },
+  { value: 'Delhi', label: 'Delhi' },
+  { value: 'Hyderabad', label: 'Hyderabad' },
+  { value: 'Nagpur', label: 'Nagpur' },
+  { value: 'Surat', label: 'Surat' },
 ];
 
 export const CONTRACT_OPTIONS: Array<{ value: ContractType; label: ContractType }> = [
@@ -66,15 +66,15 @@ export const WORKFLOWS: Record<ContractType, Milestone[]> = {
 
 export const STAKEHOLDERS: Stakeholder[] = [
   { id: 'ananya-rao', name: 'Ananya Rao', role: 'Project Manager', plant: 'Jamnagar' },
-  { id: 'rishabh-mehta', name: 'Rishabh Mehta', role: 'Site Engineer', plant: 'Dahej' },
-  { id: 'devika-nair', name: 'Devika Nair', role: 'QC Lead', plant: 'Hazira' },
-  { id: 'samar-shah', name: 'Samar Shah', role: 'Security Officer', plant: 'Nagothane' },
-  { id: 'mira-kapoor', name: 'Mira Kapoor', role: 'Finance Owner', plant: 'Silvassa' },
-  { id: 'kabir-sen', name: 'Kabir Sen', role: 'Project Manager', plant: 'Hazira' },
+  { id: 'rishabh-mehta', name: 'Rishabh Mehta', role: 'Site Engineer', plant: 'Delhi' },
+  { id: 'devika-nair', name: 'Devika Nair', role: 'QC Lead', plant: 'Hyderabad' },
+  { id: 'samar-shah', name: 'Samar Shah', role: 'Security Officer', plant: 'Nagpur' },
+  { id: 'mira-kapoor', name: 'Mira Kapoor', role: 'Finance Owner', plant: 'Surat' },
+  { id: 'kabir-sen', name: 'Kabir Sen', role: 'Project Manager', plant: 'Hyderabad' },
   { id: 'isha-menon', name: 'Isha Menon', role: 'QC Lead', plant: 'Jamnagar' },
-  { id: 'vivaan-das', name: 'Vivaan Das', role: 'Security Officer', plant: 'Dahej' },
+  { id: 'vivaan-das', name: 'Vivaan Das', role: 'Security Officer', plant: 'Delhi' },
   { id: 'tara-iyer', name: 'Tara Iyer', role: 'Finance Owner', plant: 'Jamnagar' },
-  { id: 'neel-suri', name: 'Neel Suri', role: 'Site Engineer', plant: 'Silvassa' },
+  { id: 'neel-suri', name: 'Neel Suri', role: 'Site Engineer', plant: 'Surat' },
 ];
 
 export const ROLE_ORDER: StakeholderRole[] = [

@@ -541,15 +541,15 @@ export default function GateWorkspace() {
               />
             </Section>
 
-            <Section title="Execution Checklist" description="Complete each operational requirement before closing the gate.">
+            <Section title="Execution Checklist" description="">
               <Checklist items={config.checklist} checked={checked} onToggle={toggleCheck} />
             </Section>
 
-            <Section title="Dynamic Form" description={`${milestone.label} fields are rendered from the selected execution gate.`}>
+            <Section title="Dynamic Form" description="">
               <DynamicForm fields={config.fields} form={form} setField={setField} />
             </Section>
 
-            <Section title="Attachments" description="Attach gate evidence for the completion file.">
+            <Section title="Attachments" description="">
               <button
                 type="button"
                 onClick={addMockUpload}
@@ -581,7 +581,7 @@ export default function GateWorkspace() {
               </div>
             </Section>
 
-            <Section title="Comments & Timeline" description="Internal notes, approval history and latest order activity.">
+            <Section title="Comments & Timeline" description="">
               <div className="grid gap-4">
                 <TextField
                   label="Internal note"

@@ -42,6 +42,8 @@ interface TooltipState {
   index: number;
   x: number;
   y: number;
+  /** Donut bounds at hover time, so the tooltip can steer clear of the ring. */
+  avoid?: { left: number; right: number; top: number; bottom: number };
 }
 
 interface PieChartProps {
@@ -111,7 +113,13 @@ export default function PieChart({
   const center = centerIndex !== null ? segments[centerIndex] : null;
 
   const setHover = (index: number, e: React.MouseEvent) => {
-    setTip({ index, x: e.clientX, y: e.clientY });
+    const r = donutRef.current?.getBoundingClientRect();
+    setTip({
+      index,
+      x: e.clientX,
+      y: e.clientY,
+      avoid: r ? { left: r.left, right: r.right, top: r.top, bottom: r.bottom } : undefined,
+    });
     onHoverKey?.(segments[index].key);
   };
   const moveHover = (e: React.MouseEvent) =>
@@ -342,7 +350,11 @@ export default function PieChart({
         })}
       </motion.div>
 
-      <FloatingTooltip open={tip !== null && ownHover !== null} cursor={tip ? { x: tip.x, y: tip.y } : undefined}>
+      <FloatingTooltip
+        open={tip !== null && ownHover !== null}
+        cursor={tip ? { x: tip.x, y: tip.y } : undefined}
+        avoid={tip?.avoid}
+      >
         {ownHover !== null && (
           <>
             <div className={TT_HEAD}>

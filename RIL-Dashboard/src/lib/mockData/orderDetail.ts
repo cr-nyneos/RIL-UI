@@ -27,7 +27,7 @@ export const GATE_CHAIN: { key: string; label: string; role: string }[] = [
   { key: 'payment', label: 'Payment Release / SCF', role: 'Finance Controller' },
 ];
 
-const PLANTS: Plant[] = ['Jamnagar', 'Dahej', 'Hazira', 'Nagothane', 'Silvassa'];
+const PLANTS: Plant[] = ['Jamnagar', 'Delhi', 'Hyderabad', 'Nagpur', 'Surat'];
 
 /** One person per role per plant — the pool the reassign modal filters against. */
 export const STAKEHOLDER_DIRECTORY: Record<string, string[]> = {
@@ -315,11 +315,11 @@ const ORD_2044_MILESTONES: Milestone[] = [
     state: 'complete',
     owner: { name: 'Ajay Kulkarni', role: 'Security Desk' },
     timestamp: '2026-06-28',
-    detail: 'Vendor personnel cleared for Nagothane against three active site passes.',
+    detail: 'Vendor personnel cleared for Nagpur against three active site passes.',
     documents: ['ID Proof – Kirloskar personnel', 'Safety Induction Record'],
     history: [
       { at: '2026-06-24', note: 'Clearance request raised by Kirloskar Brothers.' },
-      { at: '2026-06-28', note: 'Cleared by Ajay Kulkarni, Security Desk – Nagothane.' },
+      { at: '2026-06-28', note: 'Cleared by Ajay Kulkarni, Security Desk – Nagpur.' },
     ],
   },
   {
@@ -561,13 +561,13 @@ export function buildDemoOrderDetail(order: Order): OrderDetail {
     documents: ORD_2044_DOCUMENTS,
     securityPasses: ORD_2044_PASSES,
     stakeholders: [
-      { gateKey: 'clearance', gate: 'Security Clearance', owner: 'Ajay Kulkarni', role: 'Security Desk', plant: 'Nagothane', assignment: 'Auto' },
-      { gateKey: 'documents', gate: 'Document Verification', owner: 'Sandeep Rathi', role: 'QA Officer', plant: 'Nagothane', assignment: 'Auto' },
-      { gateKey: 'gate-in', gate: 'Material Gate-In', owner: 'Nitin Bhosale', role: 'Gate Supervisor', plant: 'Nagothane', assignment: 'Manual' },
-      { gateKey: 'qc', gate: 'QC / Inspection', owner: 'Sandeep Rathi', role: 'QA Officer', plant: 'Nagothane', assignment: 'Auto' },
-      { gateKey: 'delivery', gate: 'Delivery Confirmation', owner: 'Sunil Bhatt', role: 'Site Lead', plant: 'Nagothane', assignment: 'Auto' },
-      { gateKey: 'governance', gate: 'Governance Approval', owner: 'Pooja Agarwal', role: 'Governance Auditor', plant: 'Nagothane', assignment: 'Auto' },
-      { gateKey: 'payment', gate: 'Payment Release / SCF', owner: 'Shweta Pillai', role: 'Finance Controller', plant: 'Nagothane', assignment: 'Auto' },
+      { gateKey: 'clearance', gate: 'Security Clearance', owner: 'Ajay Kulkarni', role: 'Security Desk', plant: 'Nagpur', assignment: 'Auto' },
+      { gateKey: 'documents', gate: 'Document Verification', owner: 'Sandeep Rathi', role: 'QA Officer', plant: 'Nagpur', assignment: 'Auto' },
+      { gateKey: 'gate-in', gate: 'Material Gate-In', owner: 'Nitin Bhosale', role: 'Gate Supervisor', plant: 'Nagpur', assignment: 'Manual' },
+      { gateKey: 'qc', gate: 'QC / Inspection', owner: 'Sandeep Rathi', role: 'QA Officer', plant: 'Nagpur', assignment: 'Auto' },
+      { gateKey: 'delivery', gate: 'Delivery Confirmation', owner: 'Sunil Bhatt', role: 'Site Lead', plant: 'Nagpur', assignment: 'Auto' },
+      { gateKey: 'governance', gate: 'Governance Approval', owner: 'Pooja Agarwal', role: 'Governance Auditor', plant: 'Nagpur', assignment: 'Auto' },
+      { gateKey: 'payment', gate: 'Payment Release / SCF', owner: 'Shweta Pillai', role: 'Finance Controller', plant: 'Nagpur', assignment: 'Auto' },
     ],
     invoices: ORD_2044_INVOICES,
     scf: ORD_2044_SCF,

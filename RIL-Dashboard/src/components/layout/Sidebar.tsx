@@ -58,7 +58,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           variant="ghost"
           size="sm"
           onClick={onToggle}
-          className={`flex-none p-0 ${collapsed ? 'h-7 w-7' : 'ml-auto h-8 w-8'}`}
+          className={`flex-none cursor-pointer p-0 ${collapsed ? 'h-7 w-7' : 'ml-auto h-8 w-8'}`}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           <Menu size={16} />
