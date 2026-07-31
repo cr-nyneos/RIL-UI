@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Demo from './pages/Demo';
@@ -11,6 +11,10 @@ import LoadingScreen2 from './components/LoadingScreen2.tsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/login', { replace: true });
+  }, [navigate]);
 
   return (
     <>
@@ -26,7 +30,6 @@ function App() {
         <LoadingScreen2
           onComplete={() => {
             setLoading(false);
-            navigate('/login', { replace: true });
           }}
         />
       )}
