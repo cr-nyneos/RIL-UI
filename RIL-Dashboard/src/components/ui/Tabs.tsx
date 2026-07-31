@@ -13,7 +13,8 @@ interface TabsProps {
   onChange: (key: string) => void;
   className?: string;
   size?: 'sm' | 'md';
-  variant?: 'pill' | 'segmented';
+  /** `attached` shares the container's border so tabs and panel read as one object. */
+  variant?: 'pill' | 'segmented' | 'attached';
   toggleOff?: boolean;
 }
 
@@ -57,11 +58,28 @@ export default function Tabs({
     refs.current[tabs[next].key]?.focus();
   };
 
+  const attached = variant === 'attached';
+
   return (
     <div
-      className={`glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`}
+      className={
+        attached
+          ? `surface-section-head relative flex items-stretch overflow-x-auto px-2 ${className}`
+          : `glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`
+      }
       role="tablist"
     >
+      {attached && (
+        <span
+          aria-hidden
+          className="tab-pill absolute bottom-[-1px] left-0 h-0.5 bg-brand-600"
+          style={{
+            transform: `translateX(${pill?.left ?? 0}px)`,
+            width: pill?.width ?? 0,
+            opacity: pill ? 1 : 0,
+          }}
+        />
+      )}
       {variant === 'pill' && (
         <span
           aria-hidden
@@ -87,8 +105,10 @@ export default function Tabs({
             tabIndex={isActive ? 0 : -1}
             onClick={() => handleChange(tab.key)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-sm)] transition-colors duration-150 ${
-              size === 'sm' ? 'px-3 py-1.5 text-[13px]' : 'px-3.5 py-1.5 text-[14px]'
+            className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap transition-colors duration-150 ${
+              attached
+                ? 'h-11 px-3.5 text-[14px]'
+                : `rounded-[var(--radius-sm)] ${size === 'sm' ? 'px-3 py-1.5 text-[13px]' : 'px-3.5 py-1.5 text-[14px]'}`
             } ${
               isActive
                 ? `${variant === 'segmented' ? 'bg-brand-600 text-white' : 'text-brand-700'} font-bold`

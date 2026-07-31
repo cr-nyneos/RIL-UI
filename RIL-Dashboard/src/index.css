@@ -562,6 +562,11 @@
   z-index: 2;
 }
 
+/* Expandable rows wrap the row and its detail band, so the divider rule moves
+   to the wrapper — the table still reads as one object. */
+.dt-row-group > .dt-row { border-bottom: 1px solid var(--color-glass-hairline); }
+.dt-row-group:last-child > *:last-child { border-bottom: none; }
+
 .dt-row-clickable { cursor: pointer; }
 
 .dt-row:hover,
@@ -577,7 +582,7 @@
 .dt-row:focus-visible::before { transform: scaleX(1); }
 
 /* ---------------------------------------------------------------- */
-/* GateRail — current-segment marker + inline tooltip                */
+/* StageRail — current-segment marker + inline tooltip               */
 /* ---------------------------------------------------------------- */
 @keyframes gate-pulse {
   0%   { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.28); }

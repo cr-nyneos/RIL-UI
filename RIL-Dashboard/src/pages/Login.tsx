@@ -50,8 +50,14 @@ export default function Login() {
 
   return (
     <div className="app-canvas flex h-screen max-h-screen w-full overflow-hidden">
-      <div className="flex flex-1 items-center justify-center px-6 lg:flex-[0_0_46%] lg:px-16">
-        <div className={`w-full max-w-[370px] ${shake ? 'is-error' : ''}`}>
+      <div
+        className="relative flex flex-1 items-center justify-center overflow-hidden px-6 lg:flex-[0_0_46%] lg:px-16"
+        style={{
+          background:
+            'linear-gradient(155deg, #dfe1f7 0%, #eef0fb 30%, #f4f5fa 55%, #e9e7fa 80%, #ded9f6 100%)',
+        }}
+      >
+        <div className={`relative z-10 w-full max-w-[370px] ${shake ? 'is-error' : ''}`}>
           {/* <div className="mb-12 flex items-center gap-2.5 max-[480px]:mb-8">
             <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--color-brand-600),var(--color-violet-500))] text-sm font-extrabold text-white">
             <Warehouse size={20} strokeWidth={2.2} />

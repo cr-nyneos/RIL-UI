@@ -6,11 +6,13 @@ interface SearchInputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  id?: string;
 }
 
-export default function SearchInput({ value, onChange, placeholder, className = '' }: SearchInputProps) {
+export default function SearchInput({ value, onChange, placeholder, className = '', id }: SearchInputProps) {
   return (
     <TextField
+      id={id}
       type="search"
       value={value}
       onChange={onChange}

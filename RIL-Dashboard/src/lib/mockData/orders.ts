@@ -73,7 +73,7 @@ export const ORDERS: Order[] = [
     progress: 70,
     expected: '2026-08-20',
     valueCr: 0.9,
-    gates: gates(4),
+    gates: gates(3),
     flags: [{ type: 'partial', detail: '18 of 24 line items received; balance scheduled.' }],
   },
   {

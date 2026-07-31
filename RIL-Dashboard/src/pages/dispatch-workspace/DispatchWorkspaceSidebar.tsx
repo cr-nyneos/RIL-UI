@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 import CardHeader from '../../components/ui/CardHeader';
-import GateRail from '../../components/ui/GateRail';
+import StageRail from '../../components/ui/StageRail';
 import GlassCard from '../../components/ui/GlassCard';
 import StatusBadge from '../../components/ui/StatusBadge';
 import { formatExpected, formatValue, getOrderBucket } from '../../lib/orderFilters';
@@ -94,7 +94,7 @@ export default function DispatchWorkspaceSidebar({
             {order ? (
               <div className="space-y-4">
                 <StatusBadge status={order.status} />
-                <GateRail gates={order.gates} compact={false} blocked={getOrderBucket(order) === 'blocked'} />
+                <StageRail stages={order.gates} compact={false} blocked={getOrderBucket(order) === 'blocked'} />
               </div>
             ) : (
               <SummaryRow label="Order" value="" />

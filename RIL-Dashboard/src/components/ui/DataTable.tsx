@@ -32,6 +32,9 @@ interface DataTableProps<T> {
   bodyKey?: string;
   /** Must be at least the sum of the fixed column widths, or flexible columns collapse. */
   minWidth?: string;
+  /** Row key currently expanded; its detail renders as a full-width band beneath the row. */
+  expandedKey?: string | null;
+  renderExpanded?: (row: T) => ReactNode;
 }
 
 const ALIGN: Record<'left' | 'center' | 'right', string> = {
@@ -62,6 +65,8 @@ export default function DataTable<T>({
   surface = true,
   bodyKey,
   minWidth = '1320px',
+  expandedKey,
+  renderExpanded,
 }: DataTableProps<T>) {
   const template = columns.map((c) => c.width ?? 'minmax(0,1fr)').join(' ');
   const rowHeight = density === 'compact' ? 'h-12' : 'h-16';
@@ -126,10 +131,15 @@ export default function DataTable<T>({
           <div key={bodyKey} className={bodyKey ? 'animate-fade-fast' : undefined}>
           {rows.length === 0
             ? emptyState
-            : rows.map((row, rowIndex) => (
+            : rows.map((row, rowIndex) => {
+                const key = rowKey(row);
+                const expanded = renderExpanded && expandedKey === key;
+
+                return (
+                  <div key={key} className="dt-row-group">
                 <div
-                  key={rowKey(row)}
                   role="row"
+                  aria-expanded={renderExpanded ? Boolean(expanded) : undefined}
                   tabIndex={onRowClick ? 0 : undefined}
                   onClick={onRowClick ? () => onRowClick(row) : undefined}
                   onKeyDown={(event) => handleKeyDown(event, row)}
@@ -158,7 +168,18 @@ export default function DataTable<T>({
                     );
                   })}
                 </div>
-              ))}
+
+                {expanded && (
+                  <div
+                    className="border-b border-[var(--color-glass-hairline)] px-5 py-5"
+                    style={{ background: 'var(--color-surface-subtle)' }}
+                  >
+                    {renderExpanded(row)}
+                  </div>
+                )}
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

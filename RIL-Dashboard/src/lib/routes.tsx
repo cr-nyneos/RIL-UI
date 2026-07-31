@@ -12,6 +12,7 @@ import type { ReactElement } from 'react';
 import Dashboard from '../pages/Dashboard';
 import CreateOrder from '../pages/CreateOrder';
 import Orders from '../pages/Orders';
+import OrderDetail from '../pages/OrderDetail';
 import RouteStub from '../pages/RouteStub';
 import DispatchWorkspace from '../pages/DispatchWorkspace';
 
@@ -29,7 +30,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/orders', label: 'Orders', icon: Package, element: <Orders />, nav: true },
   { path: '/orders/create', label: 'Create Order', icon: ClipboardPlus, element: <CreateOrder />, nav: true, navGroup: '/orders' },
   { path: '/orders/dispatch', label: 'Dispatch Workspace', icon: Truck, element: <DispatchWorkspace />, nav: true, navGroup: '/orders' },
-  { path: '/orders/:id', label: 'Order Detail', element: <RouteStub /> },
+  { path: '/orders/:id', label: 'Order Detail', element: <OrderDetail /> },
   { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <RouteStub title="Approvals" />, nav: true },
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <RouteStub title="Vendors" />, nav: true },
   { path: '/payments', label: 'Payments', icon: Wallet, element: <RouteStub title="Payments" />, nav: true },

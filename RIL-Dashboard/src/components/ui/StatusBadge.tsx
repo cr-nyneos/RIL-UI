@@ -6,10 +6,10 @@ import type { Tone } from '../../lib/types/ui';
 
 export type StatusTone = Extract<Tone, 'success' | 'warning' | 'danger' | 'neutral'>;
 
-const SUCCESS = ['on track', 'delivered', 'verified', 'paid', 'passed', 'cleared'];
-const NEUTRAL_BRAND = ['in transit', 'gate-in', 'in qc', 'active'];
-const WARNING = ['partially delivered', 'pending', 'awaiting', 'scheduled'];
-const DANGER = ['delayed', 'blocked', 'overdue', 'rejected', 'failed', 'damaged', 'escalated', 'critical'];
+const SUCCESS = ['on track', 'delivered', 'verified', 'paid', 'passed', 'cleared', 'approved', 'matched', 'collected'];
+const NEUTRAL_BRAND = ['in transit', 'gate-in', 'in qc', 'active', 'draft', 'submitted'];
+const WARNING = ['partially delivered', 'pending', 'awaiting', 'scheduled', 'expiring'];
+const DANGER = ['delayed', 'blocked', 'overdue', 'rejected', 'failed', 'fail', 'mismatch', 'damaged', 'escalated', 'critical', 'expired'];
 const NEUTRAL = ['completed', 'archived', 'n/a'];
 
 /**

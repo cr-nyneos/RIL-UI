@@ -15,7 +15,7 @@ import Section from '../components/ui/Section';
 import StatusBadge from '../components/ui/StatusBadge';
 import TypeBadge from '../components/ui/TypeBadge';
 import ProgressMeter from '../components/ui/ProgressMeter';
-import GateRail from '../components/ui/GateRail';
+import StageRail from '../components/ui/StageRail';
 import ExceptionFlags from '../components/ui/ExceptionFlags';
 import Toast from '../components/ui/Toast';
 import Button from '../components/ui/Button';
@@ -201,7 +201,7 @@ export default function Orders() {
       header: 'Gate',
       width: '170px',
       render: (order) => (
-        <GateRail gates={order.gates} compact blocked={getOrderBucket(order) === 'blocked'} />
+        <StageRail stages={order.gates} compact blocked={getOrderBucket(order) === 'blocked'} />
       ),
     },
     {

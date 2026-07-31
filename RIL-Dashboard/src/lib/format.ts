@@ -20,6 +20,11 @@ export function formatRelative(value: string | Date, clock: Date = new Date(), c
   return `in ${diff} days`;
 }
 
+export function formatTime(value: string | Date): string {
+  const date = typeof value === 'string' ? new Date(value) : value;
+  return new Intl.DateTimeFormat(DATE_LOCALE, { hour: '2-digit', minute: '2-digit' }).format(date);
+}
+
 export function formatPercent(value: number, decimals = 1): string {
   return `${value.toFixed(decimals)}%`;
 }
