@@ -120,7 +120,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           alignItems: 'center',
           justifyContent: 'center',
           background: 'linear-gradient(to bottom, #0F172A 0%, #172554 50%, #1E293B 100%)',
-          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          fontFamily: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
           opacity: mounted ? 1 : 0,
           transform: mounted ? 'translateY(0)' : 'translateY(12px)',
           transition: `opacity ${EXIT_DURATION}ms ease-in-out, transform ${FADE_IN_DURATION}ms cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -248,7 +248,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <p
             style={{
               margin: '8px 0 0 0',
-              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontFamily: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
               fontWeight: 500,
               fontSize: 16,
               color: '#94A3B8',
@@ -298,7 +298,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <p
             style={{
               margin: '20px 0 0 0',
-              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontFamily: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
               fontWeight: 500,
               fontSize: 14,
               color: '#CBD5E1',
@@ -312,7 +312,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <p
             style={{
               margin: '6px 0 0 0',
-              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontFamily: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
               fontWeight: 400,
               fontSize: 13,
               color: '#64748B',

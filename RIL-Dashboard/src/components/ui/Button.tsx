@@ -34,7 +34,7 @@ const VARIANT: Record<ButtonVariant, string> = {
   primary:
     'border-brand-600 bg-brand-600 text-white hover:border-brand-700 hover:bg-brand-700 active:bg-brand-800',
   secondary:
-    'border-[var(--color-border)] bg-[var(--color-surface-input)] text-ink-700 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-hover)] hover:text-ink-900',
+    'border-[var(--color-border)] bg-[var(--color-brand-soft2)] text-brand-800 hover:border-brand-500 hover:bg-[var(--color-surface-selected)] hover:text-brand-700',
   ghost: 'bg-transparent text-ink-600 hover:bg-[var(--color-surface-hover)] hover:text-ink-900',
   icon: 'justify-center border-[var(--color-border)] bg-[var(--color-surface-input)] text-ink-600 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-hover)] hover:text-ink-900',
   link: 'h-auto bg-transparent px-0 text-brand-700 hover:underline hover:underline-offset-[3px]',

@@ -98,6 +98,26 @@ export const MONTHLY_DELIVERIES_PLANNED: LinePoint[] = [
   { month: 'Jul', value: 26 },
 ];
 
+// ---- Vendor operations health (dashboard highlight band) ----
+export interface OpsHealthMetric {
+  label: string;
+  value: string;
+  caption: string;
+}
+
+export const VENDOR_OPS_HEALTH = {
+  score: 94,
+  band: 'Excellent',
+  summary:
+    'Vendor SLA adherence, QC acceptance and gate-in punctuality are tracking above target across the network. 2 sites carry open exceptions this cycle.',
+  metrics: [
+    { label: 'On-time Delivery', value: '92%', caption: 'vs 88% target' },
+    { label: 'QC Acceptance', value: '97%', caption: 'first-pass rate' },
+    { label: 'SLA Adherence', value: '89%', caption: 'governance gates' },
+    { label: 'Vendor Compliance', value: '96%', caption: 'documents current' },
+  ] as OpsHealthMetric[],
+};
+
 // ---- Hero priority signals ----
 export interface PrioritySignal {
   label: string;

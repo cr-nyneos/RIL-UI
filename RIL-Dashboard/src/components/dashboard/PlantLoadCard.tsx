@@ -9,7 +9,7 @@ interface PlantLoadCardProps {
 
 export default function PlantLoadCard({ data }: PlantLoadCardProps) {
   return (
-    <div className="flex h-full flex-col p-5">
+    <div className="dash-chart-card flex h-full flex-col p-6">
       <CardHeader
         eyebrow="Site Load"
         icon={Waves}
@@ -17,7 +17,7 @@ export default function PlantLoadCard({ data }: PlantLoadCardProps) {
         // subtitle="Hover a vessel to disturb the liquid & read its load"
         pill={`${data.length} SITES`}
       />
-      <div className="min-h-75 flex-1">
+      <div className="dash-chart-stage min-h-75 flex-1 p-2">
         <BarChart data={data} unit="" valuePrefix="" shareLabel="Share of active orders" showTrend={false} />
       </div>
     </div>

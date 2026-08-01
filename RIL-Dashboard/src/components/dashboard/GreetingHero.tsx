@@ -10,9 +10,9 @@ function timeGreeting() {
 }
 
 const TONE_DOT: Record<string, string> = {
-  danger: 'bg-danger',
-  warning: 'bg-warning',
-  info: 'bg-brand-600',
+  danger: 'bg-[#FF9C8A]',
+  warning: 'bg-[#FFC46B]',
+  info: 'bg-[#7FB2FF]',
 };
 
 export default function GreetingHero() {
@@ -24,24 +24,36 @@ export default function GreetingHero() {
   });
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <h1 className="text-page-title">{timeGreeting()}, Chaitanya</h1>
-        <p className="text-meta mt-0.5">{dateLabel}</p>
-      </div>
+    <div className="dash-hero relative overflow-hidden px-6 py-7 sm:px-9 sm:py-8">
+      <div className="relative flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
+        <div className="min-w-0">
+          <span className="dash-hero-eyebrow inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] leading-4 font-bold tracking-[0.14em] uppercase">
+            <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#7FB2FF]" />
+            Vendor Management
+          </span>
+          <h1 className="mt-4 text-[30px] leading-9 font-bold tracking-[-0.025em] text-white sm:text-[34px] sm:leading-11">
+            {timeGreeting()}, Chaitanya
+          </h1>
+          <p className="mt-2.5 text-[13.5px] leading-5 font-medium text-[#A9C2F0]">
+            {dateLabel}
+            <span className="mx-2 text-[#4F6BA8]">|</span>
+            Live network position across 5 plants
+          </p>
+        </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        {PRIORITY_SIGNALS.map((s) => (
-          <Link
-            key={s.label}
-            to={s.href}
-            className="flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-input)] px-3 text-[13px] font-medium text-ink-700 transition-colors duration-150 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-hover)]"
-          >
-            <span className={`h-1.5 w-1.5 flex-none rounded-full ${TONE_DOT[s.tone]}`} />
-            <span className="font-bold tabular-nums text-ink-900">{s.count}</span>
-            {s.label}
-          </Link>
-        ))}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {PRIORITY_SIGNALS.map((s) => (
+            <Link
+              key={s.label}
+              to={s.href}
+              className="dash-hero-chip flex h-12 items-center gap-2.5 rounded-[var(--radius-md)] px-3.5 text-[12.5px] font-semibold text-[#A9C2F0]"
+            >
+              <span className={`h-2 w-2 flex-none rounded-full ${TONE_DOT[s.tone]}`} />
+              <span className="text-[17px] leading-5 font-bold tabular-nums text-white">{s.count}</span>
+              {s.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

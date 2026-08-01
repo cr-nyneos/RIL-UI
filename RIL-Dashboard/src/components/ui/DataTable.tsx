@@ -1,5 +1,5 @@
+import { Fragment } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 
 export interface Column<T> {
   key: string;
@@ -26,30 +26,20 @@ interface DataTableProps<T> {
   stagger?: boolean;
   density?: 'default' | 'compact';
   footer?: ReactNode;
-  /** False when the table already lives inside a section container. */
   surface?: boolean;
-  /** Change this to crossfade the body (filter / sort / page change) without replaying the page entrance. */
   bodyKey?: string;
-  /** Must be at least the sum of the fixed column widths, or flexible columns collapse. */
   minWidth?: string;
-  /** Row key currently expanded; its detail renders as a full-width band beneath the row. */
   expandedKey?: string | null;
   renderExpanded?: (row: T) => ReactNode;
 }
 
 const ALIGN: Record<'left' | 'center' | 'right', string> = {
-  left: 'justify-start text-left',
-  center: 'justify-center text-center',
-  right: 'justify-end text-right',
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
 };
 
 const STAGGER_CAP = 10;
-
-function cellPadding(index: number, count: number): string {
-  if (index === 0) return 'pl-5 pr-3';
-  if (index === count - 1) return 'pl-3 pr-5';
-  return 'px-3';
-}
 
 export default function DataTable<T>({
   columns,
@@ -68,8 +58,7 @@ export default function DataTable<T>({
   expandedKey,
   renderExpanded,
 }: DataTableProps<T>) {
-  const template = columns.map((c) => c.width ?? 'minmax(0,1fr)').join(' ');
-  const rowHeight = density === 'compact' ? 'h-12' : 'h-16';
+  const cellPadding = density === 'compact' ? 'px-6 py-2.5' : 'px-6 py-4';
 
   const handleSort = (column: Column<T>) => {
     if (!column.sortable || !onSortChange) return;
@@ -77,7 +66,7 @@ export default function DataTable<T>({
     onSortChange({ key: column.key, dir });
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>, row: T) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, row: T) => {
     if (!onRowClick) return;
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -87,101 +76,139 @@ export default function DataTable<T>({
 
   return (
     <div className={surface ? 'glass-raised overflow-hidden' : 'overflow-hidden'}>
-      <div className="overflow-x-auto overflow-y-visible">
-        <div role="table" style={{ minWidth }}>
-          <div
-            role="row"
-            className="dt-head grid items-center"
-            style={{ gridTemplateColumns: template }}
-          >
-            {columns.map((column, index) => {
-              const align = column.align ?? 'left';
-              const active = sort?.key === column.key;
-              const padding = cellPadding(index, columns.length);
+      <div
+        className={`overflow-x-auto overflow-y-visible ${
+          surface ? '' : 'rounded-lg border border-(--color-border)'
+        }`}
+      >
+        <table className="min-w-full table-auto border-collapse" style={{ minWidth }}>
+          <colgroup>
+            {columns.map((column) => (
+              <col key={column.key} style={column.width ? { width: column.width } : undefined} />
+            ))}
+          </colgroup>
+          <thead>
+            <tr>
+              {columns.map((column) => {
+                const align = column.align ?? 'left';
+                const active = sort?.key === column.key;
 
-              if (!column.sortable) {
                 return (
-                  <div
+                  <th
                     key={column.key}
-                    role="columnheader"
-                    className={`text-table-head flex h-12 items-center ${ALIGN[align]} ${padding}`}
+                    scope="col"
+                    aria-sort={
+                      column.sortable && active
+                        ? sort.dir === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : undefined
+                    }
+                    className={`dt-head ${cellPadding} ${ALIGN[align]} sticky top-0 z-10 select-none text-sm font-semibold tracking-wider text-ink-700 uppercase`}
                   >
-                    {column.header}
-                  </div>
+                    <div
+                      className={`flex items-center gap-1 ${
+                        align === 'right' ? 'justify-end' : align === 'center' ? 'justify-center' : 'justify-start'
+                      }`}
+                    >
+                      <span
+                        className={column.sortable ? 'cursor-pointer' : undefined}
+                        onClick={column.sortable ? () => handleSort(column) : undefined}
+                        onKeyDown={
+                          column.sortable
+                            ? (event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault();
+                                  handleSort(column);
+                                }
+                              }
+                            : undefined
+                        }
+                        tabIndex={column.sortable ? 0 : undefined}
+                        role={column.sortable ? 'button' : undefined}
+                        aria-label={column.sortable ? 'Sort column' : undefined}
+                      >
+                        {column.header}
+                      </span>
+                      {column.sortable && (
+                        <span className="ml-1 text-xs text-brand-700">
+                          {active && sort.dir === 'asc' ? (
+                            '▲'
+                          ) : active && sort.dir === 'desc' ? (
+                            '▼'
+                          ) : (
+                            <span className="opacity-30">▲▼</span>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  </th>
                 );
-              }
-
-              return (
-                <div key={column.key} role="columnheader" aria-sort={active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none'}>
-                  <button
-                    type="button"
-                    onClick={() => handleSort(column)}
-                    className={`text-table-head flex h-12 w-full items-center gap-1.5 transition-colors duration-200 hover:text-ink-700 ${ALIGN[align]} ${padding}`}
-                  >
-                    <span>{column.header}</span>
-                    {!active && <ChevronsUpDown size={13} strokeWidth={2.4} className="text-ink-400" />}
-                    {active && sort.dir === 'asc' && <ChevronUp size={13} strokeWidth={2.6} className="text-brand-700" />}
-                    {active && sort.dir === 'desc' && <ChevronDown size={13} strokeWidth={2.6} className="text-brand-700" />}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-
-          <div key={bodyKey} className={bodyKey ? 'animate-fade-fast' : undefined}>
-          {rows.length === 0
-            ? emptyState
-            : rows.map((row, rowIndex) => {
+              })}
+            </tr>
+          </thead>
+          <tbody key={bodyKey} className={bodyKey ? 'animate-fade-fast' : undefined}>
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-6 py-12 text-center">
+                  {emptyState}
+                </td>
+              </tr>
+            ) : (
+              rows.map((row, rowIndex) => {
                 const key = rowKey(row);
                 const expanded = renderExpanded && expandedKey === key;
 
                 return (
-                  <div key={key} className="dt-row-group">
-                <div
-                  role="row"
-                  aria-expanded={renderExpanded ? Boolean(expanded) : undefined}
-                  tabIndex={onRowClick ? 0 : undefined}
-                  onClick={onRowClick ? () => onRowClick(row) : undefined}
-                  onKeyDown={(event) => handleKeyDown(event, row)}
-                  className={`dt-row grid items-center ${rowHeight} ${onRowClick ? 'dt-row-clickable' : ''} ${
-                    expanded ? 'dt-row-selected' : ''
-                  } ${stagger ? 'animate-rise' : ''}`}
-                  style={{
-                    gridTemplateColumns: template,
-                    ...(stagger
-                      ? { animationDelay: `${240 + Math.min(rowIndex, STAGGER_CAP) * 15}ms` }
-                      : {}),
-                  }}
-                >
-                  {columns.map((column, index) => {
-                    const align = column.align ?? 'left';
-                    return (
-                      <div
-                        key={column.key}
-                        role="cell"
-                        className={`flex min-w-0 items-center ${ALIGN[align]} ${cellPadding(index, columns.length)}`}
+                  <Fragment key={key}>
+                      <tr
+                        aria-expanded={renderExpanded ? Boolean(expanded) : undefined}
+                        tabIndex={onRowClick ? 0 : undefined}
+                        onClick={onRowClick ? () => onRowClick(row) : undefined}
+                        onKeyDown={(event) => handleKeyDown(event, row)}
+                        className={`transition-colors duration-150 ${
+                          expanded ? 'dt-tr-selected' : rowIndex % 2 === 0 ? 'dt-tr-alt' : 'dt-tr'
+                        } ${onRowClick ? 'dt-tr-clickable' : ''} ${stagger ? 'animate-rise' : ''}`}
+                        style={
+                          stagger
+                            ? { animationDelay: `${240 + Math.min(rowIndex, STAGGER_CAP) * 15}ms` }
+                            : undefined
+                        }
                       >
-                        <div className="min-w-0 max-w-full">
-                          {column.render ? column.render(row) : String((row as Record<string, unknown>)[column.key] ?? '')}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                        {columns.map((column) => {
+                          const align = column.align ?? 'left';
+                          return (
+                            <td
+                              key={column.key}
+                              className={`${cellPadding} ${ALIGN[align]} border-b border-[var(--color-border)] text-sm font-normal text-ink-700`}
+                            >
+                              <div className="min-w-0 max-w-full">
+                                {column.render
+                                  ? column.render(row)
+                                  : String((row as Record<string, unknown>)[column.key] ?? '')}
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
 
-                {expanded && (
-                  <div
-                    className="border-b border-[var(--color-glass-hairline)] px-5 py-5"
-                    style={{ background: 'var(--color-surface-subtle)' }}
-                  >
-                    {renderExpanded(row)}
-                  </div>
-                )}
-                  </div>
+                      {expanded && (
+                        <tr>
+                          <td
+                            colSpan={columns.length}
+                            className="border-b border-[var(--color-border)] px-6 py-6"
+                            style={{ background: 'var(--color-surface-subtle)' }}
+                          >
+                            {renderExpanded(row)}
+                          </td>
+                        </tr>
+                      )}
+                  </Fragment>
                 );
-              })}
-          </div>
-        </div>
+              })
+            )}
+          </tbody>
+        </table>
       </div>
       {footer}
     </div>

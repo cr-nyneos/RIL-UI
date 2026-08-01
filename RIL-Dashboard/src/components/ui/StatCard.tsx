@@ -36,17 +36,22 @@ export default function StatCard({
   delay = 0,
 }: StatCardProps) {
   const content = (
-    <div className="glass-raised kpi-card relative flex h-[152px] flex-col p-4">
-      <div className="kpi-head flex items-center gap-2">
-        <span className="flex-none" style={{ color: accentIcon } as CSSProperties}>
-          <Icon size={16} strokeWidth={2.2} />
+    <div className="glass-raised kpi-card relative flex h-43 flex-col">
+      <span className="kpi-edge" style={{ background: accentIcon } as CSSProperties} />
+
+      <div className="kpi-head flex flex-none items-center gap-3 px-4 pt-4">
+        <span
+          className="kpi-medallion flex h-9 w-9 flex-none items-center justify-center rounded-3xl"
+          style={{ background: accentIcon } as CSSProperties}
+        >
+          <Icon size={17} strokeWidth={2.3} />
         </span>
         <p className="text-kpi-label truncate uppercase">{label}</p>
       </div>
 
-      <div key={value} className="animate-fade mt-2 flex items-baseline gap-2">
+      <div key={value} className="animate-fade flex items-baseline gap-2.5 px-4 pt-5">
         <span
-          className="kpi-value text-[24px] leading-8 font-bold tabular-nums tracking-tight"
+          className="kpi-value text-[30px] leading-9 font-bold tabular-nums tracking-tight"
           style={{ color: accentText } as CSSProperties}
         >
           {value}

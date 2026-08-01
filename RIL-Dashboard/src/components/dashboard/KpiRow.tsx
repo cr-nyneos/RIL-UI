@@ -18,7 +18,7 @@ function trendDirection(series: number[]): 'up' | 'down' {
 
 export default function KpiRow({ totals }: KpiRowProps) {
   return (
-    <div className="grid grid-cols-2 items-stretch gap-3 lg:grid-cols-5">
+    <div className="grid grid-cols-2 items-stretch gap-4 lg:grid-cols-5">
       <StatCard
         icon={Package}
         label="Active Orders"
@@ -27,9 +27,9 @@ export default function KpiRow({ totals }: KpiRowProps) {
         trendValue={trendValue(KPI_SPARKLINES.activeOrders)}
         trendTone="neutral"
         accentId="active-orders"
-        accentFill="var(--color-kpi-brand-fill)"
+        accentFill="var(--color-kpi-cobalt)"
         accentText="var(--color-kpi-brand-text)"
-        accentIcon="var(--color-kpi-neutral-icon)"
+        accentIcon="var(--color-kpi-cobalt)"
         sparkline={KPI_SPARKLINES.activeOrders}
         href="/orders"
         delay={40}
@@ -42,9 +42,9 @@ export default function KpiRow({ totals }: KpiRowProps) {
         trendValue={trendValue(KPI_SPARKLINES.inTransit)}
         trendTone="neutral"
         accentId="in-transit"
-        accentFill="var(--color-kpi-neutral-fill)"
+        accentFill="var(--color-kpi-azure)"
         accentText="var(--color-kpi-neutral-text)"
-        accentIcon="var(--color-kpi-neutral-icon)"
+        accentIcon="var(--color-kpi-azure)"
         sparkline={KPI_SPARKLINES.inTransit}
         href="/orders"
         delay={70}
@@ -86,9 +86,9 @@ export default function KpiRow({ totals }: KpiRowProps) {
         trend={trendDirection(KPI_SPARKLINES.pendingPayments)}
         trendTone="neutral"
         accentId="pending-payments"
-        accentFill="var(--color-kpi-neutral-fill)"
+        accentFill="var(--color-kpi-indigo)"
         accentText="var(--color-kpi-neutral-text)"
-        accentIcon="var(--color-kpi-neutral-icon)"
+        accentIcon="var(--color-kpi-indigo)"
         sparkline={KPI_SPARKLINES.pendingPayments}
         href="/payments"
         delay={160}

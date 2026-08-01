@@ -24,43 +24,43 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       ref={rowRef}
       onMouseEnter={() => collapsed && setTipAnchor(rowRef.current?.getBoundingClientRect() ?? null)}
       onMouseLeave={() => setTipAnchor(null)}
-      className={`group relative flex items-center gap-3 rounded-[var(--radius-md)] py-2 text-[14px] transition-colors duration-150 ${
+      className={`group relative flex items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] py-2.5 text-[14.5px] transition-colors duration-150 ${
         nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
         collapsed ? 'justify-center' : ''
       } ${soon || disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${
         isActive
-          ? 'sidebar-item-active font-bold text-brand-800'
+          ? 'sidebar-item-active font-bold text-sidebar-active-ink'
           : soon
-            ? 'font-semibold text-ink-600'
+            ? 'font-semibold text-sidebar-icon/70'
             : disabled
               ? 'font-semibold text-sidebar-ink'
               : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
       }`}
     >
-      {isActive && <span className="sidebar-item-indicator absolute top-1 bottom-1 left-0 w-0.5 rounded-[var(--radius-sm)]" />}
+      {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />}
       {Icon ? (
         <Icon
-          size={18}
+          size={20}
           strokeWidth={2.1}
           className={`flex-none transition-colors duration-180 ${
             isActive
-              ? 'text-brand-600'
+              ? 'text-sidebar-active-icon'
               : soon || disabled
                 ? 'text-sidebar-icon'
-                : 'text-sidebar-icon group-hover:text-brand-600'
+                : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'
           }`}
         />
       ) : (
         <span
           className={`h-1.5 w-1.5 flex-none rounded-full transition-colors duration-180 ${
-            isActive ? 'bg-brand-600' : 'bg-sidebar-icon group-hover:bg-brand-600'
+            isActive ? 'bg-sidebar-active-icon' : 'bg-sidebar-icon group-hover:bg-sidebar-hover-ink'
           }`}
         />
       )}
       {!collapsed && <span className="truncate">{label}</span>}
       {soon && !collapsed && (
-        <span className="ml-auto flex-none rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-chip-neutral px-1.5 py-0.5 text-[10px] font-semibold text-ink-500">
+        <span className="ml-auto flex-none rounded-[var(--radius-sm)] border border-[var(--color-rail-border)] bg-[var(--color-surface-rail-mark)] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-sidebar-group-label uppercase">
           Soon
         </span>
       )}

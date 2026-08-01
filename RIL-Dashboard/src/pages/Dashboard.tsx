@@ -2,26 +2,66 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import AppShell from '../components/layout/AppShell';
-// import GreetingHero from '../components/dashboard/GreetingHero';
-import DashboardFilters from '../components/dashboard/DashboardFilters';
-import KpiRow from '../components/dashboard/KpiRow';
-import OrderStatusCard from '../components/dashboard/OrderStatusCard';
-import PlantLoadCard from '../components/dashboard/PlantLoadCard';
-import DeliveryTrendCard from '../components/dashboard/DeliveryTrendCard';
-import Section from '../components/ui/Section';
+import KpiGroupCard, { type KpiGroup } from '../components/dashboard/KpiGroupCard';
+import PieChart from '../components/PieChart';
+import BarChart from '../components/BarChart';
+import LineChart from '../components/LineChart';
 import Button from '../components/ui/Button';
-import { MONTHLY_DELIVERIES_ACTUAL, MONTHLY_DELIVERIES_PLANNED } from '../lib/mockData/dashboard';
-import {  computeFilteredTotals,  computeFilteredStatusDistribution, computeFilteredPlantSegments,
+import Select from '../components/ui/Select';
+import Tabs from '../components/ui/Tabs';
+import DataTable, { type Column } from '../components/ui/DataTable';
+import Pagination from '../components/ui/Pagination';
+import {
+  MONTHLY_DELIVERIES_ACTUAL,
+  MONTHLY_DELIVERIES_PLANNED,
+  PLANTS,
+  PLANT_BREAKDOWN,
+  type PlantBreakdown,
+} from '../lib/mockData/dashboard';
+import { formatCurrency } from '../lib/format';
+import {
+  computeFilteredTotals,
+  computeFilteredStatusDistribution,
+  computeFilteredPlantSegments,
   type PlantFilter,
   type ContractTypeFilter,
   type PeriodFilter,
 } from '../lib/dashboardFilters';
-import GreetingHero from '../components/dashboard/GreetingHero';
+
+const PAGE_SIZE = 4;
+
+interface StatusRow {
+  key: string;
+  status: string;
+  orders: number;
+  share: string;
+}
+
+const statusColumns: Column<StatusRow>[] = [
+  { key: 'status', header: 'Status' },
+  { key: 'orders', header: 'Orders', align: 'right' },
+  { key: 'share', header: 'Share', align: 'right' },
+];
+
+const plantColumns: Column<PlantBreakdown>[] = [
+  { key: 'plant', header: 'Plant' },
+  { key: 'activeOrders', header: 'Active Orders', align: 'right' },
+  { key: 'inTransit', header: 'In Transit', align: 'right' },
+  { key: 'delayed', header: 'Delayed', align: 'right' },
+  { key: 'governanceApprovals', header: 'Approvals', align: 'right' },
+  {
+    key: 'pendingPaymentsCr',
+    header: 'Pending Payments',
+    align: 'right',
+    render: (row) => formatCurrency(row.pendingPaymentsCr),
+  },
+];
 
 export default function Dashboard() {
   const [plant, setPlant] = useState<PlantFilter>('all');
   const [contractType, setContractType] = useState<ContractTypeFilter>('all');
   const [period, setPeriod] = useState<PeriodFilter>('6m');
+  const [page, setPage] = useState(1);
 
   const totals = useMemo(() => computeFilteredTotals(plant, contractType), [plant, contractType]);
   const statusData = useMemo(() => computeFilteredStatusDistribution(plant, contractType), [plant, contractType]);
@@ -36,68 +76,238 @@ export default function Dashboard() {
     [period],
   );
 
+  const kpiGroups: KpiGroup[] = useMemo(
+    () => [
+      {
+        header: 'Total Active Orders',
+        data: [
+          { title: 'Active', value: totals.activeOrders },
+          { title: 'In Transit', value: totals.inTransit },
+        ],
+      },
+      {
+        header: 'Total Delivery Exposure',
+        data: [
+          { title: 'Delayed', value: totals.delayed },
+          { title: 'On Track', value: Math.max(0, totals.activeOrders - totals.delayed) },
+        ],
+      },
+      {
+        header: 'Total Governance Load',
+        data: [
+          { title: 'Approvals', value: totals.governanceApprovals },
+          { title: 'Cleared', value: Math.max(0, totals.activeOrders - totals.governanceApprovals) },
+        ],
+      },
+      {
+        header: 'Total Pending Payments',
+        data: [
+          { title: 'Pending', value: formatCurrency(totals.pendingPaymentsCr) },
+          { title: 'Sites', value: plantData.length },
+        ],
+      },
+    ],
+    [totals, plantData.length],
+  );
+
+  const positionGroup: KpiGroup = useMemo(
+    () => ({
+      header: 'Network Position & Forecast',
+      data: [
+        { title: 'Active Orders', value: totals.activeOrders },
+        { title: 'In Transit', value: totals.inTransit },
+        { title: 'Delayed', value: totals.delayed },
+        { title: 'Approvals', value: totals.governanceApprovals },
+        { title: 'Pending Payments', value: formatCurrency(totals.pendingPaymentsCr) },
+      ],
+    }),
+    [totals],
+  );
+
+  const statusRows: StatusRow[] = useMemo(() => {
+    const total = statusData.reduce((sum, s) => sum + s.value, 0) || 1;
+    return statusData.map((s) => ({
+      key: s.key,
+      status: s.fullLabel,
+      orders: s.value,
+      share: `${((s.value / total) * 100).toFixed(1)}%`,
+    }));
+  }, [statusData]);
+
+  const plantRows = useMemo(
+    () => (plant === 'all' ? PLANT_BREAKDOWN : PLANT_BREAKDOWN.filter((row) => row.id === plant)),
+    [plant],
+  );
+
+  const pageCount = Math.max(1, Math.ceil(plantRows.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const pagedPlantRows = plantRows.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   return (
     <AppShell>
-      <div className="flex flex-col gap-4">
-        <div className="animate-rise" style={{ animationDelay: '0ms' }}>
-          
-          <GreetingHero />
+      <div className="tsy space-y-6">
+        <div className="tsy-page-head">
+          <h1 className="tsy-page-title">Vendor Operations Control Dashboard</h1>
+          <nav aria-label="breadcrumb" className="mb-3 flex items-center gap-2 text-sm">
+            <Link to="/" className="tsy-title hover:underline">
+              Home
+            </Link>
+            <span>/</span>
+            <span className="font-medium">Operations Home Page</span>
+          </nav>
         </div>
 
-        <Section
-          title="Global Overview"
-          // description="Portfolio position across the selected plant, contract type and period."
-          toolbar={
-            <div className="flex w-full flex-wrap items-center justify-between gap-2.5">
-              <DashboardFilters
-                plant={plant}
-                onPlantChange={setPlant}
-                contractType={contractType}
-                onContractTypeChange={setContractType}
-                period={period}
-                onPeriodChange={setPeriod}
-              />
-              <Button as={Link} to="/orders/create" variant="primary" size="md" icon={<Plus size={16} />}>
-                Create Order
-              </Button>
-            </div>
-          }
-          padded={false}
-          bodyClassName="p-4"
-          className="animate-rise"
-          headClassName="bg-[var(--color-brand-soft2)]"
-          style={{ animationDelay: '60ms' }}
-        >
-          <KpiRow totals={totals} />
+        {/* Filters */}
+        <div className="tsy-section grid grid-cols-1 gap-6 p-6 md:grid-cols-4">
+          <div className="flex flex-col gap-1">
+            <span className="tsy-title truncate font-semibold whitespace-nowrap">Plant</span>
+            <Select
+              ariaLabel="Filter by plant"
+              value={plant}
+              onChange={setPlant}
+              options={[{ value: 'all', label: 'All Plants' }, ...PLANTS.map((p) => ({ value: p.id, label: p.label }))]}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="tsy-title truncate font-semibold whitespace-nowrap">Time Period</span>
+            <Select
+              ariaLabel="Filter by period"
+              value={period}
+              onChange={setPeriod}
+              options={[
+                { value: '3m', label: 'Last 3 Months' },
+                { value: '6m', label: 'Last 6 Months' },
+              ]}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="tsy-title truncate font-semibold whitespace-nowrap">Contract Type</span>
+            <Tabs
+              active={contractType}
+              onChange={(value) => setContractType(value as ContractTypeFilter)}
+              size="sm"
+              variant="segmented"
+              tabs={[
+                { key: 'all', label: 'All' },
+                { key: 'Manufactured', label: 'Manufactured' },
+                { key: 'Material', label: 'Material' },
+              ]}
+            />
+          </div>
+          <div className="flex items-end justify-end">
+            <Button as={Link} to="/orders/create" variant="primary" size="md" className="tsy-btn" icon={<Plus size={16} />}>
+              Create Order
+            </Button>
+          </div>
+        </div>
 
-          {/* Delivery trend lives in the same container as the KPI row — the
-              headline numbers and the curve behind them are one reading. */}
-          <div className="mt-1 flex flex-wrap items-center justify-between gap-3 px-1 pt-4">
-            <div className="min-w-0">
-              <h3 className="text-section-title truncate">Delivery Trends</h3>
-              {/* <p className="text-meta mt-0.5 truncate">
-                Planned against actual deliveries over the selected period.
-              </p> */}
-            </div>
-            <span className="text-pill">{period === '3m' ? 'LAST 3 MONTHS' : 'LAST 6 MONTHS'}</span>
-          </div>
-          <div className="h-[25rem] w-full">
-            <DeliveryTrendCard actual={actual} planned={planned} />
-          </div>
-        </Section>
+        {/* KPI CARDS */}
+        <div className="tsy-section grid grid-cols-1 gap-6 p-6 md:grid-cols-2 xl:grid-cols-4">
+          {kpiGroups.map((group) => (
+            <KpiGroupCard key={group.header} group={group} />
+          ))}
+        </div>
 
-        <Section
-          title="Portfolio Analytics"
-          // description="Pipeline composition and site level load."
-          padded={false}
-          className="animate-rise"
-          style={{ animationDelay: '180ms' }}
-        >
-          <div className="grid grid-cols-1 items-stretch divide-y divide-[var(--color-border)] xl:grid-cols-2 xl:divide-x xl:divide-y-0">
-            <OrderStatusCard data={statusData} activeCount={totals.activeOrders} />
-            <PlantLoadCard data={plantData} />
+        {/* Position + pipeline composition */}
+        <div className="tsy-section grid grid-cols-1 gap-6 p-6 xl:grid-cols-3">
+          <div className="tsy-card h-125 overflow-auto p-6">
+            <h3 className="tsy-title mb-6 text-xl font-semibold">{positionGroup.header}</h3>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {positionGroup.data.map((item) => (
+                <div key={item.title} className="tsy-section p-2">
+                  <div className="text-lg font-semibold">{item.title}</div>
+                  <div className="tsy-title text-2xl font-bold">{item.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </Section>
+          <div className="tsy-card p-6 xl:col-span-2">
+            <h3 className="tsy-title mb-6 text-xl font-semibold">Orders by Status (Active)</h3>
+            <PieChart
+              data={statusData}
+              unit=""
+              valuePrefix=""
+              shareLabel="Share"
+              shareUnitLabel="of active orders"
+              totalLabel="Total Active"
+              idleHint=""
+              showTrend={false}
+              ariaLabel="Order status distribution"
+            />
+          </div>
+        </div>
+
+        {/* By status / by plant */}
+        <div className="tsy-section grid grid-cols-1 gap-6 p-6 xl:grid-cols-2">
+          <div className="tsy-card space-y-6 p-2">
+            <h3 className="tsy-title pl-4 text-xl font-semibold">By Status</h3>
+            <PieChart
+              data={statusData}
+              unit=""
+              valuePrefix=""
+              shareLabel="Share"
+              shareUnitLabel="of active orders"
+              totalLabel="Total Active"
+              idleHint=""
+              showTrend={false}
+              ariaLabel="Orders by status"
+            />
+            <DataTable
+              columns={statusColumns}
+              rows={statusRows}
+              rowKey={(row) => row.key}
+              surface={false}
+              density="compact"
+              minWidth="360px"
+            />
+          </div>
+          <div className="tsy-card space-y-6 p-2">
+            <h3 className="tsy-title pl-4 text-xl font-semibold">By Plant</h3>
+            <BarChart data={plantData} unit="" valuePrefix="" shareLabel="Share of active orders" showTrend={false} />
+          </div>
+        </div>
+
+        {/* Plant-wise breakdown */}
+        <div className="tsy-section p-6">
+          <h3 className="tsy-title mb-6 text-xl font-semibold">Plant-wise Order & Payment Breakdown</h3>
+          <div className="tsy-card overflow-hidden">
+            <DataTable
+              columns={plantColumns}
+              rows={pagedPlantRows}
+              rowKey={(row) => row.id}
+              surface={false}
+              minWidth="720px"
+              footer={
+                <Pagination
+                  page={currentPage}
+                  pageCount={pageCount}
+                  pageSize={PAGE_SIZE}
+                  total={plantRows.length}
+                  onPageChange={setPage}
+                />
+              }
+            />
+          </div>
+        </div>
+
+        {/* Delivery trend */}
+        <div className="tsy-section p-6">
+          <h3 className="tsy-title mb-6 text-xl font-semibold">Monthly Deliveries — Planned vs. Actual</h3>
+          <div className="tsy-card h-105 w-full p-4">
+            <LineChart
+              data={actual}
+              secondaryData={planned}
+              unit=""
+              valuePrefix=""
+              primaryLabel="Actual"
+              secondaryLabel="Planned"
+              periodLabel="Deliveries"
+              changeLabel="MoM change"
+              ariaLabel="Monthly deliveries, planned vs actual"
+              fillHeight
+            />
+          </div>
+        </div>
       </div>
     </AppShell>
   );

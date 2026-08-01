@@ -34,40 +34,63 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   return (
     <aside
       className={`surface-rail animate-slide-left flex h-full flex-none flex-col overflow-hidden transition-[width] duration-250 ease-out ${
-        collapsed ? 'w-[76px]' : 'w-[248px]'
+        collapsed ? 'w-[84px]' : 'w-[272px]'
       }`}
     >
       <div
-        className={`surface-rail-mark flex h-16 flex-none items-center ${
-          collapsed ? 'justify-between gap-0 px-2.5' : 'gap-2.5 px-4'
+        className={`surface-rail-mark flex h-[72px] flex-none items-center ${
+          collapsed ? 'justify-center px-3' : 'gap-3 px-5'
         }`}
       >
         <Link
           to="/"
           aria-label="Go to dashboard"
-          className="flex min-w-0 cursor-pointer items-center gap-2.5"
+          className="flex min-w-0 cursor-pointer items-center gap-3"
         >
-          <span className="flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] bg-brand-600 text-sm font-bold text-white">
-            <Warehouse size={18} strokeWidth={2.2} />
+          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[var(--radius-md)] bg-brand-600 text-sm font-bold text-white shadow-[0_4px_14px_-4px_rgba(54,92,245,0.8)]">
+            <Warehouse size={21} strokeWidth={2.2} />
           </span>
           {!collapsed && (
-            <span className="truncate text-[16px] font-bold tracking-tight text-ink-900">NyneOS</span>
+            <span className="flex min-w-0 flex-col">
+              <span className="truncate text-[18px] leading-6 font-bold tracking-tight text-white">
+                NyneOS
+              </span>
+              <span className="truncate text-[11px] leading-4 font-semibold tracking-[0.06em] text-sidebar-group-label uppercase">
+                Vendor Mgmt
+              </span>
+            </span>
           )}
         </Link>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggle}
-          className={`flex-none cursor-pointer p-0 ${collapsed ? 'h-7 w-7' : 'ml-auto h-8 w-8'}`}
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          <Menu size={16} />
-        </Button>
+        {!collapsed && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggle}
+            className="ml-auto h-9 w-9 flex-none cursor-pointer rail-icon-btn p-0"
+            aria-label="Collapse sidebar"
+          >
+            <Menu size={18} />
+          </Button>
+        )}
       </div>
 
-      <nav className="scrollbar-subtle flex flex-1 flex-col gap-0.5 overflow-y-auto overflow-x-hidden px-2.5 py-3">
+      {collapsed && (
+        <div className="flex flex-none justify-center px-3 pt-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggle}
+            className="h-9 w-9 cursor-pointer rail-icon-btn p-0"
+            aria-label="Expand sidebar"
+          >
+            <Menu size={18} />
+          </Button>
+        </div>
+      )}
+
+      <nav className="scrollbar-subtle flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-3.5 py-4">
         {!collapsed && (
-          <span className="mb-1.5 px-3 text-[11px] font-bold tracking-[0.08em] text-sidebar-group-label uppercase">
+          <span className="mt-1 mb-2.5 px-3 text-[11px] font-bold tracking-widest text-sidebar-group-label uppercase">
             Operations
           </span>
         )}
@@ -86,10 +109,10 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           ),
         )}
 
-        <div className="surface-divider mt-4 mb-3 h-px flex-none" />
+        <div className="surface-rail-divider mt-5 mb-4 h-px flex-none" />
 
         {!collapsed && (
-          <span className="mb-1.5 px-3 text-[11px] font-bold tracking-[0.08em] text-sidebar-group-label uppercase">
+          <span className="mb-2.5 px-3 text-[11px] font-bold tracking-widest text-sidebar-group-label uppercase">
             Phase 2
           </span>
         )}
@@ -98,7 +121,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="flex-none border-t border-[var(--color-border)] bg-[var(--color-brand-soft2)] px-2.5 py-2.5">
+      <div className="flex flex-none flex-col gap-1 border-t border-[var(--color-rail-border)] bg-[var(--color-surface-rail-mark)] px-3.5 py-3.5">
         <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled />
         <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
       </div>

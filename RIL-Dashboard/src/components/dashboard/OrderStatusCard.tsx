@@ -10,7 +10,7 @@ interface OrderStatusCardProps {
 
 export default function OrderStatusCard({ data, activeCount }: OrderStatusCardProps) {
   return (
-    <div className="flex h-full flex-col p-5">
+    <div className="dash-chart-card flex h-full flex-col p-6">
       <CardHeader
         eyebrow="Order Pipeline"
         icon={PieIcon}
@@ -18,7 +18,7 @@ export default function OrderStatusCard({ data, activeCount }: OrderStatusCardPr
         // subtitle="Hover a slice to expand the breakdown"
         pill={`${activeCount} ACTIVE`}
       />
-      <div className="flex min-h-75 flex-1 items-center justify-center">
+      <div className="dash-chart-stage flex min-h-75 flex-1 items-center justify-center p-2">
         <PieChart
           data={data}
           unit=""
