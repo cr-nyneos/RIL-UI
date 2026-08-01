@@ -67,8 +67,8 @@ export default function JourneyCard({
           onToggle();
         }
       }}
-      className={`focus-bloom group cursor-pointer overflow-hidden rounded-[var(--radius-lg)] border bg-[var(--color-surface-section)] outline-none transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-px hover:shadow-[0_16px_32px_-24px_rgba(23,37,84,0.55)] ${
-        expanded ? 'border-[var(--color-border-strong)]' : 'border-[var(--color-border)]'
+      className={`focus-bloom group cursor-pointer overflow-hidden rounded-[var(--radius-md)] border bg-[var(--color-surface-section)] outline-none transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-px hover:border-brand-500 hover:shadow-[0_16px_32px_-24px_rgba(23,37,84,0.55)] ${
+        expanded ? 'border-brand-500' : 'border-[var(--color-border-strong)]'
       } ${className}`}
       style={style}
     >
@@ -81,10 +81,10 @@ export default function JourneyCard({
               </span>
             )}
             <div className="min-w-0">
-              <h3 className="truncate text-[15px] leading-5 font-bold tracking-[-0.01em] text-ink-900 tabular-nums">
+              <h3 className="truncate text-[17px] leading-6 font-bold tracking-[-0.01em] text-ink-900 tabular-nums">
                 {title}
               </h3>
-              <p className="text-meta mt-1 truncate">
+              <p className="mt-1 truncate text-[13px] leading-5 font-medium text-ink-500">
                 {subtitle}
                 {subtitle && reference && ' · '}
                 {reference &&
@@ -117,7 +117,7 @@ export default function JourneyCard({
         <JourneyRail stages={stages} />
 
         {note && (
-          <p className="flex items-start gap-2 text-[13px] leading-5 font-medium" style={{ color: toneToken(note.tone).text }}>
+          <p className="flex items-start gap-2 text-[14px] leading-5 font-semibold" style={{ color: toneToken(note.tone).text }}>
             <span
               aria-hidden
               className="mt-[7px] h-1.5 w-1.5 flex-none rounded-full"
@@ -134,8 +134,8 @@ export default function JourneyCard({
         <dl className="grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
           {facts.map((fact) => (
             <div key={fact.label} className="min-w-0">
-              <dt className="text-table-head">{fact.label}</dt>
-              <dd className="mt-1 text-[13px] leading-5 font-bold text-ink-900 tabular-nums">{fact.value}</dd>
+              <dt className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">{fact.label}</dt>
+              <dd className="mt-1 text-[14px] leading-5 font-semibold text-ink-900 tabular-nums">{fact.value}</dd>
             </div>
           ))}
         </dl>

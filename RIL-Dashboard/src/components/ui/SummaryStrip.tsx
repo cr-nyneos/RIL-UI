@@ -1,4 +1,4 @@
-export type SummaryTone = 'neutral' | 'danger' | 'warning';
+export type SummaryTone = 'neutral' | 'danger' | 'warning' | 'success';
 
 export interface SummaryItem {
   key: string;
@@ -18,6 +18,7 @@ const TONE_COLOR: Record<SummaryTone, string> = {
   neutral: 'var(--color-ink-900)',
   danger: 'var(--color-danger)',
   warning: 'var(--color-warning)',
+  success: 'var(--color-success)',
 };
 
 export default function SummaryStrip({ items, onSelect, className = '' }: SummaryStripProps) {

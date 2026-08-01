@@ -8,7 +8,9 @@ import EmptyState from '../components/ui/EmptyState';
 import PageHeader from '../components/ui/PageHeader';
 import SearchInput from '../components/ui/SearchInput';
 import Section from '../components/ui/Section';
+import SectionCard from '../components/ui/SectionCard';
 import Select from '../components/ui/Select';
+import SummaryStrip from '../components/ui/SummaryStrip';
 import Tabs from '../components/ui/Tabs';
 import Toast from '../components/ui/Toast';
 
@@ -62,15 +64,6 @@ function matchesManpower(record: ManpowerRecord, query: string): boolean {
     .join(' ')
     .toLowerCase()
     .includes(q);
-}
-
-function SummaryMetric({ label, value }: { label: string; value: number | string }) {
-  return (
-    <div className="min-w-0 sm:border-l sm:border-[var(--color-border)] sm:pl-6 sm:first:border-l-0 sm:first:pl-0">
-      <div className="text-table-head truncate">{label}</div>
-      <div className="mt-1 text-[22px] leading-7 font-bold tracking-[-0.02em] text-ink-900 tabular-nums">{value}</div>
-    </div>
-  );
 }
 
 export default function SiteOperations() {
@@ -146,78 +139,108 @@ export default function SiteOperations() {
       <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
+            size="lg"
+            rule
             title="Site Operations"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Site Operations', to: '/site-operations' },
+              { label: tabs.find((item) => item.key === tab)?.label ?? 'Gate Movements' },
+            ]}
             actions={
-              <>
-                <SearchInput
-                  value={query}
-                  onChange={setQuery}
-                  placeholder="Search vehicle, vendor, driver"
-                  className="w-full sm:w-[260px]"
-                />
-                <Button
-                  variant="secondary"
-                  icon={<RefreshCw size={16} strokeWidth={2.3} />}
-                  aria-label="Refresh site operations"
-                  onClick={() => setToast('Site operations refreshed.')}
-                  className="cursor-pointer"
-                />
-                <Button
-                  variant="primary"
-                  icon={<ClipboardPlus size={16} strokeWidth={2.3} />}
-                  onClick={() => navigate('/site-operations/new')}
-                  className="cursor-pointer"
-                >
-                  Record Movement
-                </Button>
-              </>
+              <Button
+                variant="primary"
+                icon={<ClipboardPlus size={16} strokeWidth={2.3} />}
+                onClick={() => navigate('/site-operations/new')}
+                className="cursor-pointer"
+              >
+                Record Movement
+              </Button>
             }
           />
-          {/* <p className="text-meta mt-1">
-            Live vehicle, material and manpower movement across every plant gate.
-          </p> */}
         </div>
 
-        <Section
-          padded={false}
+        <Tabs
           className="animate-rise"
           style={{ animationDelay: '60ms' }}
-          toolbar={
-            <div className="grid w-full grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
-              <SummaryMetric label="Vehicles On Site" value={summary.vehiclesOnSite} />
-              <SummaryMetric label="Entries Today" value={summary.entriesToday} />
-              <SummaryMetric label="Exits Today" value={summary.exitsToday} />
-              <SummaryMetric label="Active Workforce" value={summary.activeWorkforce} />
-            </div>
-          }
+          variant="bar"
+          tabs={tabs}
+          active={tab}
+          onChange={(key) => setTab(key as TabKey)}
+        />
+
+        <div
+          className="animate-rise flex flex-wrap items-end justify-between gap-4"
+          style={{ animationDelay: '90ms' }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
-            <Tabs tabs={tabs} active={tab} onChange={(key) => setTab(key as TabKey)} />
-            <div className="flex flex-wrap items-center gap-2">
-              <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="min-w-[150px]" />
-              {tab === 'movements' && (
+          <div className="flex flex-wrap items-end gap-2.5">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-subtitle text-brand-700">Plant</span>
+              <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="w-[180px]" />
+            </label>
+            {tab === 'movements' && (
+              <label className="flex flex-col gap-1.5">
+                <span className="text-subtitle text-brand-700">Status</span>
                 <Select
                   value={status}
                   onChange={setStatus}
                   options={STATUS_OPTIONS}
                   ariaLabel="Movement status"
-                  className="min-w-[170px]"
+                  className="w-[190px]"
                 />
-              )}
-            </div>
+              </label>
+            )}
+            <Button
+              variant="icon"
+              icon={<RefreshCw size={17} strokeWidth={2.3} />}
+              aria-label="Refresh site operations"
+              title="Refresh site operations"
+              onClick={() => setToast('Site operations refreshed.')}
+              className="cursor-pointer"
+            />
           </div>
-        </Section>
+
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            placeholder="Search vehicle, vendor, driver"
+            className="w-[280px]"
+          />
+        </div>
+
+        <SectionCard
+          title="Today at a Glance"
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '120ms' }}
+        >
+          <SummaryStrip
+            items={[
+              { key: 'onsite', label: 'Vehicles On Site', value: summary.vehiclesOnSite },
+              { key: 'entries', label: 'Entries Today', value: summary.entriesToday },
+              { key: 'exits', label: 'Exits Today', value: summary.exitsToday },
+              { key: 'workforce', label: 'Active Workforce', value: summary.activeWorkforce },
+            ]}
+          />
+        </SectionCard>
 
         <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]">
           <div key={tab} className="animate-fade-fast flex min-w-0 flex-col gap-6">
             {tab === 'movements' ? (
               grouped.length ? (
                 grouped.map((group) => (
-                  <section key={group.key} className="flex flex-col gap-3">
-                    <div className="flex items-baseline gap-2 px-1">
-                      <h2 className="text-table-head">{group.label}</h2>
-                      <span className="text-meta tabular-nums">{group.items.length}</span>
-                    </div>
+                  <SectionCard
+                    key={group.key}
+                    title={group.label}
+                    collapsible
+                    bodyTone="subtle"
+                    bodyClassName="flex flex-col gap-3"
+                    meta={
+                      <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
+                        {group.items.length}
+                      </span>
+                    }
+                  >
                     {group.items.map((movement, index) => (
                       <MovementJourney
                         key={movement.id}
@@ -230,7 +253,7 @@ export default function SiteOperations() {
                         style={{ animationDelay: `${Math.min(index, 8) * 15}ms` }}
                       />
                     ))}
-                  </section>
+                  </SectionCard>
                 ))
               ) : (
                 <Section>

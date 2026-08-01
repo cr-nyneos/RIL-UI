@@ -24,7 +24,7 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       ref={rowRef}
       onMouseEnter={() => collapsed && setTipAnchor(rowRef.current?.getBoundingClientRect() ?? null)}
       onMouseLeave={() => setTipAnchor(null)}
-      className={`group relative flex items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] py-2.5 text-[14.5px] transition-colors duration-150 ${
+      className={`group relative flex items-center gap-3 overflow-hidden rounded-[var(--radius-md)] py-3 text-[16px] transition-colors duration-150 ${
         nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
         collapsed ? 'justify-center' : ''

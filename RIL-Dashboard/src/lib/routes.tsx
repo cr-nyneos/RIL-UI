@@ -22,6 +22,7 @@ import DispatchWorkspace from '../pages/DispatchWorkspace';
 import GateWorkspace from '../pages/GateWorkspace';
 import RecordMovement from '../pages/RecordMovement';
 import SiteOperations from '../pages/SiteOperations';
+import Vendors from '../pages/Vendors';
 
 export interface AppRoute {
   path: string;
@@ -43,7 +44,8 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/orders/:id/gates/:gate', label: 'Gate Workspace', element: <GateWorkspace /> },
   { path: '/orders/:id', label: 'Order Detail', element: <OrderDetail /> },
   { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <Approvals />, nav: true },
-  { path: '/vendors', label: 'Vendors', icon: Building2, element: <RouteStub title="Vendors" />, nav: true },
+  { path: '/vendors', label: 'Vendors', icon: Building2, element: <Vendors />, nav: true },
+  { path: '/vendors/:id', label: 'Vendor 360', element: <RouteStub title="Vendor 360" /> },
   { path: '/payments', label: 'Payments', icon: Wallet, element: <RouteStub title="Payments" />, nav: true },
 ];
 

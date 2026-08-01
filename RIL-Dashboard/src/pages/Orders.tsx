@@ -11,7 +11,6 @@ import Tabs from '../components/ui/Tabs';
 import DataTable, { type Column, type SortState } from '../components/ui/DataTable';
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
-import Section from '../components/ui/Section';
 import StatusBadge from '../components/ui/StatusBadge';
 import TypeBadge from '../components/ui/TypeBadge';
 import ProgressMeter from '../components/ui/ProgressMeter';
@@ -33,7 +32,25 @@ import {
 } from '../lib/orderFilters';
 import Select from '../components/ui/Select';
 
-const PAGE_SIZE = 5;
+const DEFAULT_PAGE_SIZE = 5;
+
+interface OrderCounts {
+  total: number;
+  execution: number;
+  delayed: number;
+  blocked: number;
+  completed: number;
+  manufactured: number;
+  material: number;
+}
+
+const TAB_ITEMS: { key: OrderFilter; label: string; count: (c: OrderCounts) => number }[] = [
+  { key: 'all', label: 'All', count: (c) => c.total },
+  { key: 'manufactured', label: 'Manufactured', count: (c) => c.manufactured },
+  { key: 'material', label: 'Material', count: (c) => c.material },
+  { key: 'delayed', label: 'Delayed', count: (c) => c.delayed },
+  { key: 'completed', label: 'Completed', count: (c) => c.completed },
+];
 
 const PLANT_OPTIONS = [
   { value: 'all', label: 'All Plants' },
@@ -109,6 +126,7 @@ export default function Orders() {
   const [filter, setFilter] = useState<OrderFilter>('all');
   const [sort, setSort] = useState<SortState>({ key: 'order', dir: 'desc' });
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [staggerRows, setStaggerRows] = useState(true);
   const [toast, setToast] = useState<string | null>(() => {
     const state = location.state as { toast?: string } | null;
@@ -145,11 +163,11 @@ export default function Orders() {
     return sorted;
   }, [scoped, filter, sort]);
 
-  const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(rows.length / pageSize));
 
   const pageRows = useMemo(
-    () => rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
-    [rows, page],
+    () => rows.slice((page - 1) * pageSize, page * pageSize),
+    [rows, page, pageSize],
   );
 
   // Any filter interaction resets to page 1 and stops the mount-only row cascade.
@@ -157,6 +175,12 @@ export default function Orders() {
     setStaggerRows(false);
     setPage(1);
   };
+
+  // Mirrors Cimplr's breadcrumb, where the last crumb names the active view.
+  // The summary strip can select buckets that have no tab of their own.
+  const activeTabLabel =
+    TAB_ITEMS.find((tab) => tab.key === filter)?.label ??
+    (filter === 'execution' ? 'In Execution' : filter === 'blocked' ? 'Blocked' : 'Register');
 
   const applyFilter = (next: OrderFilter) => {
     interact();
@@ -268,53 +292,51 @@ export default function Orders() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-5">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
+            size="lg"
+            rule
             title="Orders"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Orders', to: '/orders' },
+              { label: activeTabLabel },
+            ]}
             actions={
-              <>
-                <Button
-                  variant="secondary"
-                  icon={<Download size={16} strokeWidth={2.2} />}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    exportOrdersToExcel(rows);
-                    setToast(`Exported ${rows.length} orders.`);
-                  }}
-                >
-                  Export
-                </Button>
-                <Button
-                  variant="primary"
-                  icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
-                  className="cursor-pointer"
-                  onClick={() => navigate('/orders/create')}
-                >
-                  Create Order
-                </Button>
-              </>
+              <Button
+                variant="primary"
+                icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
+                className="cursor-pointer"
+                onClick={() => navigate('/orders/create')}
+              >
+                Create Order
+              </Button>
             }
           />
         </div>
 
-        <Section
-          title="Order Register"
-          description={`${rows.length} of ${counts.total} orders in the current scope.`}
-          padded={false}
+        <Tabs
           className="animate-rise"
           style={{ animationDelay: '60ms' }}
-          toolbar={
-            <>
-              <SearchInput
-                value={query}
-                onChange={(value) => {
-                  interact();
-                  setQuery(value);
-                }}
-                placeholder="Search order, PO, or vendor"
-                className="w-[260px]"
-              />
+          variant="bar"
+          active={filter}
+          onChange={(key) => applyFilter(key as OrderFilter)}
+          toggleOff
+          tabs={TAB_ITEMS.map((tab) => ({
+            key: tab.key,
+            label: tab.label,
+            count: tab.count(counts),
+          }))}
+        />
+
+        <div
+          className="animate-rise flex flex-wrap items-end justify-between gap-4"
+          style={{ animationDelay: '90ms' }}
+        >
+          <div className="flex flex-wrap items-end gap-2.5">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-subtitle text-brand-700">Plant</span>
               <Select
                 ariaLabel="Filter by plant"
                 value={plant}
@@ -323,23 +345,37 @@ export default function Orders() {
                   interact();
                   setPlant(value);
                 }}
+                className="w-[220px]"
               />
-              <Tabs
-                className="ml-auto"
-                active={filter}
-                onChange={(key) => applyFilter(key as OrderFilter)}
-                size="sm"
-                toggleOff
-                tabs={[
-                  { key: 'all', label: 'All', count: counts.total },
-                  { key: 'manufactured', label: 'Manufactured', count: counts.manufactured },
-                  { key: 'material', label: 'Material', count: counts.material },
-                  { key: 'delayed', label: 'Delayed', count: counts.delayed },
-                  { key: 'completed', label: 'Completed', count: counts.completed },
-                ]}
-              />
-            </>
-          }
+            </label>
+            <Button
+              variant="icon"
+              aria-label="Export orders"
+              title="Export orders"
+              className="cursor-pointer"
+              onClick={() => {
+                exportOrdersToExcel(rows);
+                setToast(`Exported ${rows.length} orders.`);
+              }}
+            >
+              <Download size={17} strokeWidth={2.2} />
+            </Button>
+          </div>
+
+          <SearchInput
+            value={query}
+            onChange={(value) => {
+              interact();
+              setQuery(value);
+            }}
+            placeholder="Search order, PO, or vendor"
+            className="w-[280px]"
+          />
+        </div>
+
+        <div
+          className="glass-raised animate-rise"
+          style={{ animationDelay: '120ms' }}
         >
           <div className="border-b border-[var(--color-border)]">
             <SummaryStrip
@@ -377,18 +413,23 @@ export default function Orders() {
             }
             footer={
               <Pagination
+                variant="entries"
                 page={page}
                 pageCount={pageCount}
-                pageSize={PAGE_SIZE}
+                pageSize={pageSize}
                 total={rows.length}
                 onPageChange={(next) => {
                   interact();
                   setPage(next);
                 }}
+                onPageSizeChange={(next) => {
+                  interact();
+                  setPageSize(next);
+                }}
               />
             }
           />
-        </Section>
+        </div>
       </div>
 
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}

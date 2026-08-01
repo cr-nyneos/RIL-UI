@@ -9,7 +9,7 @@ export type StatusTone = Extract<Tone, 'success' | 'warning' | 'danger' | 'neutr
 const SUCCESS = ['on track', 'delivered', 'verified', 'paid', 'passed', 'cleared', 'approved', 'matched', 'collected'];
 const NEUTRAL_BRAND = ['in transit', 'gate-in', 'in qc', 'active', 'draft', 'submitted'];
 const WARNING = ['partially delivered', 'pending', 'awaiting', 'scheduled', 'expiring'];
-const DANGER = ['delayed', 'blocked', 'overdue', 'rejected', 'failed', 'fail', 'mismatch', 'damaged', 'escalated', 'critical', 'expired'];
+const DANGER = ['delayed', 'blocked', 'overdue', 'rejected', 'failed', 'fail', 'mismatch', 'damaged', 'escalated', 'critical', 'expired', 'suspended'];
 const NEUTRAL = ['completed', 'archived', 'n/a'];
 
 /**

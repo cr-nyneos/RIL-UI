@@ -8,8 +8,9 @@ import Button from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
 import PageHeader from '../components/ui/PageHeader';
 import SearchInput from '../components/ui/SearchInput';
-import Section from '../components/ui/Section';
+import SectionCard from '../components/ui/SectionCard';
 import Select from '../components/ui/Select';
+import SummaryStrip, { type SummaryTone } from '../components/ui/SummaryStrip';
 import Toast from '../components/ui/Toast';
 
 import { formatDate, formatRelative } from '../lib/format';
@@ -207,7 +208,12 @@ function WorkflowRail({ item }: { item: BoardOrder }) {
               >
                 <span className={`h-2 w-2 rounded-full ${complete || current ? 'bg-white' : 'bg-[var(--color-border-strong)]'}`} />
               </button>
-              <span className={`max-w-full truncate text-center text-[11px] leading-4 ${current ? 'font-bold text-ink-900' : 'font-bold text-ink-700'}`}>
+              <span
+                className={`max-w-full truncate text-center text-[12px] leading-4 ${
+                  current ? 'font-bold' : 'font-semibold text-ink-600'
+                }`}
+                style={current ? { color: blockedCurrent ? 'var(--color-danger)' : 'var(--color-brand-700)' } : undefined}
+              >
                 {stage.short}
               </span>
             </div>
@@ -232,56 +238,67 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') navigate(`/orders/${item.order.id}`);
       }}
-      className="group flex cursor-pointer flex-col gap-4 rounded-2xl border border-[var(--color-border)] bg-white p-5 outline-none transition-[background,box-shadow,transform] duration-200 hover:-translate-y-[1px] hover:shadow-[0_16px_32px_-24px_rgba(23,37,84,0.55)] focus-bloom"
+      className="group flex cursor-pointer flex-col gap-4 rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[var(--color-surface-section)] p-5 outline-none transition-[background,box-shadow,transform] duration-200 hover:-translate-y-[1px] hover:border-brand-500 hover:shadow-[0_16px_32px_-24px_rgba(23,37,84,0.55)] focus-bloom"
     >
       {/* Header row: identity + expected date */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[15px] font-bold leading-5 text-ink-900">{item.order.id}</span>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="text-[17px] leading-6 font-bold text-brand-700">{item.order.id}</span>
             <Badge tone={priorityTone(item.priority)} size="xs" shape="square">
               {item.priority}
             </Badge>
           </div>
-          <div className="mt-1 truncate text-[13px] font-semibold text-ink-700">{item.order.vendor}</div>
-          <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-meta">
+          <div className="mt-1 truncate text-[14px] leading-5 font-semibold text-ink-800">{item.order.vendor}</div>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] leading-5 font-medium text-ink-500">
             <span>{item.order.plant}</span>
+            <span aria-hidden>·</span>
             <span>{item.owner.name}</span>
           </div>
         </div>
 
-        <div className="flex shrink-0 gap-6 text-right">
+        <div className="flex shrink-0 gap-7 text-right">
           <div>
-            <div className="text-table-head">Expected</div>
-            <div className="mt-0.5 text-[13px] font-semibold tabular-nums text-ink-800">{formatDate(item.order.expected)}</div>
-            <div className="text-meta">{formatRelative(item.order.expected, TODAY, item.status === 'completed')}</div>
+            <div className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">Expected</div>
+            <div className="mt-1 text-[14px] leading-5 font-semibold tabular-nums text-ink-900">{formatDate(item.order.expected)}</div>
+            <div className="text-[13px] leading-5 font-medium text-ink-500">
+              {formatRelative(item.order.expected, TODAY, item.status === 'completed')}
+            </div>
           </div>
           <div>
-            <div className="text-table-head">Current Stage</div>
-            <div className="mt-0.5 flex items-center justify-end gap-1.5 text-[13px] font-semibold text-ink-800">
-              <StatusIcon size={14} strokeWidth={2.4} style={{ color: meta.accent }} />
+            <div className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">Current Stage</div>
+            <div className="mt-1 flex items-center justify-end gap-1.5 text-[14px] leading-5 font-semibold text-ink-900">
+              <StatusIcon size={15} strokeWidth={2.4} style={{ color: meta.accent }} />
               <span className="truncate">{item.gate.label}</span>
             </div>
-            <div className="text-meta tabular-nums">{item.order.progress}% complete</div>
+            <div className="text-[13px] leading-5 font-medium tabular-nums text-ink-500">{item.order.progress}% complete</div>
           </div>
         </div>
       </div>
 
       {/* Workflow rail: full width, own row */}
-      <div className="rounded-xl bg-[var(--color-surface-subtle)] px-4 py-3">
+      <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-brand-soft2)] px-4 py-3.5">
         <WorkflowRail item={item} />
       </div>
 
       {/* Footer: blocking reason (or status) + action, full width */}
       <div
-        className={`flex flex-wrap items-center justify-between gap-3 rounded-xl px-4 py-2.5 ${
-          needsAttention ? '' : 'bg-[var(--color-surface-subtle)]'
-        }`}
-        style={needsAttention ? { background: item.status === 'blocked' ? 'var(--color-danger-subtle, #FEF2F2)' : 'var(--color-warning-subtle, #FFFBEB)' } : undefined}
+        className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-md)] border px-4 py-3"
+        style={{
+          background: needsAttention
+            ? item.status === 'blocked'
+              ? 'var(--color-danger-soft)'
+              : 'var(--color-warning-soft)'
+            : 'var(--color-brand-soft2)',
+          borderColor: needsAttention ? meta.accent : 'var(--color-border)',
+        }}
       >
-        <div className="flex min-w-0 items-center gap-1.5">
-          {needsAttention && <StatusIcon size={14} strokeWidth={2.4} style={{ color: meta.accent }} />}
-          <p className={`truncate text-[13px] font-semibold ${needsAttention ? '' : 'text-ink-800'}`} style={needsAttention ? { color: meta.accent } : undefined}>
+        <div className="flex min-w-0 items-center gap-2">
+          {needsAttention && <StatusIcon size={15} strokeWidth={2.4} className="flex-none" style={{ color: meta.accent }} />}
+          <p
+            className="truncate text-[14px] leading-5 font-semibold"
+            style={{ color: needsAttention ? meta.accent : 'var(--color-ink-800)' }}
+          >
             {needsAttention ? `${meta.label} — ${item.reason}` : item.reason}
           </p>
         </div>
@@ -354,11 +371,11 @@ export default function ExecutionBoard() {
 
   const summary = useMemo(
     () => [
-      { label: 'Orders', value: filtered.length, tone: 'neutral' as Tone },
-      { label: 'Active', value: filtered.filter((item) => item.status === 'in-progress' || item.status === 'waiting').length, tone: 'neutral' as Tone },
-      { label: 'Blocked', value: filtered.filter((item) => item.status === 'blocked').length, tone: 'danger' as Tone },
-      { label: 'Delayed', value: filtered.filter((item) => item.status === 'delayed').length, tone: 'warning' as Tone },
-      { label: 'Completed Today', value: filtered.filter((item) => item.status === 'completed' && item.order.expected === '2026-07-30').length, tone: 'success' as Tone },
+      { key: 'orders', label: 'Orders', value: filtered.length, tone: 'neutral' as SummaryTone },
+      { key: 'active', label: 'Active', value: filtered.filter((item) => item.status === 'in-progress' || item.status === 'waiting').length, tone: 'neutral' as SummaryTone },
+      { key: 'blocked', label: 'Blocked', value: filtered.filter((item) => item.status === 'blocked').length, tone: 'danger' as SummaryTone },
+      { key: 'delayed', label: 'Delayed', value: filtered.filter((item) => item.status === 'delayed').length, tone: 'warning' as SummaryTone },
+      { key: 'completed', label: 'Completed Today', value: filtered.filter((item) => item.status === 'completed' && item.order.expected === '2026-07-30').length, tone: 'success' as SummaryTone },
     ],
     [filtered],
   );
@@ -377,69 +394,88 @@ export default function ExecutionBoard() {
     <AppShell>
       <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
-          <PageHeader title="Execution Board" />
-          {/* <p className="text-meta mt-1">Portfolio-wide tracker for order movement, blocked gates and execution ownership.</p> */}
+          <PageHeader
+            size="lg"
+            rule
+            title="Execution Board"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Execution Board' },
+            ]}
+          />
         </div>
 
-        <Section
-          padded={false}
+        <SectionCard
+          title="Filters"
           className="animate-rise"
           style={{ animationDelay: '60ms' }}
-          toolbar={
-            <div className="flex w-full flex-col gap-2.5">
-              <div className="flex items-center gap-2">
-                <SearchInput value={query} onChange={setQuery} placeholder="Search order, vendor, owner" className="min-w-0 flex-1" />
-                <Button variant="ghost" icon={<FilterX size={15} strokeWidth={2.3} />} onClick={clearFilters} className="shrink-0 cursor-pointer">
-                  Clear
-                </Button>
-                <Button
-                  variant="secondary"
-                  icon={<RefreshCw size={16} strokeWidth={2.3} />}
-                  onClick={() => setToast('Execution board refreshed.')}
-                  aria-label="Refresh"
-                  className="shrink-0 cursor-pointer"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="w-full" />
-                <Select value={vendor} onChange={setVendor} options={vendorOptions} ariaLabel="Vendor" className="w-full" />
-                <Select value={stage} onChange={setStage} options={STAGE_OPTIONS} ariaLabel="Current stage" className="w-full" />
-                <Select value={priorityValue} onChange={setPriorityValue} options={PRIORITY_OPTIONS} ariaLabel="Priority" className="w-full" />
-                <Select value={status} onChange={setStatus} options={STATUS_OPTIONS} ariaLabel="Status" className="w-full" />
-                <Select value={assignment} onChange={setAssignment} options={ASSIGNMENT_OPTIONS} ariaLabel="Assignment" className="w-full" />
-              </div>
-            </div>
+          actions={
+            <>
+              <Button variant="ghost" icon={<FilterX size={15} strokeWidth={2.3} />} onClick={clearFilters} className="cursor-pointer">
+                Clear
+              </Button>
+              <Button
+                variant="icon"
+                icon={<RefreshCw size={17} strokeWidth={2.3} />}
+                onClick={() => setToast('Execution board refreshed.')}
+                aria-label="Refresh"
+                title="Refresh"
+                className="cursor-pointer"
+              />
+            </>
           }
-          headClassName="bg-[var(--color-brand-soft2)]"
         >
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[var(--color-border)] px-5 py-3">
-            {summary.map((item) => (
-              <div key={item.label} className="flex items-baseline gap-1.5">
-                <span className="text-[16px] font-bold tabular-nums text-ink-900">{item.value}</span>
-                <span className={`text-[12px] font-semibold ${item.tone === 'danger' ? 'text-danger' : item.tone === 'warning' ? 'text-warning' : item.tone === 'success' ? 'text-success' : 'text-ink-700'}`}>
-                  {item.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </Section>
+          <div className="flex flex-col gap-3">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-subtitle text-brand-700">Search</span>
+              <SearchInput value={query} onChange={setQuery} placeholder="Search order, vendor, owner" className="w-full" />
+            </label>
 
-        <div className="animate-rise" style={{ animationDelay: '120ms' }}>
-          <div className="mb-3 px-1">
-            <h2 className="text-[15px] font-bold text-ink-900">Execution Tracker</h2>
-            {/* <p className="text-meta mt-0.5">Each card shows the active gate, expected completion and next action.</p> */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { label: 'Plant', node: <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="w-full" /> },
+                { label: 'Vendor', node: <Select value={vendor} onChange={setVendor} options={vendorOptions} ariaLabel="Vendor" className="w-full" /> },
+                { label: 'Stage', node: <Select value={stage} onChange={setStage} options={STAGE_OPTIONS} ariaLabel="Current stage" className="w-full" /> },
+                { label: 'Priority', node: <Select value={priorityValue} onChange={setPriorityValue} options={PRIORITY_OPTIONS} ariaLabel="Priority" className="w-full" /> },
+                { label: 'Status', node: <Select value={status} onChange={setStatus} options={STATUS_OPTIONS} ariaLabel="Status" className="w-full" /> },
+                { label: 'Assignee', node: <Select value={assignment} onChange={setAssignment} options={ASSIGNMENT_OPTIONS} ariaLabel="Assignment" className="w-full" /> },
+              ].map((field) => (
+                <label key={field.label} className="flex min-w-0 flex-col gap-1.5">
+                  <span className="text-subtitle text-brand-700">{field.label}</span>
+                  {field.node}
+                </label>
+              ))}
+            </div>
           </div>
+        </SectionCard>
 
-          <div className="flex flex-col gap-3 animate-fade-fast">
-            {filtered.length ? (
-              filtered.map((item) => <ExecutionCard key={item.order.id} item={item} />)
-            ) : (
-              <div className="rounded-2xl border border-[var(--color-border)] bg-white p-8">
-                <EmptyState title="No orders found" description="Adjust the filters to view execution progress." />
-              </div>
-            )}
-          </div>
-        </div>
+        <SectionCard
+          title="Board Summary"
+          padded={false}
+          className="animate-rise"
+          style={{ animationDelay: '90ms' }}
+        >
+          <SummaryStrip items={summary} />
+        </SectionCard>
+
+        <SectionCard
+          title="Execution Tracker"
+          className="animate-rise"
+          style={{ animationDelay: '120ms' }}
+          bodyTone="subtle"
+          bodyClassName="animate-fade-fast flex flex-col gap-3"
+          meta={
+            <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
+              {filtered.length}
+            </span>
+          }
+        >
+          {filtered.length ? (
+            filtered.map((item) => <ExecutionCard key={item.order.id} item={item} />)
+          ) : (
+            <EmptyState title="No orders found" description="Adjust the filters to view execution progress." />
+          )}
+        </SectionCard>
       </div>
 
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}

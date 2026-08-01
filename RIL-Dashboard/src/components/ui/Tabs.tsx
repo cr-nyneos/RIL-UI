@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import Badge from './Badge';
 
 export interface TabItem {
@@ -12,9 +12,13 @@ interface TabsProps {
   active: string;
   onChange: (key: string) => void;
   className?: string;
+  style?: CSSProperties;
   size?: 'sm' | 'md';
-  /** `attached` shares the container's border so tabs and panel read as one object. */
-  variant?: 'pill' | 'segmented' | 'attached';
+  /**
+   * `attached` shares the container's border so tabs and panel read as one object.
+   * `bar` is the listing-page tab strip: filled active tab sitting on a hairline.
+   */
+  variant?: 'pill' | 'segmented' | 'attached' | 'bar';
   toggleOff?: boolean;
 }
 
@@ -23,6 +27,7 @@ export default function Tabs({
   active,
   onChange,
   className = '',
+  style,
   size = 'md',
   variant = 'pill',
   toggleOff = false,
@@ -59,14 +64,18 @@ export default function Tabs({
   };
 
   const attached = variant === 'attached';
+  const bar = variant === 'bar';
 
   return (
     <div
       className={
         attached
           ? `surface-section-head relative flex items-stretch overflow-x-auto px-2 ${className}`
-          : `glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`
+          : bar
+            ? `relative flex items-stretch gap-1 overflow-x-auto border-b border-[var(--color-border-strong)] ${className}`
+            : `glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`
       }
+      style={style}
       role="tablist"
     >
       {attached && (
@@ -108,18 +117,32 @@ export default function Tabs({
             className={`relative z-1 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap transition-colors duration-150 ${
               attached
                 ? 'h-11 px-3.5 text-[14px]'
-                : `rounded-[var(--radius-sm)] ${size === 'sm' ? 'px-3 py-1.5 text-[13px]' : 'px-3.5 py-1.5 text-[14px]'}`
+                : bar
+                  ? 'rounded-t-[var(--radius-md)] border-b-2 px-6 py-3 text-[14px]'
+                  : `rounded-[var(--radius-sm)] ${size === 'sm' ? 'px-3 py-1.5 text-[13px]' : 'px-3.5 py-1.5 text-[14px]'}`
             } ${
               isActive
-                ? `${variant === 'segmented' ? 'bg-brand-600 text-white' : 'text-brand-700'} font-bold`
-                : 'font-semibold text-ink-600 hover:bg-[var(--color-surface-hover)] hover:text-ink-900'
+                ? `${variant === 'segmented' || bar ? 'bg-brand-600 text-white' : 'text-brand-700'} ${
+                    bar ? 'border-brand-600' : ''
+                  } font-bold`
+                : `font-semibold ${
+                    bar
+                      ? 'border-transparent bg-[var(--color-brand-soft2)] text-ink-700 hover:bg-[var(--color-surface-hover)] hover:text-brand-700'
+                      : 'text-ink-600 hover:bg-[var(--color-surface-hover)] hover:text-ink-900'
+                  }`
             }`}
           >
             <span>{tab.label}</span>
             {tab.count !== undefined && (
-              <Badge shape="square" size="xs" tone={isActive ? 'brand' : 'neutral'}>
-                {tab.count}
-              </Badge>
+              isActive && (bar || variant === 'segmented') ? (
+                <span className="inline-flex items-center rounded-[var(--radius-sm)] border border-white/30 bg-white/20 px-1.5 py-0.5 text-[11px] leading-[14px] font-bold text-white tabular-nums">
+                  {tab.count}
+                </span>
+              ) : (
+                <Badge shape="square" size="xs" tone={isActive ? 'brand' : 'neutral'}>
+                  {tab.count}
+                </Badge>
+              )
             )}
           </button>
         );

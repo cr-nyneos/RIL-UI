@@ -11,6 +11,8 @@
   /* ---- NyneOS blue-neutral enterprise design system ---- */
   --font-display2: 'Figtree', ui-sans-serif, system-ui, sans-serif;
 
+  --text-title: 28px;
+
   /* Canvas / surface hierarchy
      page → section container → component → interactive element
      Every surface is a blue-neutral, never a gray. The page carries a
@@ -31,7 +33,7 @@
   --color-surface-selected: #E5ECFE;
 
   /* Table banding — neutral head, visibly tinted alternate row */
-  --color-table-head: #F2F5FA;
+  --color-surface-tablehead: #F2F5FA;
   --color-table-row: #FFFFFF;
   --color-table-row-alt: #D9E5FF;
   --color-table-row-hover: #C9D9FF;
@@ -324,6 +326,14 @@
   font-weight: 700;
   letter-spacing: -0.015em;
   color: var(--color-ink-900);
+}
+
+@utility text-page-title-lg {
+  font-size: 44px;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #393E46E7;
 }
 
 @utility text-section-title {
@@ -934,7 +944,7 @@
 /* Data table — header, rows and footer read as one object           */
 /* ---------------------------------------------------------------- */
 .dt-head {
-  background: var(--color-table-head);
+  background: var(--color-surface-tablehead);
   border-bottom: 1px solid var(--color-border-strong);
 }
 
