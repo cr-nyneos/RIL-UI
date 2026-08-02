@@ -7,6 +7,7 @@ import EmptyState from '../components/ui/EmptyState';
 import PageHeader from '../components/ui/PageHeader';
 import SearchInput from '../components/ui/SearchInput';
 import Section from '../components/ui/Section';
+import SectionCard from '../components/ui/SectionCard';
 import Select from '../components/ui/Select';
 import Skeleton from '../components/ui/Skeleton';
 import SummaryStrip from '../components/ui/SummaryStrip';
@@ -202,35 +203,6 @@ export default function Approvals() {
               { label: 'Approvals', to: '/approvals' },
               { label: tabs.find((item) => item.key === queue)?.label ?? 'All' },
             ]}
-            actions={
-              <>
-                <SearchInput
-                  value={query}
-                  onChange={setQuery}
-                  placeholder="Search order, vendor, gate"
-                  className="w-full sm:w-[260px]"
-                />
-                <Button
-                  variant="secondary"
-                  icon={<SlidersHorizontal size={16} strokeWidth={2.3} />}
-                  aria-expanded={filtersOpen}
-                  onClick={() => setFiltersOpen((open) => !open)}
-                  className="cursor-pointer"
-                >
-                  Filter
-                </Button>
-                <Button
-                  variant="secondary"
-                  icon={<RefreshCw size={16} strokeWidth={2.3} />}
-                  aria-label="Refresh approvals"
-                  onClick={() => {
-                    setLoading(true);
-                    setToast('Approvals queue refreshed.');
-                  }}
-                  className="cursor-pointer"
-                />
-              </>
-            }
           />
           {/* <p className="text-meta mt-1">
             Decisions waiting on {CURRENT_USER.name} and the {CURRENT_USER.role.toLowerCase()} team.
@@ -246,8 +218,37 @@ export default function Approvals() {
               { key: 'cleared', label: 'Cleared Today', value: summary.clearedToday },
             ]}
           />
+        </Section>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--color-border)] px-5 py-3">
+        <div className="animate-rise flex flex-wrap items-center justify-between gap-3" style={{ animationDelay: '90ms' }}>
+            <div className="flex flex-wrap items-center gap-2">
+              <SearchInput
+                value={query}
+                onChange={setQuery}
+                placeholder="Search order, vendor, gate"
+                className="w-full sm:w-[260px]"
+              />
+              <Button
+                variant="secondary"
+                icon={<SlidersHorizontal size={16} strokeWidth={2.3} />}
+                aria-expanded={filtersOpen}
+                onClick={() => setFiltersOpen((open) => !open)}
+                className="cursor-pointer"
+              >
+                Filter
+              </Button>
+              <Button
+                variant="secondary"
+                icon={<RefreshCw size={16} strokeWidth={2.3} />}
+                aria-label="Refresh approvals"
+                onClick={() => {
+                  setLoading(true);
+                  setToast('Approvals queue refreshed.');
+                }}
+                className="cursor-pointer"
+              />
+            </div>
+
             <Tabs
               tabs={tabs}
               active={queue}
@@ -255,7 +256,7 @@ export default function Approvals() {
               className="order-2 ml-auto"
             />
             {filtersOpen && (
-              <div className="animate-fade-fast flex flex-wrap items-center gap-2">
+              <div className="animate-fade-fast order-3 flex w-full flex-wrap items-center gap-2">
                 <Select
                   value={track}
                   onChange={setTrack}
@@ -272,8 +273,7 @@ export default function Approvals() {
                 />
               </div>
             )}
-          </div>
-        </Section>
+        </div>
 
         <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]">
           <div key={`${queue}-${track}-${plant}`} className="animate-fade-fast flex min-w-0 flex-col gap-6">
@@ -281,14 +281,18 @@ export default function Approvals() {
               <FeedSkeleton />
             ) : grouped.length ? (
               grouped.map((group) => (
-                <section key={group.key} className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 px-1">
-                    <h2 className="text-[15px] leading-5 font-bold tracking-[-0.01em] text-ink-900">{group.label}</h2>
-                    <span className="text-[13px] leading-5 font-bold text-ink-800 tabular-nums">
+                <SectionCard
+                  key={group.key}
+                  title={group.label}
+                  collapsible
+                  bodyTone="subtle"
+                  bodyClassName="flex flex-col gap-3"
+                  meta={
+                    <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
                       {group.items.length}
                     </span>
-                    <span className="text-meta">{group.description}</span>
-                  </div>
+                  }
+                >
                   {group.items.map((decision, index) => (
                     <DecisionItem
                       key={decision.id}
@@ -299,7 +303,7 @@ export default function Approvals() {
                       style={{ animationDelay: `${Math.min(index, 8) * 15}ms` }}
                     />
                   ))}
-                </section>
+                </SectionCard>
               ))
             ) : (
               <Section>

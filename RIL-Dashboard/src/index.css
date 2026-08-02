@@ -226,21 +226,12 @@
 
   
   .surface-rail {
-    background:
-      linear-gradient(
-        100deg,
-        rgba(255, 255, 255, 0.04) 0%,
-        rgba(255, 255, 255, 0) 55%
-      ),
-      linear-gradient(
-        170deg,
-        #1281B0 0%,
-        var(--color-surface-rail) 42%,
-        #0A7099 82%,
-        #096A93 100%
-      );
-    border-right: 1px solid var(--color-rail-border);
-    box-shadow: 1px 0 0 rgba(11, 23, 53, 0.4), 8px 0 28px -18px rgba(11, 23, 53, 0.55);
+    background: linear-gradient(
+      to bottom,
+      var(--color-surface-rail),
+      var(--color-surface-rail-deep)
+    );
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
   /* Brand mark band at the head of the rail */

@@ -22,7 +22,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} />
       <div
         className={`h-screen min-w-0 overflow-x-hidden overflow-y-auto pt-[72px] transition-all duration-300 ${
-          collapsed ? 'pl-[76px]' : 'pl-64'
+          collapsed ? 'pl-[86px]' : 'pl-[266px]'
         }`}
       >
         <div className="mx-auto max-w-[1600px] px-5 py-5 sm:px-8 sm:py-6">

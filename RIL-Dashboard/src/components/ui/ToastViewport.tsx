@@ -25,7 +25,6 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: str
       className={`glass-raised pointer-events-auto flex w-[340px] items-start gap-3 py-3 pr-3 pl-3.5 shadow-[0_10px_28px_-14px_rgba(11,23,53,0.45)] ${
         toast.leaving ? 'animate-toast-out' : 'animate-toast-in'
       }`}
-      style={{ borderLeft: `3px solid ${tone.color}` }}
     >
       <span
         className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full"
