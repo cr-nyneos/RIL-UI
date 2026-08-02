@@ -54,7 +54,7 @@ export default function CreateOrderSidebar({
     <aside className="animate-panel-right space-y-4 xl:sticky xl:top-8">
       {activeStep === 'details' && (
         <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
-          <CardHeader eyebrow="Order" icon={PackageCheck} title="Order Summary" subtitle="Current commercial values." />
+          <CardHeader eyebrow="Order" icon={PackageCheck} title="Order Summary" />
           <SummaryRow label="Vendor" value={vendor} />
           <SummaryRow label="Plant" value={plant} />
           <SummaryRow label="Contract" value={contractType} />
@@ -66,7 +66,7 @@ export default function CreateOrderSidebar({
       {activeStep === 'workflow' && (
         <>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
-            <CardHeader eyebrow="Route" icon={ShieldCheck} title="Workflow Preview" subtitle="Milestones that will be created." pill={`${workflow.length}`} />
+            <CardHeader eyebrow="Route" icon={ShieldCheck} title="Workflow Preview"  pill={`${workflow.length}`} />
             <div className="space-y-3">
               {workflow.map((milestone) => (
                 <div key={milestone.label} className="glass-inset p-4">
@@ -80,7 +80,7 @@ export default function CreateOrderSidebar({
             </div>
           </GlassCard>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
-            <CardHeader eyebrow="Milestones" icon={Route} title="Milestone Summary" subtitle="Duration and ownership coverage." />
+            <CardHeader eyebrow="Milestones" icon={Route} title="Milestone Summary"/>
             <SummaryRow label="Stages" value={`${workflow.length}`} />
             <SummaryRow label="Duration" value={`${totalDuration} days`} />
             <SummaryRow label="Owner Rules" value="Mapped" />
@@ -91,7 +91,7 @@ export default function CreateOrderSidebar({
       {activeStep === 'team' && (
         <>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
-            <CardHeader eyebrow="Owners" icon={Users} title="Assigned Owners" subtitle="Current role coverage." />
+            <CardHeader eyebrow="Owners" icon={Users} title="Assigned Owners"  />
             <div className="space-y-3">
               {ROLE_ORDER.map((role) => {
                 const owner = stakeholders[role];
@@ -111,7 +111,7 @@ export default function CreateOrderSidebar({
             </div>
           </GlassCard>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
-            <CardHeader eyebrow="Coverage" icon={UserRoundCheck} title="Role Coverage" subtitle="Required ownership before review." />
+            <CardHeader eyebrow="Coverage" icon={UserRoundCheck} title="Role Coverage" />
             <SummaryRow label="Assigned" value={`${assignedCount} of ${ROLE_ORDER.length}`} />
             <SummaryRow label="Open Roles" value={`${ROLE_ORDER.length - assignedCount}`} />
             <SummaryRow label="Primary Plant" value={plant} />
@@ -122,14 +122,14 @@ export default function CreateOrderSidebar({
       {activeStep === 'documents' && (
         <>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
-            <CardHeader eyebrow="Files" icon={CloudUpload} title="Uploaded Files" subtitle="Files selected for this order." />
+            <CardHeader eyebrow="Files" icon={CloudUpload} title="Uploaded Files" />
             <SummaryRow label="Uploaded" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
             {REQUIRED_DOCUMENTS.map((document) => (
               <CheckRow key={document} label={document} done={documents[document]} waiting={!documents[document]} />
             ))}
           </GlassCard>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
-            <CardHeader eyebrow="Documents" icon={FileCheck2} title="Required Documents" subtitle="Mandatory execution package." />
+            <CardHeader eyebrow="Documents" icon={FileCheck2} title="Required Documents" />
             <div className="space-y-3">
               {REQUIRED_DOCUMENTS.map((document) => (
                 <div key={document} className="glass-inset flex items-center gap-3 p-3">
@@ -145,20 +145,20 @@ export default function CreateOrderSidebar({
       {activeStep === 'review' && (
         <>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '120ms' }}>
-            <CardHeader eyebrow="Complete" icon={PackageCheck} title="Complete Order Summary" subtitle="Order creation readiness." />
+            <CardHeader eyebrow="Complete" icon={PackageCheck} title="Complete Order Summary"  />
             <SummaryRow label="Vendor" value={vendor} />
             <SummaryRow label="Plant" value={plant} />
             <SummaryRow label="Value" value={orderValue ? `Rs ${orderValue}` : ''} />
             <SummaryRow label="Completion" value={completionDate} />
           </GlassCard>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '160ms' }}>
-            <CardHeader eyebrow="Route" icon={Route} title="Workflow Summary" subtitle="Confirmed milestone plan." />
+            <CardHeader eyebrow="Route" icon={Route} title="Workflow Summary" />
             <SummaryRow label="Contract Type" value={contractType} />
             <SummaryRow label="Milestones" value={`${workflow.length}`} />
             <SummaryRow label="Duration" value={`${totalDuration} days`} />
           </GlassCard>
           <GlassCard className="animate-rise p-5" style={{ animationDelay: '200ms' }}>
-            <CardHeader eyebrow="Owners" icon={Users} title="Assigned Team" subtitle="Required roles assigned." />
+            <CardHeader eyebrow="Owners" icon={Users} title="Assigned Team" />
             <SummaryRow label="Assigned" value={`${assignedCount} of ${ROLE_ORDER.length}`} />
             <SummaryRow label="Documents" value={`${uploadedCount} of ${REQUIRED_DOCUMENTS.length}`} />
           </GlassCard>
@@ -170,7 +170,6 @@ export default function CreateOrderSidebar({
           eyebrow="Checks"
           icon={UserRoundCheck}
           title={activeStep === 'review' ? 'Final Validation' : 'Validation'}
-          subtitle="Step readiness checklist."
           pill={completed[activeStep] ? 'READY' : 'PENDING'}
         />
         <div className="space-y-3">
