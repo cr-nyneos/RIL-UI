@@ -4,12 +4,14 @@ import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import TextField from '../components/ui/TextField';
 import Button from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 
 const DEMO_EMAIL = 'admin@gmail.com';
 const DEMO_PASSWORD = 'admin123';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { announceSignIn } = useNotifications();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,6 +43,7 @@ export default function Login() {
 
     if (ok) {
       navigate('/', { replace: true });
+      announceSignIn();
     } else {
       setError(true);
       setShake(true);

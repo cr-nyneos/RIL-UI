@@ -142,7 +142,11 @@ export default function OrderDetail() {
                 variant="secondary"
                 icon={<PackagePlus size={16} strokeWidth={2.2} />}
                 className="cursor-pointer"
-                onClick={() => navigate(`/shipments/new?order=${order.id}`)}
+                onClick={() =>
+                  navigate(`/orders/${order.id}/gates/delivery`, {
+                    state: { from: `/orders/${order.id}?tab=timeline`, fromLabel: 'Order' },
+                  })
+                }
               >
                 Log Shipment
               </Button>
@@ -150,7 +154,11 @@ export default function OrderDetail() {
                 variant="secondary"
                 icon={<ClipboardCheck size={16} strokeWidth={2.2} />}
                 className="cursor-pointer"
-                onClick={() => navigate(`/qc/new?order=${order.id}`)}
+                onClick={() =>
+                  navigate(`/orders/${order.id}/gates/qc`, {
+                    state: { from: `/orders/${order.id}?tab=timeline`, fromLabel: 'Order' },
+                  })
+                }
               >
                 Record Inspection
               </Button>

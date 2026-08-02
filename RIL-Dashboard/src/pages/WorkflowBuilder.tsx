@@ -15,6 +15,7 @@ import StatusBadge from '../components/ui/StatusBadge';
 import DataTable, { type Column, type SortState } from '../components/ui/DataTable';
 import EmptyState from '../components/ui/EmptyState';
 
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 import {
   AUTO_UNLOCK_RULES,
   CONTRACT_TYPES,
@@ -52,6 +53,7 @@ function formatSla(hours: number): string {
 }
 
 export default function WorkflowBuilder() {
+  const { notify } = useNotifications();
   const [workflows, setWorkflows] = useState<Record<WorkflowKey, Workflow>>(WORKFLOWS);
   const [activeKey, setActiveKey] = useState<WorkflowKey>('manufactured');
   const [stageId, setStageId] = useState('security-clearance');
@@ -190,7 +192,15 @@ export default function WorkflowBuilder() {
                   icon={<Save size={16} strokeWidth={2.2} />}
                   disabled={!dirty}
                   className="cursor-pointer"
-                  onClick={() => setDirty(false)}
+                  onClick={() => {
+                    setDirty(false);
+                    notify({
+                      title: 'Workflow published',
+                      description: `${workflow.label} is now live for new orders`,
+                      module: 'Execution',
+                      to: '/workflow-builder',
+                    });
+                  }}
                 >
                   Save Workflow
                 </Button>

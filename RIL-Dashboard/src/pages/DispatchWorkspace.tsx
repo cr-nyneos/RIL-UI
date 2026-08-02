@@ -10,6 +10,7 @@ import PageHeader from '../components/ui/PageHeader';
 import Section from '../components/ui/Section';
 import StepNavigation from '../components/ui/StepNavigation';
 import Toast from '../components/ui/Toast';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 import { getOrders } from '../lib/orderStore';
 import { matchesSearch } from '../lib/orderFilters';
 import type { Order } from '../lib/types/order';
@@ -32,6 +33,7 @@ import type {
 
 export default function DispatchWorkspace() {
   const navigate = useNavigate();
+  const { notify } = useNotifications();
   const announcedCompletion = useRef<Partial<Record<StepKey, boolean>>>({});
   const [activeStep, setActiveStep] = useState<StepKey>('order');
   const [orderQuery, setOrderQuery] = useState('');
@@ -232,6 +234,14 @@ export default function DispatchWorkspace() {
     setToast('Dispatching order...');
     window.setTimeout(() => {
       setIsDirty(false);
+      notify({
+        title: 'Dispatch logged successfully',
+        description: `${shipmentId} moving to ${selectedOrder?.plant ?? 'plant'} on ${vehicleNumber}`,
+        module: 'Site Operations',
+        orderId: selectedOrder?.id ?? '—',
+        to: '/orders/dispatch',
+        toast: false,
+      });
       navigate('/orders', {
         state: { toast: `Dispatched ${shipmentId} against ${selectedOrder?.id}.` },
       });

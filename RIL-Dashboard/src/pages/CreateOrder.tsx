@@ -10,6 +10,7 @@ import PageHeader from '../components/ui/PageHeader';
 import Section from '../components/ui/Section';
 import StepNavigation from '../components/ui/StepNavigation';
 import Toast from '../components/ui/Toast';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 import { upsertWorkspaceOrder } from '../lib/orderStore';
 import type { ContractType } from '../lib/types/order';
 import CreateOrderSidebar from './create-order/CreateOrderSidebar';
@@ -24,6 +25,7 @@ import type { DraftState, FieldKey, Priority, Stakeholder, StakeholderRole, Step
 
 export default function CreateOrder() {
   const navigate = useNavigate();
+  const { notify } = useNotifications();
   const announcedCompletion = useRef<Partial<Record<StepKey, boolean>>>({});
   const [activeStep, setActiveStep] = useState<StepKey>('details');
   const [vendor, setVendor] = useState('');
@@ -197,6 +199,16 @@ export default function CreateOrder() {
     );
 
     setIsDirty(false);
+    if (mode === 'created') {
+      notify({
+        title: 'Order created successfully',
+        description: `${order.id} raised for ${vendor} at ${plant}`,
+        module: 'Orders',
+        orderId: order.id,
+        to: `/orders/${order.id}`,
+        toast: false,
+      });
+    }
     navigate('/orders', {
       state: {
         toast: mode === 'draft' ? `Saved ${order.id} as draft.` : `Created ${order.id} and added it to Orders.`,

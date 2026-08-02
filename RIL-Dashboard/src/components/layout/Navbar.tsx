@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bell, Calendar, Mail, Menu, User, Warehouse, X } from 'lucide-react';
+import { Calendar, Mail, Menu, User, Warehouse, X, type LucideIcon } from 'lucide-react';
 import { PRIMARY_NAV } from '../../lib/routes';
+import NotificationBell from './NotificationBell';
 
 interface NavbarProps {
   sidebarCollapsed: boolean;
@@ -16,7 +17,7 @@ const USER = {
 };
 
 const NavItems: React.FC<{
-  items: { to: string; icon: any; label: string }[];
+  items: { to: string; icon: LucideIcon; label: string }[];
   active: string;
   onChange: (to: string) => void;
 }> = ({ items, active, onChange }) => (
@@ -167,13 +168,7 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
       </div>
 
       <div className="flex items-center space-x-4 mr-4">
-        <button
-          className="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--color-surface-hover)] transition-colors cursor-pointer"
-          aria-label="Notifications"
-        >
-          <Bell size={18} className="text-ink-600" />
-          <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-brand-600" />
-        </button>
+        <NotificationBell />
         <div className="relative" ref={userDropdownRef}>
           <div
             onClick={() => setIsUserDetailsVisible((prev) => !prev)}

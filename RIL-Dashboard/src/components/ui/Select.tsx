@@ -32,7 +32,7 @@ export default function Select<T extends string>({
           border border-[var(--color-border)]
           bg-[var(--color-surface-input)]
           px-3.5
-          text-[14px]
+          text-[15px]
           font-semibold
           text-ink-900
           transition-colors
@@ -83,7 +83,7 @@ export default function Select<T extends string>({
                   items-center
                   rounded-[var(--radius-sm)]
                   px-9
-                  text-[14px]
+                  text-[15px]
                   font-medium
                   text-ink-800
                   outline-none

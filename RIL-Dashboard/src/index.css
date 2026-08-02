@@ -78,9 +78,9 @@
 
   /* Ink scale — charcoal black → warm slate. Blue is reserved for headings
      and brand accents; body copy, labels and table text stay charcoal. */
-  --color-ink-900: #393E46;
-  --color-ink-800: #393E46;
-  --color-ink-700: #393E46;
+  --color-ink-900: #22262C;
+  --color-ink-800: #22262C;
+  --color-ink-700: #22262C;
   --color-ink-600: #5F656E;
   --color-ink-500: #7B818A;
   --color-ink-400: #9BA1AA;
@@ -118,17 +118,17 @@
   --color-kpi-azure: #005E88;
   --color-kpi-indigo: #00496B;
   --color-kpi-brand-fill: #0C7BAB;
-  --color-kpi-brand-text: #393E46;
+  --color-kpi-brand-text: #22262C;
   --color-kpi-cyan-fill: #94A3B8;
-  --color-kpi-cyan-text: #393E46;
+  --color-kpi-cyan-text: #22262C;
   --color-kpi-danger-fill: #B42318;
   --color-kpi-danger-text: #B42318;
   --color-kpi-warning-fill: #B54708;
   --color-kpi-warning-text: #B54708;
   --color-kpi-violet-fill: #94A3B8;
-  --color-kpi-violet-text: #393E46;
+  --color-kpi-violet-text: #22262C;
   --color-kpi-neutral-fill: #94A3B8;
-  --color-kpi-neutral-text: #393E46;
+  --color-kpi-neutral-text: #22262C;
   --color-kpi-neutral-icon: #5F656E;
 
   /* Chip backgrounds */
@@ -278,39 +278,39 @@
 /* Semantic type scale — components never hand-roll a size/color     */
 /* ---------------------------------------------------------------- */
 @utility text-card-title {
-  font-size: 17px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 26px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--color-ink-900);
 }
 
 @utility text-subtitle {
-  font-size: 13px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 21px;
   font-weight: 600;
   color: var(--color-ink-700);
 }
 
 @utility text-eyebrow {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: 12px;
+  line-height: 18px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--color-ink-700);
 }
 
 @utility text-pill {
-  font-size: 11px;
-  line-height: 14px;
+  font-size: 12px;
+  line-height: 16px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-ink-600);
 }
 
 @utility text-kpi-label {
-  font-size: 11.5px;
-  line-height: 16px;
+  font-size: 12.5px;
+  line-height: 18px;
   font-weight: 700;
   letter-spacing: 0.07em;
   color: var(--color-ink-700);
@@ -321,7 +321,7 @@
   line-height: 30px;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--color-ink-900);
+  color: #393E46;
 }
 
 @utility text-page-title-lg {
@@ -333,30 +333,30 @@
 }
 
 @utility text-section-title {
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 17px;
+  line-height: 25px;
   font-weight: 700;
   letter-spacing: -0.005em;
   color: var(--color-ink-900);
 }
 
 @utility text-body {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 23px;
   font-weight: 500;
   color: var(--color-ink-700);
 }
 
 @utility text-body-strong {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 23px;
   font-weight: 600;
   color: var(--color-ink-800);
 }
 
 @utility text-table-head {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: 12px;
+  line-height: 18px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -364,14 +364,14 @@
 }
 
 @utility text-meta {
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 20px;
   font-weight: 600;
   color: var(--color-ink-700);
 }
 
 @utility text-badge {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 600;
 }
@@ -911,6 +911,22 @@
 }
 .animate-menu {
   animation: menu-in .16s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* Toasts — slide in from the right edge, fade back out the same way */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateX(18px); }
+}
+.animate-toast-in {
+  animation: toast-in .24s cubic-bezier(.16, 1, .3, 1) both;
+}
+.animate-toast-out {
+  animation: toast-out .18s ease-in both;
 }
 
 /* ---------------------------------------------------------------- */

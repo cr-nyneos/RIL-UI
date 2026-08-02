@@ -106,7 +106,11 @@ export default function DocumentsTab({ detail, onNotify }: DocumentsTabProps) {
             size="sm"
             icon={<Plus size={15} strokeWidth={2.2} />}
             className="cursor-pointer"
-            onClick={() => navigate('/security-passes/new')}
+            onClick={() =>
+              navigate(`/orders/${detail.orderId}/gates/clearance`, {
+                state: { from: `/orders/${detail.orderId}?tab=documents`, fromLabel: 'Order' },
+              })
+            }
           >
             Request Pass
           </Button>

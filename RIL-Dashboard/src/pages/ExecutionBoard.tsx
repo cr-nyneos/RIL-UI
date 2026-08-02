@@ -308,7 +308,9 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
           iconPosition="right"
           onClick={(event) => {
             event.stopPropagation();
-            navigate(`/orders/${item.order.id}`);
+            navigate(`/orders/${item.order.id}/gates/${item.gate.key}`, {
+              state: { from: '/execution', fromLabel: 'Execution Board' },
+            });
           }}
         >
           Open
@@ -406,9 +408,20 @@ export default function ExecutionBoard() {
         </div>
 
         <SectionCard
-          title="Filters"
+          title="Board Summary"
+          padded={false}
           className="animate-rise"
           style={{ animationDelay: '60ms' }}
+        >
+          <SummaryStrip items={summary} />
+        </SectionCard>
+
+        <SectionCard
+          title="Execution Tracker"
+          className="animate-rise"
+          style={{ animationDelay: '90ms' }}
+          bodyTone="subtle"
+          bodyClassName="animate-fade-fast flex flex-col gap-3"
           actions={
             <>
               <Button variant="ghost" icon={<FilterX size={15} strokeWidth={2.3} />} onClick={clearFilters} className="cursor-pointer">
@@ -424,52 +437,22 @@ export default function ExecutionBoard() {
               />
             </>
           }
-        >
-          <div className="flex flex-col gap-3">
-            <label className="flex flex-col gap-1.5">
-              <span className="text-subtitle text-brand-700">Search</span>
-              <SearchInput value={query} onChange={setQuery} placeholder="Search order, vendor, owner" className="w-full" />
-            </label>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { label: 'Plant', node: <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="w-full" /> },
-                { label: 'Vendor', node: <Select value={vendor} onChange={setVendor} options={vendorOptions} ariaLabel="Vendor" className="w-full" /> },
-                { label: 'Stage', node: <Select value={stage} onChange={setStage} options={STAGE_OPTIONS} ariaLabel="Current stage" className="w-full" /> },
-                { label: 'Priority', node: <Select value={priorityValue} onChange={setPriorityValue} options={PRIORITY_OPTIONS} ariaLabel="Priority" className="w-full" /> },
-                { label: 'Status', node: <Select value={status} onChange={setStatus} options={STATUS_OPTIONS} ariaLabel="Status" className="w-full" /> },
-                { label: 'Assignee', node: <Select value={assignment} onChange={setAssignment} options={ASSIGNMENT_OPTIONS} ariaLabel="Assignment" className="w-full" /> },
-              ].map((field) => (
-                <label key={field.label} className="flex min-w-0 flex-col gap-1.5">
-                  <span className="text-subtitle text-brand-700">{field.label}</span>
-                  {field.node}
-                </label>
-              ))}
-            </div>
-          </div>
-        </SectionCard>
-
-        <SectionCard
-          title="Board Summary"
-          padded={false}
-          className="animate-rise"
-          style={{ animationDelay: '90ms' }}
-        >
-          <SummaryStrip items={summary} />
-        </SectionCard>
-
-        <SectionCard
-          title="Execution Tracker"
-          className="animate-rise"
-          style={{ animationDelay: '120ms' }}
-          bodyTone="subtle"
-          bodyClassName="animate-fade-fast flex flex-col gap-3"
           meta={
             <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
               {filtered.length}
             </span>
           }
         >
+          <div className="grid grid-cols-1 gap-2.5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-section)] p-3 sm:grid-cols-2 lg:grid-cols-4">
+            <SearchInput value={query} onChange={setQuery} placeholder="Search order, vendor, owner" className="w-full sm:col-span-2" />
+            <Select value={plant} onChange={setPlant} options={plantOptions} ariaLabel="Plant" className="w-full" />
+            <Select value={vendor} onChange={setVendor} options={vendorOptions} ariaLabel="Vendor" className="w-full" />
+            <Select value={stage} onChange={setStage} options={STAGE_OPTIONS} ariaLabel="Current stage" className="w-full" />
+            <Select value={priorityValue} onChange={setPriorityValue} options={PRIORITY_OPTIONS} ariaLabel="Priority" className="w-full" />
+            <Select value={status} onChange={setStatus} options={STATUS_OPTIONS} ariaLabel="Status" className="w-full" />
+            <Select value={assignment} onChange={setAssignment} options={ASSIGNMENT_OPTIONS} ariaLabel="Assignment" className="w-full" />
+          </div>
+
           {filtered.length ? (
             filtered.map((item) => <ExecutionCard key={item.order.id} item={item} />)
           ) : (

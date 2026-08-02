@@ -14,6 +14,8 @@ import Tabs from '../components/ui/Tabs';
 import Toast from '../components/ui/Toast';
 
 import { submitDecision, useApprovals } from '../lib/approvalsStore';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
+import type { ToastTone } from '../lib/types/notifications';
 import { ORDER_PLANTS } from '../lib/mockData/orders';
 import type { DecisionAction, DecisionSubmission, DecisionTrack, PendingDecision } from '../lib/types/approvals';
 import DecisionItem from './approvals/DecisionItem';
@@ -43,6 +45,13 @@ const ACTION_TOAST: Record<DecisionAction, (decision: PendingDecision, submissio
   reject: (decision) => `${decision.gateLabel} returned to ${decision.owner.name} on ${decision.order.id}.`,
   escalate: (decision) => `${decision.gateLabel} escalated on ${decision.order.id}.`,
   delegate: (decision, submission) => `${decision.gateLabel} delegated to ${submission.delegateTo}.`,
+};
+
+const ACTION_TONE: Record<DecisionAction, ToastTone> = {
+  approve: 'success',
+  reject: 'error',
+  escalate: 'warning',
+  delegate: 'info',
 };
 
 function matches(decision: PendingDecision, query: string): boolean {
@@ -90,6 +99,7 @@ function FeedSkeleton() {
 
 export default function Approvals() {
   const { decisions, records, summary } = useApprovals();
+  const { notify } = useNotifications();
 
   const [query, setQuery] = useState('');
   const [queue, setQueue] = useState<QueueFilter>('all');
@@ -166,7 +176,16 @@ export default function Approvals() {
       setSubmitting(false);
       setActive(null);
       setExpanded((current) => (current === decision.id ? null : current));
-      setToast(ACTION_TOAST[submission.action](decision, submission));
+      notify({
+        title: ACTION_TOAST[submission.action](decision, submission),
+        description: `${decision.order.id} · ${decision.gateLabel}`,
+        module: 'Approvals',
+        orderId: decision.order.id,
+        priority: submission.action === 'escalate' ? 'Critical' : 'Medium',
+        escalated: submission.action === 'escalate',
+        tone: ACTION_TONE[submission.action],
+        to: '/approvals',
+      });
     }, 600);
   }
 

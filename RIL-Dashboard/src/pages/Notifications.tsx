@@ -13,7 +13,8 @@ import DataTable, { type Column, type SortState } from '../components/ui/DataTab
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
 
-import { NOTIFICATIONS, NOTIFICATION_MODULES, NOTIFICATION_PRIORITIES } from '../lib/mockData/notifications';
+import { NOTIFICATION_MODULES, NOTIFICATION_PRIORITIES } from '../lib/mockData/notifications';
+import { notificationTarget, useNotifications } from '../lib/notifications/NotificationsContext';
 import { formatDate, formatTime } from '../lib/format';
 import {
   notificationState,
@@ -69,18 +70,6 @@ const STATE_TONE: Record<NotificationState, Tone> = {
   Read: 'neutral',
 };
 
-const MODULE_ROUTE: Record<string, string> = {
-  Approvals: '/approvals',
-  Finance: '/finance',
-  'Site Operations': '/site-operations',
-  Execution: '/execution',
-  Vendors: '/vendors',
-};
-
-function targetFor(notification: AppNotification): string {
-  return MODULE_ROUTE[notification.module] ?? `/orders/${notification.orderId}`;
-}
-
 function isToday(timestamp: string): boolean {
   const date = new Date(timestamp);
   const now = new Date();
@@ -127,7 +116,7 @@ function compare(a: AppNotification, b: AppNotification, key: string): number {
 export default function Notifications() {
   const navigate = useNavigate();
 
-  const [items, setItems] = useState<AppNotification[]>(NOTIFICATIONS);
+  const { notifications: items, unreadCount, markRead, markAllRead } = useNotifications();
   const [filters, setFilters] = useState<NotificationFilters>(EMPTY_FILTERS);
   const [sort, setSort] = useState<SortState>({ key: 'timestamp', dir: 'desc' });
   const [page, setPage] = useState(1);
@@ -188,8 +177,6 @@ export default function Notifications() {
     filters.priority !== 'all' ||
     filters.state !== 'all';
 
-  const unreadCount = items.filter((notification) => !notification.read).length;
-
   const update = (patch: Partial<NotificationFilters>) => {
     setStaggerRows(false);
     setPage(1);
@@ -198,14 +185,12 @@ export default function Notifications() {
 
   const setRead = (id: string, read: boolean) => {
     setStaggerRows(false);
-    setItems((current) =>
-      current.map((notification) => (notification.id === id ? { ...notification, read } : notification)),
-    );
+    markRead(id, read);
   };
 
   const open = (notification: AppNotification) => {
     setRead(notification.id, true);
-    navigate(targetFor(notification));
+    navigate(notificationTarget(notification));
   };
 
   const columns: Column<AppNotification>[] = [
@@ -229,13 +214,18 @@ export default function Notifications() {
       header: 'Notification',
       sortable: true,
       render: (notification) => (
-        <span
-          className={`truncate text-[14px] leading-5 ${
-            notification.read ? 'font-medium text-ink-700' : 'font-bold text-ink-900'
-          }`}
-          title={notification.title}
-        >
-          {notification.title}
+        <span className="flex min-w-0 flex-col">
+          <span
+            className={`truncate text-[14px] leading-5 ${
+              notification.read ? 'font-medium text-ink-700' : 'font-bold text-ink-900'
+            }`}
+            title={notification.title}
+          >
+            {notification.title}
+          </span>
+          {notification.description && (
+            <span className="truncate text-[12.5px] leading-[18px] text-ink-600">{notification.description}</span>
+          )}
         </span>
       ),
     },
@@ -326,7 +316,7 @@ export default function Notifications() {
                 className="cursor-pointer"
                 onClick={() => {
                   setStaggerRows(false);
-                  setItems((current) => current.map((notification) => ({ ...notification, read: true })));
+                  markAllRead();
                 }}
               >
                 Mark All Read

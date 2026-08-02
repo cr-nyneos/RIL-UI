@@ -22,6 +22,7 @@ import TextField from '../components/ui/TextField';
 import Toast from '../components/ui/Toast';
 
 import { formatDate } from '../lib/format';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 import { buildJourney, GATES, VEHICLE_TYPES } from '../lib/mockData/siteOps';
 import { ORDER_PLANTS } from '../lib/mockData/orders';
 import { getOrders } from '../lib/orderStore';
@@ -86,6 +87,7 @@ function numeric(value: string): boolean {
 
 export default function RecordMovement() {
   const navigate = useNavigate();
+  const { notify } = useNotifications();
   const [params] = useSearchParams();
   const orders = useMemo(() => getOrders(), []);
 
@@ -178,6 +180,14 @@ export default function RecordMovement() {
     setSubmitting(true);
     window.setTimeout(() => {
       const movement = recordMovement(draft);
+      notify({
+        title: `Gate ${movement.direction.toLowerCase()} recorded`,
+        description: `${movement.vehicle} · ${movement.id}`,
+        module: 'Site Operations',
+        orderId: movement.orderId,
+        to: '/site-operations',
+        toast: false,
+      });
       navigate('/site-operations', {
         state: {
           toast: `Recorded ${movement.id} — ${movement.direction} for ${movement.vehicle}.`,

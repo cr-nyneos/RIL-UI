@@ -97,7 +97,11 @@ export default function MovementJourney({ movement, expanded, onToggle, highligh
       note={note(movement)}
       expanded={expanded}
       onToggle={onToggle}
-      onOpen={() => navigate(`/site-operations/new?movement=${movement.id}`)}
+      onOpen={() =>
+        navigate(`/orders/${movement.orderId}/gates/${movement.direction === 'Gate-In' ? 'gate-in' : 'delivery'}`, {
+          state: { from: '/site-operations', fromLabel: 'Site Operations' },
+        })
+      }
       openLabel="Record Movement"
       className="animate-rise"
       style={

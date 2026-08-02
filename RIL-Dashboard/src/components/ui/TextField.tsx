@@ -34,7 +34,7 @@ export default function TextField({
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={inputId} className="mb-1.5 block text-[13px] font-semibold text-ink-700">
+        <label htmlFor={inputId} className="mb-1.5 block text-[15px] font-semibold text-ink-700">
           {label}
         </label>
       )}
@@ -50,7 +50,7 @@ export default function TextField({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          className={`h-full w-full rounded-[var(--radius-md)] bg-transparent ${inputPadding} text-[14px] font-medium text-ink-900 outline-none placeholder:font-medium placeholder:text-ink-400 ${
+          className={`h-full w-full rounded-[var(--radius-md)] bg-transparent ${inputPadding} text-[15px] font-medium text-ink-900 outline-none placeholder:font-medium placeholder:text-ink-400 ${
             size === 'md' ? 'font-semibold text-ink-800' : ''
           }`}
           {...props}

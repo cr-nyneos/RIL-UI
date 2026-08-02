@@ -27,6 +27,7 @@ import Select from '../components/ui/Select';
 import StatusBadge from '../components/ui/StatusBadge';
 import TextField from '../components/ui/TextField';
 import Toast from '../components/ui/Toast';
+import { useNotifications } from '../lib/notifications/NotificationsContext';
 
 import { formatCurrency, formatDate } from '../lib/format';
 import { completeGate, deliveryTotals, useOrderDetail } from '../lib/orderDetailStore';
@@ -247,7 +248,7 @@ function WorkflowBreadcrumb({ milestones, activeKey }: { milestones: Milestone[]
         return (
           <div key={milestone.key} className="flex items-center gap-2">
             <span
-              className={`inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border px-2.5 text-[12px] font-semibold transition-colors ${
+              className={`inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border px-2.5 text-[13.5px] font-semibold transition-colors ${
                 active ? 'border-brand-600 bg-[var(--color-surface-selected)] text-brand-700' : 'border-[var(--color-border)] bg-[var(--color-surface-section)] text-ink-600'
               }`}
             >
@@ -317,7 +318,7 @@ function DynamicForm({
         if (field.kind === 'select' && field.options) {
           return (
             <label key={field.key} className="grid gap-1.5">
-              <span className="text-[13px] font-semibold text-ink-700">
+              <span className="text-[15px] font-semibold text-ink-700">
                 {field.label}
                 {field.required && <span className="text-danger"> *</span>}
               </span>
@@ -397,6 +398,7 @@ function DependencyEngine({
 
 export default function GateWorkspace() {
   const navigate = useNavigate();
+  const { notify } = useNotifications();
   const location = useLocation();
   const { id, gate } = useParams<{ id: string; gate: string }>();
   const gateKey = normalizeGate(gate);
@@ -473,6 +475,14 @@ export default function GateWorkspace() {
         documents: files.length > 0 ? files : config.requiredDocuments,
       });
       setSuccess(true);
+      notify({
+        title: `${activeMilestone.label} completed`,
+        description: `${activeOrder.id} moved to the next gate`,
+        module: 'Approvals',
+        orderId: activeOrder.id,
+        to: `/orders/${activeOrder.id}?tab=timeline`,
+        toast: false,
+      });
       setToast(`${activeMilestone.label} completed. Next gate unlocked.`);
       window.setTimeout(() => navigate(backTo), 900);
     }, 650);
