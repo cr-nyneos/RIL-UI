@@ -32,3 +32,26 @@ export interface Vendor {
   /** ISO date of the last order, movement or document event. */
   lastActivity: string;
 }
+
+export interface VendorCertification {
+  name: string;
+  authority: string;
+  /** ISO date. */
+  validTo: string;
+}
+
+/** The registration and contact record behind a directory row — Vendor 360. */
+export interface VendorProfile {
+  contactName: string;
+  contactRole: string;
+  email: string;
+  phone: string;
+  city: string;
+  gstin: string;
+  msme: boolean;
+  /** ISO date the vendor was onboarded. */
+  onboardedAt: string;
+  /** ISO date of the last KYC verification, null when never verified. */
+  kycVerifiedAt: string | null;
+  certifications: VendorCertification[];
+}

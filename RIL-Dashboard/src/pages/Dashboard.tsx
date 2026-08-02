@@ -268,7 +268,7 @@ export default function Dashboard() {
         </div>
 
         {/* Plant-wise breakdown */}
-        <div className="tsy-section p-6">
+        <div>
           <h3 className="tsy-title mb-6 text-xl font-semibold">Plant-wise Order & Payment Breakdown</h3>
           <div className="tsy-card overflow-hidden">
             <DataTable
@@ -291,7 +291,7 @@ export default function Dashboard() {
         </div>
 
         {/* Delivery trend */}
-        <div className="tsy-section p-6">
+        <div>
           <h3 className="tsy-title mb-6 text-xl font-semibold">Monthly Deliveries — Planned vs. Actual</h3>
           <div className="tsy-card h-105 w-full p-4">
             <LineChart

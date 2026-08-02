@@ -18,15 +18,15 @@
   --color-surface-page: #FFFFFF;
   --color-surface-section: #FFFFFF;
   --color-surface-subtle: #F7F7F8;
-  --color-surface-header: #F1F2F3;
-  --color-surface-toolbar: #F8F8F9;
+  --color-surface-header: #E7F4FB;
+  --color-surface-toolbar: #F2F9FD;
   --color-surface-input: #FFFFFF;
   --color-surface-menu: #FFFFFF;
   --color-surface-hover: #E7F4FB;
   --color-surface-selected: #D9EDF8;
 
-  /* Table banding — neutral head, visibly tinted alternate row */
-  --color-surface-tablehead: #F1F2F3;
+  /* Table banding — brand-tinted head, visibly tinted alternate row */
+  --color-surface-tablehead: #E7F4FB;
   --color-table-row: #FFFFFF;
   --color-table-row-alt: #D9EDF8;
   --color-table-row-hover: #C4E4F4;
@@ -715,7 +715,7 @@
   transition: background-color .18s ease, border-color .18s ease;
 }
 .kpi-card:hover .kpi-strip {
-  background: var(--color-brand-soft2);
+  background: var(--color-surface-selected);
   border-bottom-color: var(--color-border);
 }
 
@@ -1045,6 +1045,18 @@
     opacity 140ms ease;
 }
 
+/* The strip scrolls horizontally when the tabs outrun the container, but the
+   scrollbar itself must never render: `overflow-x: auto` resolves the other
+   axis to `auto` too, so the sliding indicator was raising a stray vertical
+   scrollbar inside the header band. */
+.tab-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.tab-strip::-webkit-scrollbar {
+  display: none;
+}
+
 /* ---------------------------------------------------------------- */
 /* Focus ring — shared by SearchInput / Select / TextField           */
 /* ---------------------------------------------------------------- */
@@ -1193,8 +1205,8 @@
 }
 
 .tsy .dt-head {
-  background: var(--tsy-surface-dark);
-  border-bottom-color: var(--tsy-border);
+  background: var(--tsy-primary-xl);
+  border-bottom-color: var(--tsy-primary-md);
 }
 
 .tsy .dt-tr { background: var(--tsy-surface); }

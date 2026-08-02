@@ -70,9 +70,9 @@ export default function Tabs({
     <div
       className={
         attached
-          ? `surface-section-head relative flex items-stretch overflow-x-auto px-2 ${className}`
+          ? `surface-section-head tab-strip relative flex items-stretch overflow-x-auto px-2 ${className}`
           : bar
-            ? `relative flex items-stretch gap-1 overflow-x-auto border-b border-[var(--color-border-strong)] ${className}`
+            ? `tab-strip relative flex items-stretch gap-1 overflow-x-auto border-b border-[var(--color-border-strong)] ${className}`
             : `glass-inset relative inline-flex rounded-[var(--radius-md)] p-1 ${className}`
       }
       style={style}

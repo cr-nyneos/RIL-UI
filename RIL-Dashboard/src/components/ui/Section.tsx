@@ -7,6 +7,11 @@ interface SectionProps {
   toolbar?: ReactNode;
   children: ReactNode;
   padded?: boolean;
+  /**
+   * `flush` drops the card border, radius and shadow so a section can stack
+   * inside a container that already is one — no boxes inside boxes.
+   */
+  variant?: 'card' | 'flush';
   className?: string;
   headClassName?: string;
   bodyClassName?: string;
@@ -20,13 +25,19 @@ export default function Section({
   toolbar,
   children,
   padded = true,
+  variant = 'card',
   className = '',
   headClassName = '',
   bodyClassName = '',
   style,
 }: SectionProps) {
   return (
-    <section className={`surface-section overflow-hidden ${className}`} style={style}>
+    <section
+      className={`overflow-hidden ${
+        variant === 'card' ? 'surface-section' : 'border-t border-[var(--color-border)] first:border-t-0'
+      } ${className}`}
+      style={style}
+    >
       {(title || toolbar) && (
         <header className={`surface-section-head ${headClassName}`}>
           {title && (

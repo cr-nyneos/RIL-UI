@@ -229,7 +229,12 @@ export default function Approvals() {
           />
 
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--color-border)] px-5 py-3">
-            <Tabs tabs={tabs} active={queue} onChange={(key) => setQueue(key as QueueFilter)} />
+            <Tabs
+              tabs={tabs}
+              active={queue}
+              onChange={(key) => setQueue(key as QueueFilter)}
+              className="order-2 ml-auto"
+            />
             {filtersOpen && (
               <div className="animate-fade-fast flex flex-wrap items-center gap-2">
                 <Select
