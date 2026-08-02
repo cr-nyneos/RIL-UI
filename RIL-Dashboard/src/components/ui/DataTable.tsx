@@ -81,7 +81,7 @@ export default function DataTable<T>({
           surface ? '' : 'rounded-lg border border-(--color-border)'
         }`}
       >
-        <table className="min-w-full table-auto border-collapse" style={{ minWidth }}>
+        <table className="min-w-full table-auto border-collapse" style={{ minWidth, width: '100%' }}>
           <colgroup>
             {columns.map((column) => (
               <col key={column.key} style={column.width ? { width: column.width } : undefined} />

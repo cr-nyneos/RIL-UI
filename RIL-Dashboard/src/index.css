@@ -11,8 +11,6 @@
   /* ---- NyneOS blue-neutral enterprise design system ---- */
   --font-display2: 'Figtree', ui-sans-serif, system-ui, sans-serif;
 
-  --text-title: 28px;
-
   /* Canvas / surface hierarchy
      page → section container → component → interactive element
      Every surface is a blue-neutral, never a gray. The page carries a
@@ -39,13 +37,13 @@
   --color-table-row-hover: #C9D9FF;
 
  
-  --color-surface-rail: #0F1F47;
-  --color-surface-rail-deep: #0B1735;
+  --color-surface-rail: #108FC5;
+  --color-surface-rail-deep: #0072A4;
   --color-surface-rail-mark: rgba(255, 255, 255, 0.045);
   --color-surface-rail-nest: rgba(255, 255, 255, 0.035);
-  --color-rail-border: rgba(148, 178, 255, 0.13);
-  --color-rail-hover: rgba(120, 160, 255, 0.11);
-  --color-rail-active: rgba(54, 92, 245, 0.9);
+  --color-rail-border: rgba(255, 255, 255, 0.18);
+  --color-rail-hover: #EAF9FF33;
+  --color-rail-active: #C5EEFF66;
 
   /* Brand — single primary indigo. Active nav, primary buttons, selected
      states, focus. Cobalt sits underneath it as the pressed tone. */
@@ -144,10 +142,10 @@
   --color-chip-warning: #FFFAEB;
 
   
-  --color-sidebar-ink: #C5D5F5;
-  --color-sidebar-icon: #8FA8DA;
+  --color-sidebar-ink: #FFFFFF;
+  --color-sidebar-icon: #FFFFFF;
   --color-sidebar-hover-ink: #FFFFFF;
-  --color-sidebar-group-label: #7E97CC;
+  --color-sidebar-group-label: rgba(255, 255, 255, 0.72);
   --color-sidebar-active-ink: #FFFFFF;
   --color-sidebar-active-icon: #FFFFFF;
 }
@@ -390,7 +388,6 @@
    selected route has to be unmistakable from across the room. */
 .sidebar-item-active {
   background: var(--color-rail-active);
-  box-shadow: 0 2px 10px -4px rgba(54, 92, 245, 0.65);
 }
 .sidebar-item-indicator {
   background: #FFFFFF;
@@ -404,9 +401,8 @@
 }
 .rail-icon-btn:hover,
 .rail-icon-btn:focus-visible {
-  background: var(--color-brand-600);
+  background: var(--color-rail-active);
   color: #FFFFFF;
-  box-shadow: 0 4px 12px -5px rgba(54, 92, 245, 0.85);
 }
 
 
@@ -954,8 +950,8 @@
 .dt-tr-selected,
 .dt-tr-selected:hover { background: var(--color-surface-selected); }
 .dt-tr-clickable { cursor: pointer; }
-.dt-tr-clickable:hover,
-.dt-tr-alt.dt-tr-clickable:hover { background: var(--color-table-row-hover); }
+/* .dt-tr-clickable:hover, */
+.dt-tr-alt:hover { background: var(--color-table-row-hover); }
 
 .dt-row {
   position: relative;

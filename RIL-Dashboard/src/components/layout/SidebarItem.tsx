@@ -24,18 +24,18 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       ref={rowRef}
       onMouseEnter={() => collapsed && setTipAnchor(rowRef.current?.getBoundingClientRect() ?? null)}
       onMouseLeave={() => setTipAnchor(null)}
-      className={`group relative flex items-center gap-3 overflow-hidden rounded-[var(--radius-md)] py-3 text-[16px] transition-colors duration-150 ${
+      className={`group relative flex items-center gap-3 overflow-hidden rounded-[var(--radius-md)] py-3 text-sm transition-colors duration-150 ${
         nested ? 'pr-3.5 pl-4' : 'px-3'
       } ${
         collapsed ? 'justify-center' : ''
       } ${soon || disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${
         isActive
-          ? 'sidebar-item-active font-bold text-sidebar-active-ink'
+          ? 'sidebar-item-active font-semibold text-sidebar-active-ink'
           : soon
-            ? 'font-semibold text-sidebar-icon/70'
+            ? 'font-normal text-sidebar-icon/70'
             : disabled
-              ? 'font-semibold text-sidebar-ink'
-              : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
+              ? 'font-normal text-sidebar-ink'
+              : 'sidebar-item-hover font-normal text-sidebar-ink hover:text-sidebar-hover-ink'
       }`}
     >
       {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />}

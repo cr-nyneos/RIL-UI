@@ -104,10 +104,10 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
         className="w-full cursor-pointer text-left"
       >
         <div
-          className={`group relative flex cursor-pointer items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] px-3 py-2.5 text-[14.5px] transition-colors duration-150 ${
+          className={`group relative flex cursor-pointer items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] px-3 py-2.5 text-sm transition-colors duration-150 ${
             inGroup && !open
-              ? 'sidebar-item-active font-bold text-sidebar-active-ink'
-              : 'sidebar-item-hover font-semibold text-sidebar-ink hover:text-sidebar-hover-ink'
+              ? 'sidebar-item-active font-semibold text-sidebar-active-ink'
+              : 'sidebar-item-hover font-normal text-sidebar-ink hover:text-sidebar-hover-ink'
           }`}
         >
           {inGroup && !open && (

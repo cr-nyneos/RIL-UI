@@ -47,7 +47,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           aria-label="Go to dashboard"
           className="flex min-w-0 cursor-pointer items-center gap-3"
         >
-          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[var(--radius-md)] bg-brand-600 text-sm font-bold text-white shadow-[0_4px_14px_-4px_rgba(54,92,245,0.8)]">
+          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-rail-active)] text-sm font-bold text-white">
             <Warehouse size={21} strokeWidth={2.2} />
           </span>
           {!collapsed && (

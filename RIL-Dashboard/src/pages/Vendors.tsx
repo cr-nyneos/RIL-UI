@@ -7,7 +7,7 @@ import PageHeader from '../components/ui/PageHeader';
 import SearchInput from '../components/ui/SearchInput';
 import Select from '../components/ui/Select';
 import Button from '../components/ui/Button';
-import KpiPanel from '../components/ui/KpiPanel';
+import KpiGroupCard, { type KpiGroup } from '../components/dashboard/KpiGroupCard';
 import Avatar from '../components/ui/Avatar';
 import Badge from '../components/ui/Badge';
 import StatusBadge from '../components/ui/StatusBadge';
@@ -105,15 +105,39 @@ export default function Vendors() {
     });
   }, [filters, sort, orderCounts]);
 
-  // The KPI strip counts the directory as filtered, so the numbers always
+  // The KPI cards count the directory as filtered, so the numbers always
   // describe the list the user is actually looking at.
-  const kpis = useMemo(
-    () => ({
-      total: rows.length,
-      active: rows.filter((v) => v.status === 'Active').length,
-      pendingKyc: rows.filter((v) => v.complianceState === 'Pending KYC').length,
-      highRisk: rows.filter((v) => v.risk === 'High').length,
-    }),
+  const kpiGroups: KpiGroup[] = useMemo(
+    () => [
+      {
+        header: 'Total Vendors',
+        data: [
+          { title: 'Active', value: rows.filter((v) => v.status === 'Active').length },
+          { title: 'Onboarding', value: rows.filter((v) => v.status === 'Onboarding').length },
+        ],
+      },
+      {
+        header: 'Total Compliance Load',
+        data: [
+          { title: 'Pending KYC', value: rows.filter((v) => v.complianceState === 'Pending KYC').length },
+          { title: 'Verified', value: rows.filter((v) => v.complianceState === 'Verified').length },
+        ],
+      },
+      {
+        header: 'Total Risk Exposure',
+        data: [
+          { title: 'High Risk', value: rows.filter((v) => v.risk === 'High').length },
+          { title: 'Medium Risk', value: rows.filter((v) => v.risk === 'Medium').length },
+        ],
+      },
+      {
+        header: 'Total Directory Reach',
+        data: [
+          { title: 'Vendors', value: rows.length },
+          { title: 'Plants', value: new Set(rows.flatMap((v) => v.plants)).size },
+        ],
+      },
+    ],
     [rows],
   );
 
@@ -249,30 +273,15 @@ export default function Vendors() {
           />
         </div>
 
+        {/* KPI CARDS — the Dashboard's cards verbatim; `.tsy` carries the
+            palette the card and its hover lift are built on. */}
         <div
-          className="animate-rise rounded-lg p-6 shadow-[var(--shadow-glass)]"
-          style={{ background: 'var(--color-surface-subtle)', animationDelay: '60ms' }}
+          className="tsy tsy-section animate-rise grid grid-cols-1 gap-6 p-6 md:grid-cols-2 xl:grid-cols-4"
+          style={{ animationDelay: '60ms' }}
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <KpiPanel
-              group={{
-                header: 'Vendor Base',
-                data: [
-                  { title: 'Total Vendors', value: kpis.total },
-                  { title: 'Active Vendors', value: kpis.active },
-                ],
-              }}
-            />
-            <KpiPanel
-              group={{
-                header: 'Risk & Compliance',
-                data: [
-                  { title: 'Pending KYC', value: kpis.pendingKyc },
-                  { title: 'High Risk Vendors', value: kpis.highRisk },
-                ],
-              }}
-            />
-          </div>
+          {kpiGroups.map((group) => (
+            <KpiGroupCard key={group.header} group={group} />
+          ))}
         </div>
 
         <div
