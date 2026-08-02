@@ -18,36 +18,34 @@ export default function CompletionFileTab({ detail }: CompletionFileTabProps) {
     .pop();
 
   return (
-    <div className="p-5">
-      <Section title="Project Completion File" padded={false}>
-        <div className="border-b border-[var(--color-border)] p-5">
-          <KeyValue
-            columns={3}
-            items={[
-              {
-                label: 'Status',
-                value: collected.length === artifacts.length ? 'Complete' : 'In progress',
-              },
-              {
-                label: 'Artifacts Collected',
-                value: `${collected.length} of ${artifacts.length}`,
-              },
-              { label: 'Last Updated', value: lastUpdated ? formatDate(lastUpdated) : null },
-            ]}
-          />
-        </div>
+    <Section variant="flush" title="Project Completion File" padded={false}>
+      <div className="border-b border-[var(--color-border)] p-5">
+        <KeyValue
+          columns={3}
+          items={[
+            {
+              label: 'Status',
+              value: collected.length === artifacts.length ? 'Complete' : 'In progress',
+            },
+            {
+              label: 'Artifacts Collected',
+              value: `${collected.length} of ${artifacts.length}`,
+            },
+            { label: 'Last Updated', value: lastUpdated ? formatDate(lastUpdated) : null },
+          ]}
+        />
+      </div>
 
-        {artifacts.map((artifact) => (
-          <DocumentRow
-            key={artifact.id}
-            name={artifact.name}
-            type={artifact.type}
-            status={artifact.status}
-            uploadedBy={artifact.uploadedBy}
-            uploadedAt={artifact.uploadedAt ? formatDate(artifact.uploadedAt) : undefined}
-          />
-        ))}
-      </Section>
-    </div>
+      {artifacts.map((artifact) => (
+        <DocumentRow
+          key={artifact.id}
+          name={artifact.name}
+          type={artifact.type}
+          status={artifact.status}
+          uploadedBy={artifact.uploadedBy}
+          uploadedAt={artifact.uploadedAt ? formatDate(artifact.uploadedAt) : undefined}
+        />
+      ))}
+    </Section>
   );
 }

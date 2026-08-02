@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ClipboardCheck, MoreHorizontal, PackagePlus } from 'lucide-react';
+import { ClipboardCheck, MoreHorizontal, PackagePlus } from 'lucide-react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import AppShell from '../components/layout/AppShell';
@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
 import ExceptionFlags from '../components/ui/ExceptionFlags';
 import KeyValue from '../components/ui/KeyValue';
+import PageHeader from '../components/ui/PageHeader';
 import Section from '../components/ui/Section';
 import StageRail from '../components/ui/StageRail';
 import StatusBadge from '../components/ui/StatusBadge';
@@ -124,55 +125,45 @@ export default function OrderDetail() {
   return (
     <AppShell>
       <div className="flex flex-col gap-4">
-        <header className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex min-w-0 flex-wrap items-center gap-2.5">
-            <Button
-              variant="ghost"
-              size="sm"
-              icon={<ArrowLeft size={16} strokeWidth={2.3} />}
-              className="cursor-pointer"
-              onClick={() => navigate('/orders')}
-            >
-              Orders
-            </Button>
-            <div className="min-w-0">
-              <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <h1 className="text-page-title truncate">{order.id}</h1>
-                <StatusBadge status={order.status} />
-                <TypeBadge type={order.type} />
-              </div>
-              <p className="text-meta mt-0.5 truncate">
-                {order.po} / {order.vendor} / {order.plant}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            <Button
-              variant="secondary"
-              icon={<PackagePlus size={16} strokeWidth={2.2} />}
-              className="cursor-pointer"
-              onClick={() => navigate(`/shipments/new?order=${order.id}`)}
-            >
-              Log Shipment
-            </Button>
-            <Button
-              variant="secondary"
-              icon={<ClipboardCheck size={16} strokeWidth={2.2} />}
-              className="cursor-pointer"
-              onClick={() => navigate(`/qc/new?order=${order.id}`)}
-            >
-              Record Inspection
-            </Button>
-            <Button
-              variant="icon"
-              aria-label="More actions"
-              title="Export / Print"
-              icon={<MoreHorizontal size={17} strokeWidth={2.4} />}
-              onClick={() => setToast('Export and print actions are stubbed for the POC.')}
-            />
-          </div>
-        </header>
+        <PageHeader
+          size="lg"
+          rule
+          title={order.id}
+          breadcrumbs={[
+            { label: 'Home', to: '/' },
+            { label: 'Orders', to: '/orders' },
+            { label: order.id },
+          ]}
+          actions={
+            <>
+              <StatusBadge status={order.status} />
+              <TypeBadge type={order.type} />
+              <Button
+                variant="secondary"
+                icon={<PackagePlus size={16} strokeWidth={2.2} />}
+                className="cursor-pointer"
+                onClick={() => navigate(`/shipments/new?order=${order.id}`)}
+              >
+                Log Shipment
+              </Button>
+              <Button
+                variant="secondary"
+                icon={<ClipboardCheck size={16} strokeWidth={2.2} />}
+                className="cursor-pointer"
+                onClick={() => navigate(`/qc/new?order=${order.id}`)}
+              >
+                Record Inspection
+              </Button>
+              <Button
+                variant="icon"
+                aria-label="More actions"
+                title="Export / Print"
+                icon={<MoreHorizontal size={17} strokeWidth={2.4} />}
+                onClick={() => setToast('Export and print actions are stubbed for the POC.')}
+              />
+            </>
+          }
+        />
 
         <Section
           title="Order Summary"

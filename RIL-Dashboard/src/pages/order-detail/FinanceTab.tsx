@@ -62,8 +62,13 @@ export default function FinanceTab({ detail }: FinanceTabProps) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 p-5">
-      <Section title="Invoices" description="Raised against this order's milestones." padded={false}>
+    <>
+      <Section
+        variant="flush"
+        title="Invoices"
+        description="Raised against this order's milestones."
+        padded={false}
+      >
         <DataTable
           surface={false}
           minWidth="900px"
@@ -74,6 +79,7 @@ export default function FinanceTab({ detail }: FinanceTabProps) {
       </Section>
 
       <Section
+        variant="flush"
         title="Supply Chain Finance"
         description="Financing released by the dependency engine, not by invoice date."
         actions={
@@ -113,6 +119,6 @@ export default function FinanceTab({ detail }: FinanceTabProps) {
       <FloatingTooltip open={tip !== null} below={tip ?? undefined} gap={8}>
         <p className="text-[13px] leading-5 font-medium text-ink-700">{scf.blockedReason}</p>
       </FloatingTooltip>
-    </div>
+    </>
   );
 }

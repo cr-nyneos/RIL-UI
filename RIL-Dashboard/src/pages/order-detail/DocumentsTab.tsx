@@ -63,8 +63,9 @@ export default function DocumentsTab({ detail, onNotify }: DocumentsTabProps) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 p-5">
+    <>
       <Section
+        variant="flush"
         title="Compliance Documents"
         description={`${detail.documents.filter((d) => d.status === 'Verified').length} of ${detail.documents.length} verified.`}
         padded={false}
@@ -95,6 +96,7 @@ export default function DocumentsTab({ detail, onNotify }: DocumentsTabProps) {
       </Section>
 
       <Section
+        variant="flush"
         title="Security Passes"
         description="Site access held against this order's milestones."
         padded={false}
@@ -149,6 +151,6 @@ export default function DocumentsTab({ detail, onNotify }: DocumentsTabProps) {
           </>
         )}
       </Drawer>
-    </div>
+    </>
   );
 }

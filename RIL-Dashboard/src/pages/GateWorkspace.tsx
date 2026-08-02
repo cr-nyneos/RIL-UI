@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react';
 import {
   AlertTriangle,
-  ArrowLeft,
   Check,
   CheckCircle2,
   Circle,
-  FileUp,
   Lock,
   MessageSquareText,
   ShieldCheck,
@@ -22,6 +20,7 @@ import Button from '../components/ui/Button';
 import DocumentRow from '../components/ui/DocumentRow';
 import EmptyState from '../components/ui/EmptyState';
 import KeyValue from '../components/ui/KeyValue';
+import PageHeader from '../components/ui/PageHeader';
 import ProgressMeter from '../components/ui/ProgressMeter';
 import Section from '../components/ui/Section';
 import Select from '../components/ui/Select';
@@ -404,7 +403,6 @@ export default function GateWorkspace() {
   // The workspace opens from several places — it returns to the one it came from.
   const origin = location.state as { from?: string; fromLabel?: string } | null;
   const backTo = origin?.from ?? `/orders/${id}?tab=timeline`;
-  const backLabel = `Back to ${origin?.fromLabel ?? 'Order'}`;
   const { order, detail } = useOrderDetail(id);
   const milestone = detail?.milestones.find((candidate) => candidate.key === gateKey);
   const config = GATE_CONFIG[gateKey];
@@ -483,30 +481,19 @@ export default function GateWorkspace() {
   return (
     <AppShell>
       <div className="flex flex-col gap-4">
-        <header className="surface-section overflow-hidden">
-          <div className="surface-section-head px-5 py-4">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div className="min-w-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  icon={<ArrowLeft size={16} strokeWidth={2.3} />}
-                  onClick={() => navigate(backTo)}
-                  className="mb-2 cursor-pointer"
-                >
-                  {backLabel}
-                </Button>
-                <div className="flex min-w-0 flex-wrap items-center gap-2">
-                  <h1 className="text-page-title truncate">{order.id}</h1>
-                  <span className="text-meta">/</span>
-                  <h2 className="text-page-title truncate">{milestone.label}</h2>
-                  <StatusBadge status={STATE_LABEL[milestone.state]} />
-                </div>
-                <p className="text-meta mt-1 truncate">
-                  {order.po} / {order.vendor} / {order.plant} / Owner: {owner.name}
-                </p>
-              </div>
-
+        <PageHeader
+          size="lg"
+          rule
+          title={milestone.label}
+          breadcrumbs={[
+            { label: 'Home', to: '/' },
+            { label: 'Orders', to: '/orders' },
+            { label: order.id, to: `/orders/${order.id}?tab=timeline` },
+            { label: milestone.label },
+          ]}
+          actions={
+            <>
+              <StatusBadge status={STATE_LABEL[milestone.state]} />
               <div className="w-full max-w-[220px]">
                 <div className="mb-1 flex items-center justify-between">
                   <span className="text-table-head">Current Progress</span>
@@ -514,8 +501,11 @@ export default function GateWorkspace() {
                 </div>
                 <ProgressMeter value={progress} />
               </div>
-            </div>
-          </div>
+            </>
+          }
+        />
+
+        <header className="surface-section overflow-hidden">
           <div className="px-5 py-3">
             <WorkflowBreadcrumb milestones={detail.milestones} activeKey={milestone.key} />
           </div>
@@ -676,9 +666,6 @@ export default function GateWorkspace() {
             <div className="flex flex-wrap items-center gap-2">
               <Button variant="secondary" onClick={() => navigate(backTo)}>
                 Cancel
-              </Button>
-              <Button variant="secondary" icon={<FileUp size={15} />} onClick={() => setToast('Draft saved in memory for the POC.')}>
-                Save Draft
               </Button>
               <Button variant="secondary" onClick={() => setToast('Reject action captured as a POC interaction.')}>
                 Reject

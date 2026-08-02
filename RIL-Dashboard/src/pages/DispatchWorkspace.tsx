@@ -337,7 +337,14 @@ export default function DispatchWorkspace() {
       <div className="flex flex-col gap-4 pb-24">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
+            size="lg"
+            rule
             title="Dispatch Workspace"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Orders', to: '/orders' },
+              { label: 'Dispatch Workspace' },
+            ]}
             actions={
               draftState !== 'idle' ? (
                 <Badge tone={draftState === 'saving' ? 'warning' : 'success'} variant="glass">
@@ -419,9 +426,6 @@ export default function DispatchWorkspace() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
               <Button variant="ghost" icon={<Flag size={16} strokeWidth={2.2} />} onClick={requestCancel}>
                 Cancel
-              </Button>
-              <Button variant="secondary" icon={<Landmark size={16} strokeWidth={2.2} />} onClick={saveDraft}>
-                Save Draft
               </Button>
               {activeStep === 'review' ? (
                 <Button

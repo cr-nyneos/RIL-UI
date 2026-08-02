@@ -6,7 +6,6 @@ import {
   Camera,
   Check,
   ShieldCheck,
-  Truck,
   X,
 } from 'lucide-react';
 
@@ -192,16 +191,29 @@ export default function RecordMovement() {
     <AppShell>
       <div className="flex flex-col gap-4 pb-6">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
-          <Button
-            variant="ghost"
-            size="sm"
-            icon={<ArrowLeft size={16} strokeWidth={2.3} />}
-            onClick={() => navigate('/site-operations')}
-            className="mb-2 cursor-pointer"
-          >
-            Back to Site Operations
-          </Button>
-          <PageHeader title="Record Movement" actions={<Badge variant="glass">{movementId}</Badge>} />
+          <PageHeader
+            size="lg"
+            rule
+            title="Record Movement"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Site Operations', to: '/site-operations' },
+              { label: 'Record Movement' },
+            ]}
+            actions={
+              <>
+                <Badge variant="glass">{movementId}</Badge>
+                <Button
+                  variant="secondary"
+                  icon={<ArrowLeft size={16} strokeWidth={2.2} />}
+                  onClick={() => navigate('/site-operations')}
+                  className="cursor-pointer"
+                >
+                  Back to Site Operations
+                </Button>
+              </>
+            }
+          />
           {/* <p className="text-meta mt-1">
             Capture a gate movement with its vehicle, weighment, security clearance and manpower.
           </p> */}
@@ -448,14 +460,6 @@ export default function RecordMovement() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
               <Button variant="ghost" onClick={() => navigate('/site-operations')} className="cursor-pointer">
                 Cancel
-              </Button>
-              <Button
-                variant="secondary"
-                icon={<Truck size={16} strokeWidth={2.2} />}
-                onClick={() => setToast('Movement held in memory for this session.')}
-                className="cursor-pointer"
-              >
-                Save Draft
               </Button>
               {activeStep === 'clearance' ? (
                 <Button

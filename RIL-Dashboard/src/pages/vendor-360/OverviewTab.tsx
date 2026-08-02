@@ -18,11 +18,7 @@ export default function OverviewTab({ snapshot }: OverviewTabProps) {
 
   return (
     <>
-      <Section
-        variant="flush"
-        title="Standing"
-        description="Health blends compliance completeness with delivery reliability and open exceptions."
-      >
+      <Section variant="flush" title="Standing">
         {hasAlerts && (
           <div className="mb-5 flex flex-col gap-2">
             {snapshot.breachedApprovals > 0 && (
@@ -42,17 +38,26 @@ export default function OverviewTab({ snapshot }: OverviewTabProps) {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <div className="text-meta">Health Score</div>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[17px] leading-6 font-bold text-[var(--color-ink-900)]">Health Score</span>
+              <span className="text-[17px] leading-6 font-bold tabular-nums text-[var(--color-ink-900)]">
+                {health}%
+              </span>
+            </div>
             <div className="mt-2">
-              <ProgressMeter value={health} showLabel tone={health < 70 ? 'danger' : 'neutral'} delay={80} />
+              <ProgressMeter value={health} tone={health < 70 ? 'danger' : 'neutral'} delay={80} />
             </div>
           </div>
           <div>
-            <div className="text-meta">Compliance</div>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[17px] leading-6 font-bold text-[var(--color-ink-900)]">Compliance</span>
+              <span className="text-[17px] leading-6 font-bold tabular-nums text-[var(--color-ink-900)]">
+                {vendor.compliance}%
+              </span>
+            </div>
             <div className="mt-2">
               <ProgressMeter
                 value={vendor.compliance}
-                showLabel
                 tone={vendor.compliance < 70 ? 'danger' : 'neutral'}
                 delay={120}
               />
@@ -61,13 +66,10 @@ export default function OverviewTab({ snapshot }: OverviewTabProps) {
         </div>
       </Section>
 
-      <Section
-        variant="flush"
-        title="Current Position"
-        description="Where this vendor stands across execution and the plants today."
-      >
+      <Section variant="flush" title="Current Position">
         <KeyValue
           columns={4}
+          size="lg"
           items={[
             { label: 'Active Orders', value: snapshot.activeOrders.length },
             { label: 'Open Approvals', value: snapshot.approvals.length },
