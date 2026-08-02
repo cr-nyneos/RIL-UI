@@ -128,6 +128,6 @@ export interface PrioritySignal {
 
 export const PRIORITY_SIGNALS: PrioritySignal[] = [
   { label: 'approvals breached SLA', count: 2, tone: 'danger', href: '/approvals' },
-  { label: 'payment overdue', count: 1, tone: 'warning', href: '/payments' },
+  { label: 'payment overdue', count: 1, tone: 'warning', href: '/finance' },
   { label: 'orders at risk', count: 5, tone: 'info', href: '/orders' },
 ];

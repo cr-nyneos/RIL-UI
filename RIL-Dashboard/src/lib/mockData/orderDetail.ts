@@ -278,7 +278,7 @@ function buildActivity(order: Order, milestones: Milestone[]): ActivityEntry[] {
       id: `${order.id}-act-inv`,
       actor: ownerFor('Finance Controller', order.plant),
       action: 'raised',
-      target: { label: 'the milestone invoice', to: '/payments' },
+      target: { label: 'the milestone invoice', to: '/finance' },
       timestamp: `${shiftDays(order.expected, -8)}T16:05:00`,
       type: 'finance',
     },
@@ -549,7 +549,7 @@ const ORD_2044_ACTIVITY: ActivityEntry[] = [
   { id: 'ord2044-act-08', actor: 'Nitin Bhosale', action: 'recorded a short receipt against', target: { label: 'SHP-5502' }, timestamp: '2026-08-02T14:20:00', type: 'delivery' },
   { id: 'ord2044-act-09', actor: 'Nitin Bhosale', action: 'raised a shortage and damage exception — 8 missing, 4 damaged — on', target: { label: 'SHP-5502' }, timestamp: '2026-08-02T14:48:00', type: 'delivery' },
   { id: 'ord2044-act-10', actor: 'System', action: 'blocked', target: { label: 'QC / Inspection' }, timestamp: '2026-08-02T14:49:00', type: 'gate' },
-  { id: 'ord2044-act-11', actor: 'Shweta Pillai', action: 'flagged', target: { label: 'INV-9004', to: '/payments' }, timestamp: '2026-08-02T17:30:00', type: 'finance' },
+  { id: 'ord2044-act-11', actor: 'Shweta Pillai', action: 'flagged', target: { label: 'INV-9004', to: '/finance' }, timestamp: '2026-08-02T17:30:00', type: 'finance' },
   { id: 'ord2044-act-12', actor: 'Imran Sheikh', action: 'scheduled the balance consignment', target: { label: 'SHP-5503' }, timestamp: '2026-08-03T10:05:00', type: 'delivery' },
 ];
 

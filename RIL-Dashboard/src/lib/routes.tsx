@@ -17,13 +17,13 @@ import CreateOrder from '../pages/CreateOrder';
 import ExecutionBoard from '../pages/ExecutionBoard';
 import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
-import RouteStub from '../pages/RouteStub';
 import DispatchWorkspace from '../pages/DispatchWorkspace';
 import GateWorkspace from '../pages/GateWorkspace';
 import RecordMovement from '../pages/RecordMovement';
 import SiteOperations from '../pages/SiteOperations';
 import Vendors from '../pages/Vendors';
 import Vendor360 from '../pages/Vendor360';
+import Finance from '../pages/Finance';
 
 export interface AppRoute {
   path: string;
@@ -47,7 +47,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <Approvals />, nav: true },
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <Vendors />, nav: true },
   { path: '/vendors/:id', label: 'Vendor 360', element: <Vendor360 /> },
-  { path: '/payments', label: 'Payments', icon: Wallet, element: <RouteStub title="Payments" />, nav: true },
+  { path: '/finance', label: 'Finance', icon: Wallet, element: <Finance />, nav: true },
 ];
 
 export interface NavChild {
