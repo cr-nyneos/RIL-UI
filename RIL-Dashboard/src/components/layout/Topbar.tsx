@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Bell } from 'lucide-react';
 import Button from '../ui/Button';
 import { pageName } from '../../lib/routes';
@@ -13,6 +13,8 @@ export default function Topbar() {
 
       <div className="flex items-center gap-3">
         <Button
+          as={Link}
+          to="/notifications"
           variant="icon"
           aria-label="Notifications"
           className="relative h-9 w-9"

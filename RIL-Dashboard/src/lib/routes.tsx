@@ -26,6 +26,8 @@ import Vendors from '../pages/Vendors';
 import Vendor360 from '../pages/Vendor360';
 import Finance from '../pages/Finance';
 import WorkflowBuilder from '../pages/WorkflowBuilder';
+import Notifications from '../pages/Notifications';
+import Insights from '../pages/Insights';
 
 export interface AppRoute {
   path: string;
@@ -51,6 +53,8 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/vendors/:id', label: 'Vendor 360', element: <Vendor360 /> },
   { path: '/finance', label: 'Finance', icon: Wallet, element: <Finance />, nav: true },
   { path: '/workflow-builder', label: 'Workflow Builder', icon: Workflow, element: <WorkflowBuilder />, nav: true },
+  { path: '/insights', label: 'Insights', element: <Insights /> },
+  { path: '/notifications', label: 'Notifications', element: <Notifications /> },
 ];
 
 export interface NavChild {

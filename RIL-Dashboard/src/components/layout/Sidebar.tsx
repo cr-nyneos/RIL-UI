@@ -2,7 +2,6 @@ import {
   Workflow,
   Bell,
   BarChart3,
-  Settings,
   LogOut,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -17,8 +16,8 @@ interface SidebarProps {
 
 const ADMINISTRATION_NAV = [
   { icon: Workflow, label: 'Workflow Builder', to: '/workflow-builder' },
-  { icon: Bell, label: 'Notifications' },
-  { icon: BarChart3, label: 'Insights' },
+  { icon: Bell, label: 'Notifications', to: '/notifications' },
+  { icon: BarChart3, label: 'Insights', to: '/insights' },
 ];
 
 export default function Sidebar({ collapsed }: SidebarProps) {
