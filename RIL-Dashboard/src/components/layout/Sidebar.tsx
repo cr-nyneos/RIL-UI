@@ -52,10 +52,10 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           </span>
           {!collapsed && (
             <span className="flex min-w-0 flex-col">
-              <span className="truncate text-[18px] leading-6 font-bold tracking-tight text-white">
+              <span className="truncate text-[20px] leading-7 font-bold tracking-tight text-white">
                 NyneOS
               </span>
-              <span className="truncate text-[11px] leading-4 font-semibold tracking-[0.06em] text-sidebar-group-label uppercase">
+              <span className="truncate text-[12px] leading-4 font-semibold tracking-[0.06em] text-sidebar-group-label uppercase">
                 Vendor Mgmt
               </span>
             </span>
@@ -90,7 +90,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       <nav className="scrollbar-subtle flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-3.5 py-4">
         {!collapsed && (
-          <span className="mt-1 mb-2.5 px-3 text-[11px] font-bold tracking-widest text-sidebar-group-label uppercase">
+          <span className="mt-1 mb-2.5 px-3 text-[12px] font-bold tracking-widest text-sidebar-group-label uppercase">
             Operations
           </span>
         )}
@@ -112,7 +112,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         <div className="surface-rail-divider mt-5 mb-4 h-px flex-none" />
 
         {!collapsed && (
-          <span className="mb-2.5 px-3 text-[11px] font-bold tracking-widest text-sidebar-group-label uppercase">
+          <span className="mb-2.5 px-3 text-[12px] font-bold tracking-widest text-sidebar-group-label uppercase">
             Phase 2
           </span>
         )}

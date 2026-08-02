@@ -60,7 +60,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
               <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />
             )}
             <Icon
-              size={20}
+              size={22}
               strokeWidth={2.1}
               className={`flex-none transition-colors duration-180 ${
                 inGroup ? 'text-sidebar-active-icon' : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'
@@ -104,7 +104,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
         className="w-full cursor-pointer text-left"
       >
         <div
-          className={`group relative flex cursor-pointer items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] px-3 py-2.5 text-sm transition-colors duration-150 ${
+          className={`group relative flex cursor-pointer items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] px-3 py-3 text-[15px] leading-6 transition-colors duration-150 ${
             inGroup && !open
               ? 'sidebar-item-active font-semibold text-sidebar-active-ink'
               : 'sidebar-item-hover font-normal text-sidebar-ink hover:text-sidebar-hover-ink'
@@ -114,7 +114,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
             <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />
           )}
           <Icon
-            size={20}
+            size={22}
             strokeWidth={2.1}
             className={`flex-none transition-colors duration-180 ${
               inGroup && !open ? 'text-sidebar-active-icon' : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'

@@ -180,7 +180,7 @@ export default function Dashboard() {
               ]}
             />
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col items-start gap-1">
             <span className="tsy-title truncate font-semibold whitespace-nowrap">Contract Type</span>
             <Tabs
               active={contractType}
@@ -202,21 +202,21 @@ export default function Dashboard() {
         </div>
 
         {/* KPI CARDS */}
-        <div className="tsy-section grid grid-cols-1 gap-6 p-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {kpiGroups.map((group) => (
             <KpiGroupCard key={group.header} group={group} />
           ))}
         </div>
 
         {/* Position + pipeline composition */}
-        <div className="tsy-section grid grid-cols-1 gap-6 p-6 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="tsy-card h-125 overflow-auto p-6">
             <h3 className="tsy-title mb-6 text-xl font-semibold">{positionGroup.header}</h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {positionGroup.data.map((item) => (
                 <div key={item.title} className="tsy-section p-2">
-                  <div className="text-lg font-semibold">{item.title}</div>
-                  <div className="tsy-title text-2xl font-bold">{item.value}</div>
+                  <div className="tsy-title text-[28px] font-bold">{item.value}</div>
+                  <p className="text-xl font-medium uppercase">{item.title}</p>
                 </div>
               ))}
             </div>
@@ -238,7 +238,7 @@ export default function Dashboard() {
         </div>
 
         {/* By status / by plant */}
-        <div className="tsy-section grid grid-cols-1 gap-6 p-6 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           <div className="tsy-card space-y-6 p-2">
             <h3 className="tsy-title pl-4 text-xl font-semibold">By Status</h3>
             <PieChart

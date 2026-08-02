@@ -20,21 +20,21 @@
   --color-canvas-mist: #F7FAFF;
   --color-canvas-blush: #FBFCFF;
 
-  --color-surface-page: #F4F8FF;
+  --color-surface-page: #FFFFFF;
   --color-surface-section: #FFFFFF;
-  --color-surface-subtle: #F7FAFF;
-  --color-surface-header: #F1F6FE;
-  --color-surface-toolbar: #F6FAFF;
-  --color-surface-input: #FBFCFF;
+  --color-surface-subtle: #F7F7F8;
+  --color-surface-header: #F1F2F3;
+  --color-surface-toolbar: #F8F8F9;
+  --color-surface-input: #FFFFFF;
   --color-surface-menu: #FFFFFF;
-  --color-surface-hover: #EAF4FF;
-  --color-surface-selected: #E5ECFE;
+  --color-surface-hover: #E7F4FB;
+  --color-surface-selected: #D9EDF8;
 
   /* Table banding — neutral head, visibly tinted alternate row */
-  --color-surface-tablehead: #F2F5FA;
+  --color-surface-tablehead: #F1F2F3;
   --color-table-row: #FFFFFF;
-  --color-table-row-alt: #D9E5FF;
-  --color-table-row-hover: #C9D9FF;
+  --color-table-row-alt: #D9EDF8;
+  --color-table-row-hover: #C4E4F4;
 
  
   --color-surface-rail: #108FC5;
@@ -47,19 +47,19 @@
 
   /* Brand — single primary indigo. Active nav, primary buttons, selected
      states, focus. Cobalt sits underneath it as the pressed tone. */
-  --color-brand-800: #1E3A8A;
-  --color-brand-700: #2745C7;
-  --color-brand-600: #365CF5;
-  --color-brand-500: #5B7CF7;
-  --color-brand-soft2: #EAF0FF;
+  --color-brand-800: #005B85;
+  --color-brand-700: #0072A4;
+  --color-brand-600: #108FC5;
+  --color-brand-500: #3FAAD8;
+  --color-brand-soft2: #E7F4FB;
 
   /* Retained aliases — resolved to the single brand so no second accent survives */
-  --color-aqua-400: #365CF5;
-  --color-liquid-blue-500: #365CF5;
-  --color-violet-500: #365CF5;
+  --color-aqua-400: #108FC5;
+  --color-liquid-blue-500: #108FC5;
+  --color-violet-500: #108FC5;
 
   /* Data hues — categorical encoding only (charts), never decoration */
-  --color-data-blue: #3B6FD4;
+  --color-data-blue: #108FC5;
   --color-data-terracotta: #C2643F;
   --color-data-emerald: #0E9F6E;
   --color-data-amber: #C77C09;
@@ -72,28 +72,28 @@
   --color-warning-soft: #FFFAEB;
   --color-danger: #B42318;
   --color-danger-soft: #FEF3F2;
-  --color-info: #365CF5;
-  --color-info-soft: #EAF0FF;
+  --color-info: #108FC5;
+  --color-info-soft: #E7F4FB;
 
   /* Legacy accent aliases — collapsed onto brand / neutral */
-  --color-cyan: #2745C7;
-  --color-cyan-soft: #EAF0FF;
-  --color-violet: #2745C7;
-  --color-violet-soft: #EAF0FF;
+  --color-cyan: #0072A4;
+  --color-cyan-soft: #E7F4FB;
+  --color-violet: #0072A4;
+  --color-violet-soft: #E7F4FB;
 
-  /* Ink scale — deep navy → slate blue. No neutral gray type anywhere:
-     titles carry navy weight, descriptions stay calm in slate. */
-  --color-ink-900: #172554;
-  --color-ink-800: #1E3163;
-  --color-ink-700: #334155;
-  --color-ink-600: #475569;
-  --color-ink-500: #64748B;
-  --color-ink-400: #94A3B8;
-  --color-ink-300: #C7D5EE;
+  /* Ink scale — charcoal black → warm slate. Blue is reserved for headings
+     and brand accents; body copy, labels and table text stay charcoal. */
+  --color-ink-900: #393E46;
+  --color-ink-800: #393E46;
+  --color-ink-700: #393E46;
+  --color-ink-600: #5F656E;
+  --color-ink-500: #7B818A;
+  --color-ink-400: #9BA1AA;
+  --color-ink-300: #CBD0D7;
 
   /* Surfaces + borders (names kept for compatibility; values are now opaque) */
   --color-glass-fill: #FFFFFF;
-  --color-glass-fill-deep: #F7FAFF;
+  --color-glass-fill-deep: #F7F7F8;
   --color-glass-edge: #DBE5F7;
   --color-glass-hairline: #E9EFFB;
   --color-glass-hairline-deep: #C4D4F0;
@@ -110,8 +110,8 @@
   --radius-3xl: 10px;
 
   --gradient-liquid: var(--color-brand-600);
-  --wash-brand-hover: rgba(54, 92, 245, 0.07);
-  --wash-brand-active: rgba(54, 92, 245, 0.13);
+  --wash-brand-hover: rgba(16, 143, 197, 0.07);
+  --wash-brand-active: rgba(16, 143, 197, 0.13);
 
   /* Elevation — thin border does the work, shadow only confirms the plane.
      Shadows are tinted navy so they sit inside the blue atmosphere. */
@@ -119,25 +119,25 @@
   --shadow-glass-hover: 0 1px 3px rgba(23, 37, 84, 0.08);
 
   /* KPI tokens — value text stays neutral; colour reserved for exceptions */
-  --color-kpi-cobalt: #365CF5;
-  --color-kpi-azure: #0B84E0;
-  --color-kpi-indigo: #1E3A8A;
-  --color-kpi-brand-fill: #365CF5;
-  --color-kpi-brand-text: #172554;
+  --color-kpi-cobalt: #108FC5;
+  --color-kpi-azure: #0072A4;
+  --color-kpi-indigo: #005B85;
+  --color-kpi-brand-fill: #108FC5;
+  --color-kpi-brand-text: #393E46;
   --color-kpi-cyan-fill: #94A3B8;
-  --color-kpi-cyan-text: #172554;
+  --color-kpi-cyan-text: #393E46;
   --color-kpi-danger-fill: #B42318;
   --color-kpi-danger-text: #B42318;
   --color-kpi-warning-fill: #B54708;
   --color-kpi-warning-text: #B54708;
   --color-kpi-violet-fill: #94A3B8;
-  --color-kpi-violet-text: #172554;
+  --color-kpi-violet-text: #393E46;
   --color-kpi-neutral-fill: #94A3B8;
-  --color-kpi-neutral-text: #172554;
-  --color-kpi-neutral-icon: #475569;
+  --color-kpi-neutral-text: #393E46;
+  --color-kpi-neutral-icon: #5F656E;
 
   /* Chip backgrounds */
-  --color-chip-neutral: #EAF4FF;
+  --color-chip-neutral: #E7F4FB;
   --color-chip-danger: #FEF3F2;
   --color-chip-warning: #FFFAEB;
 
@@ -175,12 +175,7 @@
   min-height: 100vh;
   background-color: var(--color-surface-page);
 
-  background-image:
-    radial-gradient(90rem 48rem at 82% -12%, rgba(11, 132, 224, 0.20) 0%, rgba(11, 132, 224, 0) 58%),
-    radial-gradient(76rem 46rem at 4% 8%, rgba(54, 92, 245, 0.13) 0%, rgba(54, 92, 245, 0) 56%),
-    radial-gradient(96rem 60rem at 50% 112%, rgba(78, 84, 226, 0.16) 0%, rgba(78, 84, 226, 0) 62%),
-    linear-gradient(180deg, #EAF2FF 0%, #F3F8FF 42%, #FAFCFF 100%);
-  background-attachment: fixed;
+  background-image: none;
   font-family: var(--font-display2);
 }
 
@@ -236,11 +231,19 @@
 
   
   .surface-rail {
-    background: linear-gradient(
-      180deg,
-      var(--color-surface-rail) 0%,
-      var(--color-surface-rail-deep) 100%
-    );
+    background:
+      linear-gradient(
+        100deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0) 55%
+      ),
+      linear-gradient(
+        170deg,
+        #1795C9 0%,
+        var(--color-surface-rail) 42%,
+        #0C86BC 82%,
+        #0A80B5 100%
+      );
     border-right: 1px solid var(--color-rail-border);
     box-shadow: 1px 0 0 rgba(11, 23, 53, 0.4), 8px 0 28px -18px rgba(11, 23, 53, 0.55);
   }
@@ -459,7 +462,7 @@
 
 /* Control bar — one connected surface, marked as the page's input row */
 .dash-controlbar {
-  background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FF 100%);
+  background: #FFFFFF;
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--color-brand-600);
   border-radius: var(--radius-lg);
@@ -491,13 +494,13 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-brand-600) 0%, #0B84E0 42%, rgba(11, 132, 224, 0) 100%);
+  background: linear-gradient(90deg, var(--color-brand-600) 0%, #0072A4 42%, rgba(16, 143, 197, 0) 100%);
   pointer-events: none;
   z-index: 2;
 }
 
 .dash-panel-head {
-  background: linear-gradient(180deg, #F5F9FF 0%, #EDF3FE 100%);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -513,8 +516,8 @@
   border-radius: var(--radius-lg);
   background-color: #EDF4FF;
   background-image:
-    radial-gradient(36rem 18rem at 94% -60%, rgba(54, 92, 245, 0.20) 0%, rgba(54, 92, 245, 0) 70%),
-    radial-gradient(30rem 16rem at 2% 140%, rgba(11, 132, 224, 0.16) 0%, rgba(11, 132, 224, 0) 72%),
+    radial-gradient(36rem 18rem at 94% -60%, rgba(16, 143, 197, 0.20) 0%, rgba(16, 143, 197, 0) 70%),
+    radial-gradient(30rem 16rem at 2% 140%, rgba(0, 114, 164, 0.16) 0%, rgba(0, 114, 164, 0) 72%),
     linear-gradient(116deg, #E6F0FF 0%, #F4F8FF 56%, #E9EFFF 100%);
   box-shadow:
     0 1px 2px rgba(23, 37, 84, 0.05),
@@ -548,7 +551,7 @@
 }
 
 .dash-head {
-  background: linear-gradient(180deg, #F4F8FF 0%, #ECF2FE 100%);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -603,7 +606,7 @@
 }
 
 .dash-chart-stage {
-  background: linear-gradient(180deg, rgba(241, 246, 254, 0.6) 0%, rgba(255, 255, 255, 0) 72%);
+  background: #FFFFFF;
   border: 1px solid var(--color-glass-hairline);
   border-radius: var(--radius-lg);
 }
@@ -661,7 +664,7 @@
 /* KPI card interaction — structural feedback, not decoration        */
 /* ---------------------------------------------------------------- */
 .kpi-card {
-  background: linear-gradient(180deg, #F2F8FF 0%, #FFFFFF 48%);
+  background: #FFFFFF;
   border-color: var(--color-glass-edge);
   box-shadow:
     0 1px 2px rgba(23, 37, 84, 0.05),
@@ -1006,8 +1009,8 @@
 /* StageRail — current-segment marker + inline tooltip               */
 /* ---------------------------------------------------------------- */
 @keyframes gate-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(54, 92, 245, 0.28); }
-  70%, 100% { box-shadow: 0 0 0 4px rgba(54, 92, 245, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(16, 143, 197, 0.28); }
+  70%, 100% { box-shadow: 0 0 0 4px rgba(16, 143, 197, 0); }
 }
 @keyframes gate-pulse-danger {
   0%   { box-shadow: 0 0 0 0 rgba(180, 35, 24, 0.28); }
@@ -1018,7 +1021,7 @@
 
 .glass-tooltip {
   background: var(--color-ink-900);
-  border: 1px solid var(--color-ink-800);
+  border: 1px solid var(--color-ink-600);
   border-radius: var(--radius-md);
   color: #FFFFFF;
   box-shadow: 0 4px 12px -4px rgba(23, 37, 84, 0.26);
@@ -1057,7 +1060,7 @@
 .focus-bloom:focus {
   outline: none;
   border-color: var(--color-brand-600);
-  box-shadow: 0 0 0 3px rgba(54, 92, 245, 0.16);
+  box-shadow: 0 0 0 3px rgba(16, 143, 197, 0.16);
 }
 
 /* ---------------------------------------------------------------- */
@@ -1074,7 +1077,7 @@
   --tsy-primary-xl: #EAF9FF;
   --tsy-border: #ccccccad;
   --tsy-surface: #FFFFFF;
-  --tsy-surface-dark: #F8F8F7;
+  --tsy-surface-dark: #F1F2F3;
   --tsy-text: #393e46e7;
   --tsy-red: #CA3838;
 
@@ -1115,11 +1118,11 @@
   border-bottom: 1px solid var(--tsy-border);
 }
 
-/* Card title — Cimplr HoverCard: text-title (28px) font-bold tracking-wide */
+/* Card title — Cimplr KpiPanel: text-title (28px) text-primary font-semibold */
 .tsy-card-title {
   font-size: 28px;
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.025em;
   color: var(--tsy-primary);
 }
@@ -1182,7 +1185,7 @@
 }
 .tsy-kpi-card:hover {
   transform: translateY(-8px);
-  background: linear-gradient(135deg, var(--tsy-primary-xl) 0%, var(--tsy-primary-sm) 100%);
+  background: var(--tsy-primary-xl);
 }
 
 .tsy-kpi-row {

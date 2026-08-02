@@ -10,21 +10,22 @@ export interface KpiGroup {
 
 export default function KpiGroupCard({ group }: { group: KpiGroup }) {
   return (
-    <div className="tsy-kpi-card p-6">
-      <p className="tsy-card-title">{group.header}</p>
+    <div className="tsy-kpi-card space-y-2 p-6">
+      <h3 className="tsy-card-title mb-4">{group.header}</h3>
 
-      <div className="tsy-kpi-row mt-2 flex justify-between gap-6">
-        {group.data.map((item) => (
-          <div key={item.title}>
-            <div
-              className={`text-[28px] font-semibold ${Number(item.value) < 0 ? 'tsy-negative' : 'tsy-title'}`}
-            >
-              {item.value}
-            </div>
-            <div className="text-sm">{item.title}</div>
-          </div>
-        ))}
-      </div>
+      {group.data.map((item) => (
+        <div
+          key={item.title}
+          className="tsy-kpi-row flex justify-between gap-6 text-[20px] font-semibold"
+        >
+          <span>{item.title}</span>
+          <span
+            className={`text-[20px] font-semibold ${Number(item.value) < 0 ? 'tsy-negative' : 'tsy-title'}`}
+          >
+            {item.value}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
