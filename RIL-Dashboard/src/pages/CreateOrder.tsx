@@ -72,19 +72,12 @@ export default function CreateOrder() {
     [allValid, detailsValid, documentsValid, teamValid, workflowValid],
   );
 
-  const highestUnlockedIndex = useMemo(() => {
-    let index = 0;
-    if (detailsValid) index = 1;
-    if (detailsValid && workflowValid) index = 2;
-    if (detailsValid && workflowValid && teamValid) index = 3;
-    if (detailsValid && workflowValid && teamValid && documentsValid) index = 4;
-    return index;
-  }, [detailsValid, documentsValid, teamValid, workflowValid]);
+  const highestUnlockedIndex = STEPS.length - 1;
 
   const activeIndex = STEPS.findIndex((step) => step.key === activeStep);
   const completedCount = [detailsValid, workflowValid, teamValid, documentsValid, allValid].filter(Boolean).length;
   const progressPercent = Math.round((completedCount / STEPS.length) * 100);
-  const canMoveNext = completed[activeStep] && activeIndex < STEPS.length - 1 && activeIndex + 1 <= highestUnlockedIndex;
+  const canMoveNext = activeIndex < STEPS.length - 1;
 
   const markTouched = (field: FieldKey) => {
     setTouched((current) => ({ ...current, [field]: true }));
@@ -225,7 +218,6 @@ export default function CreateOrder() {
   };
 
   const handleCreate = () => {
-    if (!allValid) return;
     setCreating(true);
     setToast('Creating order...');
     window.setTimeout(() => saveWorkspaceOrder('created'), 900);
@@ -398,7 +390,6 @@ export default function CreateOrder() {
                   variant="primary"
                   icon={<Warehouse size={16} strokeWidth={2.2} />}
                   loading={creating}
-                  disabled={!allValid}
                   onClick={handleCreate}
                 >
                   Create Order

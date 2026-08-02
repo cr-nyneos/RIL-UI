@@ -88,19 +88,12 @@ export default function DispatchWorkspace() {
     [allValid, documentsValid, orderValid, shipmentValid, vehicleValid],
   );
 
-  const highestUnlockedIndex = useMemo(() => {
-    let index = 0;
-    if (orderValid) index = 1;
-    if (orderValid && shipmentValid) index = 2;
-    if (orderValid && shipmentValid && vehicleValid) index = 3;
-    if (orderValid && shipmentValid && vehicleValid && documentsValid) index = 4;
-    return index;
-  }, [documentsValid, orderValid, shipmentValid, vehicleValid]);
+  const highestUnlockedIndex = STEPS.length - 1;
 
   const activeIndex = STEPS.findIndex((step) => step.key === activeStep);
   const completedCount = [orderValid, shipmentValid, vehicleValid, documentsValid, allValid].filter(Boolean).length;
   const progressPercent = Math.round((completedCount / STEPS.length) * 100);
-  const canMoveNext = completed[activeStep] && activeIndex < STEPS.length - 1 && activeIndex + 1 <= highestUnlockedIndex;
+  const canMoveNext = activeIndex < STEPS.length - 1;
 
   const markTouched = (field: FieldKey) => {
     setTouched((current) => ({ ...current, [field]: true }));
@@ -229,7 +222,6 @@ export default function DispatchWorkspace() {
   };
 
   const handleSubmit = () => {
-    if (!allValid) return;
     setSubmitting(true);
     setToast('Dispatching order...');
     window.setTimeout(() => {
@@ -367,7 +359,7 @@ export default function DispatchWorkspace() {
 
         <Section
           title="Dispatch Readiness"
-          description={`Capture logistics, transport and documents before execution begins. ${completedCount} of ${STEPS.length} steps completed.`}
+          description={`${completedCount} of ${STEPS.length} steps completed.`}
           actions={
             <div className="flex min-w-[220px] items-center gap-3">
               <div className="h-1.5 flex-1 overflow-hidden rounded-[var(--radius-sm)] bg-[var(--color-chip-neutral)]">
@@ -442,7 +434,6 @@ export default function DispatchWorkspace() {
                   variant="primary"
                   icon={<Truck size={16} strokeWidth={2.2} />}
                   loading={submitting}
-                  disabled={!allValid}
                   onClick={handleSubmit}
                 >
                   Dispatch Order

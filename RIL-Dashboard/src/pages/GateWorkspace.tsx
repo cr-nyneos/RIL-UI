@@ -464,7 +464,7 @@ export default function GateWorkspace() {
   }
 
   function handleComplete() {
-    if (!ready || submitting) return;
+    if (submitting) return;
     setSubmitting(true);
     window.setTimeout(() => {
       completeGate({
@@ -525,7 +525,7 @@ export default function GateWorkspace() {
           <main className="flex min-w-0 flex-col gap-4">
             <Section
               title="Gate Information"
-              description={config.description}
+              description=""
               actions={<Badge tone={config.priority === 'Critical' ? 'danger' : 'warning'} shape="square">{config.priority} Priority</Badge>}
             >
               <KeyValue
@@ -687,7 +687,7 @@ export default function GateWorkspace() {
                 variant="primary"
                 icon={<ShieldCheck size={16} strokeWidth={2.3} />}
                 loading={submitting}
-                disabled={!ready || submitting}
+                disabled={submitting}
                 onClick={handleComplete}
               >
                 Complete Gate

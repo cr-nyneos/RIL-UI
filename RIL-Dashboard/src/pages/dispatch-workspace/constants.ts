@@ -71,26 +71,26 @@ export const STEP_COPY: Record<StepKey, { eyebrow: string; title: string; subtit
   order: {
     eyebrow: 'Order',
     title: 'Order Selection',
-    subtitle: 'Pick the approved order this dispatch travels against.',
+    subtitle: '',
   },
   shipment: {
     eyebrow: 'Dispatch',
     title: 'Dispatch Details',
-    subtitle: 'Carrier, schedule and package profile for this dispatch.',
+    subtitle: '',
   },
   vehicle: {
     eyebrow: 'Logistics',
     title: 'Vehicle & Logistics',
-    subtitle: 'Vehicle, driver and tracking references for transit.',
+    subtitle: '',
   },
   documents: {
     eyebrow: 'Files',
     title: 'Dispatch Documents',
-    subtitle: 'Upload the dispatch package before final review.',
+    subtitle: '',
   },
   review: {
     eyebrow: 'Review',
     title: 'Final Dispatch Review',
-    subtitle: 'Read-only confirmation before dispatch.',
+    subtitle: '',
   },
 };

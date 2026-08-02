@@ -163,7 +163,7 @@ export default function RecordMovement() {
     clearance: checks.clearance.every((check) => check.done),
   };
 
-  const highestUnlockedIndex = completed.movement ? (completed.vehicle ? 2 : 1) : 0;
+  const highestUnlockedIndex = STEPS.length - 1;
   const activeIndex = STEPS.findIndex((step) => step.key === activeStep);
   const allValid = completed.movement && completed.vehicle && completed.clearance;
   const progress = Math.round(
@@ -176,7 +176,7 @@ export default function RecordMovement() {
   }
 
   function handleSubmit() {
-    if (!allValid || submitting) return;
+    if (submitting) return;
     setSubmitting(true);
     window.setTimeout(() => {
       const movement = recordMovement(draft);
@@ -476,7 +476,6 @@ export default function RecordMovement() {
                   variant="primary"
                   icon={<ShieldCheck size={16} strokeWidth={2.2} />}
                   loading={submitting}
-                  disabled={!allValid}
                   onClick={handleSubmit}
                   className="cursor-pointer"
                 >
@@ -487,7 +486,6 @@ export default function RecordMovement() {
                   variant="primary"
                   icon={<ArrowRight size={16} strokeWidth={2.2} />}
                   iconPosition="right"
-                  disabled={!completed[activeStep]}
                   onClick={() => setActiveStep(STEPS[activeIndex + 1].key)}
                   className="cursor-pointer"
                 >
