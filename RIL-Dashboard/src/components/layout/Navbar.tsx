@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Calendar, Mail, Menu, User, Warehouse, X, type LucideIcon } from 'lucide-react';
 import { PRIMARY_NAV } from '../../lib/routes';
 import NotificationBell from './NotificationBell';
+// import { useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   sidebarCollapsed: boolean;
@@ -15,6 +16,9 @@ const USER = {
   role: 'Operations Manager',
   lastLoginTime: new Date().toISOString(),
 };
+
+ 
+
 
 const NavItems: React.FC<{
   items: { to: string; icon: LucideIcon; label: string }[];
@@ -53,7 +57,7 @@ const NavItems: React.FC<{
   </div>
 );
 
-const UserDropdown: React.FC<{ isOpen: boolean }> = ({ isOpen }) =>
+const UserDropdown: React.FC<{ isOpen: boolean; onLogout: () => void }> = ({ isOpen, onLogout }) =>
   isOpen ? (
     <div
       className="absolute right-0 mt-2 w-72 border border-[var(--color-border)] rounded-xl shadow-xl overflow-hidden z-50"
@@ -101,7 +105,7 @@ const UserDropdown: React.FC<{ isOpen: boolean }> = ({ isOpen }) =>
       </div>
 
       <div className="px-4 py-3 bg-gradient-to-r from-brand-700 to-brand-500 border-t border-[var(--color-border)] flex justify-end">
-        <button className="text-xs text-white transition-colors">Sign Out</button>
+        <button className="text-xs text-white cursor-pointer transition-colors" onClick={onLogout}>Log Out</button>
       </div>
     </div>
   ) : null;
@@ -111,6 +115,12 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
   const { pathname } = useLocation();
   const [isUserDetailsVisible, setIsUserDetailsVisible] = useState(false);
   const userDropdownRef = useRef<HTMLDivElement>(null);
+   
+
+  const handleLogout = () => {
+    setIsUserDetailsVisible(false);
+    navigate('/login', { replace: true });
+  };
 
   const activeTo =
     PRIMARY_NAV.filter((item) => item.to === '/' ? pathname === '/' : pathname.startsWith(item.to))
@@ -178,7 +188,7 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
               <User size={16} className="text-brand-600" />
             </div>
           </div>
-          <UserDropdown isOpen={isUserDetailsVisible} />
+          <UserDropdown isOpen={isUserDetailsVisible} onLogout={handleLogout} />
         </div>
       </div>
     </nav>
