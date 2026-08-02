@@ -14,6 +14,7 @@ interface SectionCardProps {
   /** `subtle` tints the body so white cards nested inside stay legible. */
   bodyTone?: 'section' | 'subtle';
   className?: string;
+  titleClassName?: string;
   bodyClassName?: string;
   style?: CSSProperties;
 }
@@ -28,6 +29,7 @@ export default function SectionCard({
   padded = true,
   bodyTone = 'section',
   className = '',
+  titleClassName = 'text-brand-700',
   bodyClassName = '',
   style,
 }: SectionCardProps) {
@@ -37,7 +39,7 @@ export default function SectionCard({
   const heading = (
     <>
       <span className="flex min-w-0 items-center gap-2.5">
-        <span className="truncate text-[20px] leading-7 font-semibold text-brand-700">{title}</span>
+        <span className={`truncate text-[20px] leading-7 font-semibold ${titleClassName}`}>{title}</span>
         {meta}
       </span>
       {collapsible && (

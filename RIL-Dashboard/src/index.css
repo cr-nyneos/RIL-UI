@@ -1252,3 +1252,17 @@
   .kpi-card:hover .kpi-crest { animation: none; }
   .kpi-crest { display: none; }
 }
+
+.wfb-type .text-kpi-label {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.wfb-type .dt-head {
+  font-size: 15px;
+}
+
+.wfb-type input,
+.wfb-type button[role='combobox'] {
+  font-size: 15px;
+}

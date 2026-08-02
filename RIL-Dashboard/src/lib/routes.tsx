@@ -8,6 +8,7 @@ import {
   Truck,
   Wallet,
   Warehouse,
+  Workflow,
   type LucideIcon,
 } from 'lucide-react';
 import type { ReactElement } from 'react';
@@ -24,6 +25,7 @@ import SiteOperations from '../pages/SiteOperations';
 import Vendors from '../pages/Vendors';
 import Vendor360 from '../pages/Vendor360';
 import Finance from '../pages/Finance';
+import WorkflowBuilder from '../pages/WorkflowBuilder';
 
 export interface AppRoute {
   path: string;
@@ -48,6 +50,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <Vendors />, nav: true },
   { path: '/vendors/:id', label: 'Vendor 360', element: <Vendor360 /> },
   { path: '/finance', label: 'Finance', icon: Wallet, element: <Finance />, nav: true },
+  { path: '/workflow-builder', label: 'Workflow Builder', icon: Workflow, element: <WorkflowBuilder />, nav: true },
 ];
 
 export interface NavChild {

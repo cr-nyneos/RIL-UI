@@ -1,5 +1,5 @@
 import {
-  FileText,
+  Workflow,
   Bell,
   BarChart3,
   Settings,
@@ -15,10 +15,10 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
-const PHASE_2_NAV = [
-  { icon: FileText, label: 'Documents' },
+const ADMINISTRATION_NAV = [
+  { icon: Workflow, label: 'Workflow Builder', to: '/workflow-builder' },
   { icon: Bell, label: 'Notifications' },
-  { icon: BarChart3, label: 'Reports' },
+  { icon: BarChart3, label: 'Insights' },
 ];
 
 export default function Sidebar({ collapsed }: SidebarProps) {
@@ -40,7 +40,7 @@ export default function Sidebar({ collapsed }: SidebarProps) {
             Operations
           </span>
         )}
-        {PRIMARY_NAV.map((item) =>
+        {PRIMARY_NAV.filter((item) => item.to !== '/workflow-builder').map((item) =>
           item.children ? (
             <SidebarGroup
               key={item.label}
@@ -59,16 +59,23 @@ export default function Sidebar({ collapsed }: SidebarProps) {
 
         {!collapsed && (
           <span className="mb-2.5 px-3 text-[12px] font-bold tracking-widest text-sidebar-group-label uppercase">
-            Phase 2
+            Administration
           </span>
         )}
-        {PHASE_2_NAV.map((item) => (
-          <SidebarItem key={item.label} icon={item.icon} label={item.label} collapsed={collapsed} soon />
+        {ADMINISTRATION_NAV.map((item) => (
+          <SidebarItem
+            key={item.label}
+            to={item.to}
+            icon={item.icon}
+            label={item.label}
+            collapsed={collapsed}
+            soon={!item.to}
+          />
         ))}
       </nav>
 
       <div className="flex flex-none flex-col gap-1 border-t border-[var(--color-rail-border)] bg-[var(--color-surface-rail-mark)] px-2.5 py-3.5">
-        <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled />
+        {/* <SidebarItem icon={Settings} label="Account & Settings" collapsed={collapsed} disabled /> */}
         <SidebarItem icon={LogOut} label="Log out" collapsed={collapsed} onClick={handleLogout} />
       </div>
     </aside>

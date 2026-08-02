@@ -29,6 +29,8 @@ interface DataTableProps<T> {
   surface?: boolean;
 
   bordered?: boolean;
+  /** Head sticks to the viewport by default; off for tables that sit inside a section card. */
+  stickyHead?: boolean;
   bodyKey?: string;
   minWidth?: string;
   expandedKey?: string | null;
@@ -56,6 +58,7 @@ export default function DataTable<T>({
   footer,
   surface = true,
   bordered = true,
+  stickyHead = true,
   bodyKey,
   minWidth = '1320px',
   expandedKey,
@@ -108,7 +111,9 @@ export default function DataTable<T>({
                           : 'descending'
                         : undefined
                     }
-                    className={`dt-head ${cellPadding} ${ALIGN[align]} sticky top-0 z-10 select-none text-sm font-semibold tracking-wider text-ink-700 uppercase`}
+                    className={`dt-head ${cellPadding} ${ALIGN[align]} ${
+                      stickyHead ? 'sticky top-0 z-10' : ''
+                    } select-none text-sm font-semibold tracking-wider text-ink-700 uppercase`}
                   >
                     <div
                       className={`flex items-center gap-1 ${
