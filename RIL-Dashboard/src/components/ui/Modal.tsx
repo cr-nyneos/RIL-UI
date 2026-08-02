@@ -41,16 +41,16 @@ export default function Modal({
         style={{ width }}
         className="animate-modal surface-section relative flex max-h-full w-full flex-col overflow-hidden shadow-[0_12px_32px_-12px_rgba(23,37,84,0.28)]"
       >
-        <header className="surface-section-head flex items-start justify-between gap-3 px-5 py-3.5">
+        <header className="flex items-start justify-between gap-3 border-b border-[var(--color-border-strong)] bg-[var(--color-brand-soft2)] px-5 py-3.5">
           <div className="min-w-0">
-            <h2 className="text-section-title truncate">{title}</h2>
-            {description && <p className="text-meta mt-0.5">{description}</p>}
+            <h2 className="truncate text-[17px] leading-6 font-semibold text-brand-700">{title}</h2>
+            {description && <p className="text-meta mt-0.5 text-brand-700">{description}</p>}
           </div>
           <button
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="flex-none cursor-pointer rounded-[var(--radius-sm)] text-ink-400 outline-none transition-colors duration-150 hover:text-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            className="flex-none cursor-pointer rounded-[var(--radius-sm)] text-brand-700 outline-none transition-colors duration-150 hover:text-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
           >
             <X size={17} strokeWidth={2.4} />
           </button>

@@ -105,12 +105,16 @@ export default function JourneyCard({
 
           <div className="flex flex-none items-center gap-2.5">
             <StatusBadge status={status} size="sm" />
-            <ChevronDown
-              size={16}
-              strokeWidth={2.4}
+            <span
               aria-hidden
-              className={`accordion-chevron text-ink-400 ${expanded ? 'rotate-180' : ''}`}
-            />
+              className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface-subtle)] text-brand-700"
+            >
+              <ChevronDown
+                size={20}
+                strokeWidth={2.6}
+                className={`accordion-chevron ${expanded ? 'rotate-180' : ''}`}
+              />
+            </span>
           </div>
         </div>
 

@@ -52,22 +52,18 @@ export default function DecisionItem({ decision, expanded, onToggle, onAct, styl
 
   return (
     <DecisionCard
-      reference={decision.id}
-      track={decision.trackLabel}
       icon={TRACK_ICON[decision.track]}
       gate={decision.gateLabel}
       orderId={decision.order.id}
       orderTo={`/orders/${decision.order.id}`}
-      subtitle={`${decision.order.vendor} · ${decision.order.plant} · ${formatCurrency(decision.order.valueCr)}`}
+      subtitle={`${decision.order.vendor} · ${formatCurrency(decision.order.valueCr)}`}
       question={decision.question}
-      context={decision.context}
       stages={decision.stages}
       accent={ACCENT[decision.urgency]}
       due={dueLabel(decision)}
       status={status(decision)}
       facts={[
         { label: 'Owner', value: decision.owner.name },
-        { label: 'Raised', value: formatDate(decision.raisedAt) },
         {
           label: 'Waiting',
           value: `${decision.waitingDays} ${decision.waitingDays === 1 ? 'day' : 'days'}`,

@@ -60,7 +60,7 @@ export default function Select<T extends string>({
           position="popper"
           sideOffset={8}
           className="
-            z-50
+            z-90
             overflow-hidden
             rounded-[var(--radius-md)]
             border border-[var(--color-border)]

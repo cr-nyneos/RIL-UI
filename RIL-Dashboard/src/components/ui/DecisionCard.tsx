@@ -15,9 +15,6 @@ export interface DecisionFact {
 }
 
 interface DecisionCardProps {
-  /** Queue reference, shown as a quiet eyebrow beside the track. */
-  reference: string;
-  track: string;
   icon?: ReactNode;
   /** The decision itself — the gate awaiting a call. */
   gate: string;
@@ -26,7 +23,6 @@ interface DecisionCardProps {
   subtitle: string;
   /** The one sentence the reviewer is answering. */
   question: string;
-  context?: string;
   stages: JourneyStage[];
   facts: DecisionFact[];
   /** Drives the left rule and the due line — urgency, never decoration. */
@@ -48,15 +44,12 @@ interface DecisionCardProps {
  * never stops being scannable.
  */
 export default function DecisionCard({
-  reference,
-  track,
   icon,
   gate,
   orderId,
   orderTo,
   subtitle,
   question,
-  context,
   stages,
   facts,
   accent = 'brand',
@@ -100,10 +93,7 @@ export default function DecisionCard({
               </span>
             )}
             <div className="min-w-0">
-              <div className="text-eyebrow truncate">
-                {track} · {reference}
-              </div>
-              <h3 className="mt-0.5 truncate text-[15px] leading-5 font-bold tracking-[-0.01em] text-ink-900">
+              <h3 className="truncate text-[17px] leading-6 font-bold tracking-[-0.01em] text-ink-900">
                 {gate}
               </h3>
               <p className="text-meta mt-1 truncate tabular-nums">
@@ -124,27 +114,29 @@ export default function DecisionCard({
           </div>
 
           <div className="flex flex-none items-center gap-2.5">
-            <span className="text-[12px] leading-5 font-bold tabular-nums" style={{ color: tokens.text }}>
-              {due}
-            </span>
-            {status && (
+            {status ? (
               <Badge tone={status.tone} size="sm" shape="square">
                 {status.label}
               </Badge>
+            ) : (
+              <span className="text-[12px] leading-5 font-bold tabular-nums" style={{ color: tokens.text }}>
+                {due}
+              </span>
             )}
-            <ChevronDown
-              size={16}
-              strokeWidth={2.4}
+            <span
               aria-hidden
-              className={`accordion-chevron text-ink-400 ${expanded ? 'rotate-180' : ''}`}
-            />
+              className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface-subtle)] text-brand-700"
+            >
+              <ChevronDown
+                size={20}
+                strokeWidth={2.6}
+                className={`accordion-chevron ${expanded ? 'rotate-180' : ''}`}
+              />
+            </span>
           </div>
         </div>
 
-        <div className="min-w-0">
-          <p className="text-[14px] leading-6 font-bold text-ink-900">{question}</p>
-          {context && <p className="text-meta mt-1">{context}</p>}
-        </div>
+        <p className="min-w-0 text-[14px] leading-6 font-bold text-ink-900">{question}</p>
 
         <JourneyRail stages={stages} size="sm" showTimes={false} />
       </div>
@@ -152,7 +144,7 @@ export default function DecisionCard({
       {/* Decision panel — the facts the call rests on, then the controls that
           answer it, on their own blue surface. */}
       <div className="border-t border-[var(--color-border)] bg-[var(--color-surface-header)] px-5 py-4 pl-6">
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3">
           {facts.map((fact) => (
             <div key={fact.label} className="min-w-0">
               <dt className="text-table-head">{fact.label}</dt>

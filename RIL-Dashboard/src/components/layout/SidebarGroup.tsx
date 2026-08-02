@@ -50,7 +50,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
           className="w-full cursor-pointer text-left"
         >
           <div
-            className={`group relative flex items-center justify-center overflow-hidden rounded-[var(--radius-md)] px-3 py-2.5 transition-colors duration-150 ${
+            className={`group relative flex max-h-[50px] items-center justify-center overflow-hidden rounded-lg px-2.5 py-3 transition-colors duration-150 ${
               inGroup
                 ? 'sidebar-item-active text-sidebar-active-ink'
                 : 'sidebar-item-hover text-sidebar-ink hover:text-sidebar-hover-ink'
@@ -60,7 +60,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
               <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />
             )}
             <Icon
-              size={22}
+              size={20}
               strokeWidth={2.1}
               className={`flex-none transition-colors duration-180 ${
                 inGroup ? 'text-sidebar-active-icon' : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'
@@ -104,7 +104,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
         className="w-full cursor-pointer text-left"
       >
         <div
-          className={`group relative flex cursor-pointer items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] px-3 py-3 text-[15px] leading-6 transition-colors duration-150 ${
+          className={`group relative flex max-h-[50px] cursor-pointer items-center gap-3 overflow-hidden rounded-lg px-2.5 py-3 text-sm leading-5 transition-colors duration-150 ${
             inGroup && !open
               ? 'sidebar-item-active font-semibold text-sidebar-active-ink'
               : 'sidebar-item-hover font-normal text-sidebar-ink hover:text-sidebar-hover-ink'
@@ -137,9 +137,9 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
         }`}
       >
         <div className="overflow-hidden">
-          <div className="relative mt-1 ml-5 flex flex-col gap-0.5 rounded-r-[var(--radius-md)] border-l border-[var(--color-rail-border)] bg-[var(--color-surface-rail-nest)] py-1.5 pl-2">
+          <div className="relative flex flex-col gap-0.5">
             {items.map((item) => (
-              <SidebarItem key={item.to} to={item.to} label={item.label} collapsed={false} end />
+              <SidebarItem key={item.to} to={item.to} label={item.label} collapsed={false} nested end />
             ))}
           </div>
         </div>

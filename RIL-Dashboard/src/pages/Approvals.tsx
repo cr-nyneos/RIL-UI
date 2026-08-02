@@ -175,7 +175,14 @@ export default function Approvals() {
       <div className="flex flex-col gap-4">
         <div className="animate-rise" style={{ animationDelay: '0ms' }}>
           <PageHeader
+            size="lg"
+            rule
             title="Approvals"
+            breadcrumbs={[
+              { label: 'Home', to: '/' },
+              { label: 'Approvals', to: '/approvals' },
+              { label: tabs.find((item) => item.key === queue)?.label ?? 'All' },
+            ]}
             actions={
               <>
                 <SearchInput

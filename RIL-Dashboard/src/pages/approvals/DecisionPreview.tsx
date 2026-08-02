@@ -18,7 +18,9 @@ export default function DecisionPreview({ decision }: { decision: PendingDecisio
   return (
     <div className="grid items-start gap-4 lg:grid-cols-2">
       <div className="grid min-w-0 items-start gap-4">
-        <Section title="Decision Context" description={`Queue reference ${decision.id}`}>
+        <Section title="Decision Context" description={`${decision.trackLabel} · queue reference ${decision.id}`}>
+          {decision.context && <p className="text-meta mb-4">{decision.context}</p>}
+
           <div className="mb-4">
             <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <span className="text-table-head">Decision Window</span>

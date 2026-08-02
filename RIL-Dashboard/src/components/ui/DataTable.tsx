@@ -24,9 +24,11 @@ interface DataTableProps<T> {
   onSortChange?: (sort: SortState) => void;
   emptyState?: ReactNode;
   stagger?: boolean;
-  density?: 'default' | 'compact';
+  density?: 'default' | 'compact' | 'tight';
   footer?: ReactNode;
   surface?: boolean;
+
+  bordered?: boolean;
   bodyKey?: string;
   minWidth?: string;
   expandedKey?: string | null;
@@ -53,12 +55,14 @@ export default function DataTable<T>({
   density = 'default',
   footer,
   surface = true,
+  bordered = true,
   bodyKey,
   minWidth = '1320px',
   expandedKey,
   renderExpanded,
 }: DataTableProps<T>) {
-  const cellPadding = density === 'compact' ? 'px-6 py-2.5' : 'px-6 py-4';
+  const cellPadding =
+    density === 'tight' ? 'px-3 py-2' : density === 'compact' ? 'px-6 py-2.5' : 'px-6 py-4';
 
   const handleSort = (column: Column<T>) => {
     if (!column.sortable || !onSortChange) return;
@@ -78,7 +82,7 @@ export default function DataTable<T>({
     <div className={surface ? 'glass-raised overflow-hidden' : 'overflow-hidden'}>
       <div
         className={`overflow-x-auto overflow-y-visible ${
-          surface ? '' : 'rounded-lg border border-(--color-border)'
+          surface || !bordered ? '' : 'rounded-lg border border-(--color-border)'
         }`}
       >
         <table className="min-w-full table-auto border-collapse" style={{ minWidth, width: '100%' }}>

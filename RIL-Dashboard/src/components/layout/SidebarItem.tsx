@@ -24,8 +24,8 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       ref={rowRef}
       onMouseEnter={() => collapsed && setTipAnchor(rowRef.current?.getBoundingClientRect() ?? null)}
       onMouseLeave={() => setTipAnchor(null)}
-      className={`group relative flex items-center gap-3.5 overflow-hidden rounded-[var(--radius-md)] py-3 text-[15px] leading-6 transition-colors duration-150 ${
-        nested ? 'pr-3.5 pl-4' : 'px-3'
+      className={`group relative flex max-h-[50px] items-center gap-3 overflow-hidden rounded-lg py-3 text-sm leading-5 transition-colors duration-150 ${
+        nested ? 'pr-3 pl-10' : 'px-2.5'
       } ${
         collapsed ? 'justify-center' : ''
       } ${soon || disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${
@@ -41,7 +41,7 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />}
       {Icon ? (
         <Icon
-          size={22}
+          size={20}
           strokeWidth={2.1}
           className={`flex-none transition-colors duration-180 ${
             isActive

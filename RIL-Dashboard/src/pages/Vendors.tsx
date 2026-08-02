@@ -276,7 +276,7 @@ export default function Vendors() {
         {/* KPI CARDS — the Dashboard's cards verbatim; `.tsy` carries the
             palette the card and its hover lift are built on. */}
         <div
-          className="tsy tsy-section animate-rise grid grid-cols-1 gap-6 p-6 md:grid-cols-2 xl:grid-cols-4"
+          className="tsy animate-rise grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4"
           style={{ animationDelay: '60ms' }}
         >
           {kpiGroups.map((group) => (

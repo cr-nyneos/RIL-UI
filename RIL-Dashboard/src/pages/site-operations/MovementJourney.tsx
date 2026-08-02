@@ -102,7 +102,7 @@ export default function MovementJourney({ movement, expanded, onToggle, highligh
       className="animate-rise"
       style={
         highlight
-          ? { ...style, borderColor: 'var(--color-brand-600)', boxShadow: '0 0 0 3px rgba(16, 143, 197, 0.16)' }
+          ? { ...style, borderColor: 'var(--color-brand-600)', boxShadow: '0 0 0 3px rgba(12, 123, 171, 0.16)' }
           : style
       }
     >

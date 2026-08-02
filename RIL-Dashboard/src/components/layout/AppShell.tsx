@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -16,9 +17,14 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   return (
 
-    <div className="app-canvas flex h-screen overflow-hidden">
+    <div className="app-canvas h-screen overflow-hidden">
+      <Navbar sidebarCollapsed={collapsed} onToggleSidebar={() => setCollapsed((c) => !c)} />
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} />
-      <div className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+      <div
+        className={`h-screen min-w-0 overflow-x-hidden overflow-y-auto pt-[72px] transition-all duration-300 ${
+          collapsed ? 'pl-[76px]' : 'pl-64'
+        }`}
+      >
         <div className="mx-auto max-w-[1600px] px-5 py-5 sm:px-8 sm:py-6">
           {/* <Topbar /> */}
           <main className="animate-page pb-10">{children}</main>
