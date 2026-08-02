@@ -87,30 +87,30 @@ export const ROLE_ORDER: StakeholderRole[] = [
 
 export const REQUIRED_DOCUMENTS = ['Contract', 'Specifications', 'Compliance Documents'];
 
-export const STEP_COPY: Record<StepKey, { eyebrow: string; title: string; subtitle: string }> = {
+export const STEP_COPY: Record<StepKey, { eyebrow: string; title: string; }> = {
   details: {
     eyebrow: 'Order',
     title: 'Commercial Details',
-    subtitle: 'Core order values required before workflow generation.',
+    // subtitle: 'Core order values required before workflow generation.',
   },
   workflow: {
     eyebrow: 'Route',
     title: 'Workflow Preview',
-    subtitle: 'Milestones adapt instantly to the selected contract type.',
+    // subtitle: 'Milestones adapt instantly to the selected contract type.',
   },
   team: {
     eyebrow: 'Owners',
     title: 'Role Assignment',
-    subtitle: 'Assign accountable owners for each required role.',
+    // subtitle: 'Assign accountable owners for each required role.',
   },
   documents: {
     eyebrow: 'Files',
     title: 'Document Package',
-    subtitle: 'Upload mandatory files before final review.',
+    // subtitle: 'Upload mandatory files before final review.',
   },
   review: {
     eyebrow: 'Review',
     title: 'Final Order Review',
-    subtitle: 'Read-only confirmation before creation.',
+    // subtitle: 'Read-only confirmation before creation.',
   },
 };
