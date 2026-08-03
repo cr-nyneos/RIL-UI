@@ -47,7 +47,7 @@ export default function ReviewTab({
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="text-section-title">Commercial Details</div>
+            <div className="text-body-strong">Commercial Details</div>
             <Button variant="icon" size="sm" aria-label="Edit details" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('details')} />
           </div>
           <SummaryRow label="Vendor" value={vendor} />
@@ -60,7 +60,7 @@ export default function ReviewTab({
         </GlassCard>
         <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="text-section-title">Workflow Summary</div>
+            <div className="text-body-strong">Workflow Summary</div>
             <Button variant="icon" size="sm" aria-label="Edit workflow" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('workflow')} />
           </div>
           <SummaryRow label="Type" value={contractType} />
@@ -70,7 +70,7 @@ export default function ReviewTab({
         </GlassCard>
         <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="text-section-title">Stakeholders</div>
+            <div className="text-body-strong">Stakeholders</div>
             <Button variant="icon" size="sm" aria-label="Edit team" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('team')} />
           </div>
           {ROLE_ORDER.map((role) => (
@@ -79,7 +79,7 @@ export default function ReviewTab({
         </GlassCard>
         <GlassCard className="p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="text-section-title">Uploaded Documents</div>
+            <div className="text-body-strong">Uploaded Documents</div>
             <Button variant="icon" size="sm" aria-label="Edit documents" icon={<Pencil size={15} strokeWidth={2.3} />} onClick={() => setActiveStep('documents')} />
           </div>
           {REQUIRED_DOCUMENTS.map((document) => (

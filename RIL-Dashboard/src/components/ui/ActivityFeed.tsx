@@ -43,7 +43,7 @@ export default function ActivityFeed({ entries, className = '' }: ActivityFeedPr
               className="flex items-start gap-3 border-b border-[var(--color-glass-hairline)] px-5 py-3 last:border-b-0"
             >
               <p className="text-body min-w-0 flex-1">
-                <span className="font-bold text-ink-900">{entry.actor}</span> {entry.action}
+                <span className="font-semibold text-ink-900">{entry.actor}</span> {entry.action}
                 {entry.target && ' '}
                 {entry.target &&
                   (entry.target.to ? (

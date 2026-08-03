@@ -161,7 +161,7 @@ export default function Vendors() {
         <div className="flex min-w-0 items-center gap-3">
           <Avatar name={vendor.name} size="md" />
           <div className="min-w-0">
-            <div className="truncate text-[14px] leading-5 font-bold text-ink-900" title={vendor.name}>
+            <div className="truncate text-[14px] leading-5 font-semibold text-ink-900" title={vendor.name}>
               {vendor.name}
             </div>
             <div className="text-meta truncate">{vendor.category}</div>
@@ -183,7 +183,7 @@ export default function Vendors() {
       align: 'right',
       sortable: true,
       render: (vendor) => (
-        <span className="text-[14px] leading-5 font-bold tabular-nums text-ink-800">
+        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-800">
           {orderCounts[vendor.name] ?? 0}
         </span>
       ),

@@ -204,7 +204,7 @@ export default function OrderDetail() {
               ))}
               {exceptionSummary && (
                 <span
-                  className="text-[13px] leading-5 font-bold tabular-nums"
+                  className="text-[13px] leading-5 font-semibold tabular-nums"
                   style={{ color: 'var(--color-danger)' }}
                 >
                   {exceptionSummary}

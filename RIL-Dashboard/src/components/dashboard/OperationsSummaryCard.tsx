@@ -28,20 +28,20 @@ export default function OperationsSummaryCard() {
             />
           </svg>
           <span className="relative flex flex-col items-center">
-            <span className="text-[22px] leading-6 font-bold tabular-nums tracking-[-0.02em] text-brand-800">
+            <span className="text-[22px] leading-6 font-semibold tabular-nums tracking-[-0.02em] text-brand-800">
               {score}
             </span>
-            <span className="text-[9px] leading-3 font-bold tracking-[0.12em] text-ink-500 uppercase">Score</span>
+            <span className="text-[9px] leading-3 font-semibold tracking-[0.12em] text-ink-500 uppercase">Score</span>
           </span>
         </div>
 
         <div className="min-w-[16rem] flex-1">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="flex items-center gap-1.5 text-[11px] leading-4 font-bold tracking-[0.12em] text-brand-700 uppercase">
+            <span className="flex items-center gap-1.5 text-[11px] leading-4 font-semibold tracking-[0.12em] text-brand-700 uppercase">
               <ShieldCheck size={13} strokeWidth={2.4} />
               Vendor Operations Health
             </span>
-            <span className="dash-ops-band rounded-full px-2.5 py-0.5 text-[10.5px] font-bold tracking-[0.08em] uppercase">
+            <span className="dash-ops-band rounded-full px-2.5 py-0.5 text-[10.5px] font-semibold tracking-[0.08em] uppercase">
               {band}
             </span>
           </div>
@@ -64,9 +64,9 @@ export default function OperationsSummaryCard() {
       <div className="dash-ops-metrics grid grid-cols-2 gap-px lg:grid-cols-4">
         {metrics.map((m) => (
           <div key={m.label} className="dash-ops-metric px-6 py-4 sm:px-7">
-            <p className="text-[10.5px] leading-4 font-bold tracking-[0.1em] text-ink-500 uppercase">{m.label}</p>
+            <p className="text-[10.5px] leading-4 font-semibold tracking-[0.1em] text-ink-500 uppercase">{m.label}</p>
             <p className="mt-1.5 flex items-baseline gap-2">
-              <span className="text-[21px] leading-7 font-bold tabular-nums tracking-[-0.02em] text-ink-900">
+              <span className="text-[21px] leading-7 font-semibold tabular-nums tracking-[-0.02em] text-ink-900">
                 {m.value}
               </span>
               <span className="text-[11.5px] font-semibold text-ink-500">{m.caption}</span>

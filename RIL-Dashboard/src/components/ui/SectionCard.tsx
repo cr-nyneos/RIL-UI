@@ -39,7 +39,7 @@ export default function SectionCard({
   const heading = (
     <>
       <span className="flex min-w-0 items-center gap-2.5">
-        <span className={`truncate text-[20px] leading-7 font-semibold ${titleClassName}`}>{title}</span>
+        <span className={`truncate text-[28px] leading-9 font-semibold ${titleClassName}`}>{title}</span>
         {meta}
       </span>
       {collapsible && (

@@ -32,7 +32,7 @@ export default function ProgressMeter({
   return (
     <div className={`w-full ${className}`}>
       {showLabel && (
-        <div className="mb-1 text-right text-[12px] font-bold tabular-nums text-ink-800">{value}%</div>
+        <div className="mb-1 text-right text-[12px] font-semibold tabular-nums text-ink-800">{value}%</div>
       )}
       <div
         className="h-1.5 w-full overflow-hidden rounded-[var(--radius-sm)]"

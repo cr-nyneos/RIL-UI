@@ -141,7 +141,7 @@ function PaymentPipeline({ invoices }: { invoices: Invoice[] }) {
             <span className="truncate text-[13px] leading-5 font-semibold text-ink-800" title={stage.label}>
               {stage.label}
             </span>
-            <span className="text-[24px] leading-8 font-bold tabular-nums text-ink-900">{cleared.length}</span>
+            <span className="text-[24px] leading-8 font-semibold tabular-nums text-ink-900">{cleared.length}</span>
             <span className="text-meta tabular-nums">{formatCurrency(valueCr)}</span>
           </li>
         );
@@ -228,7 +228,7 @@ export default function Finance() {
       width: '160px',
       sortable: true,
       render: (invoice) => (
-        <span className="truncate text-[14px] leading-5 font-bold text-ink-900" title={invoice.invoiceNo}>
+        <span className="truncate text-[14px] leading-5 font-semibold text-ink-900" title={invoice.invoiceNo}>
           {invoice.invoiceNo}
         </span>
       ),
@@ -268,7 +268,7 @@ export default function Finance() {
       align: 'right',
       sortable: true,
       render: (invoice) => (
-        <span className="text-[14px] leading-5 font-bold tabular-nums text-ink-900">
+        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-900">
           {formatCurrency(invoice.amountCr)}
         </span>
       ),

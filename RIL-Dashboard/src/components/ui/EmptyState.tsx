@@ -16,7 +16,7 @@ export default function EmptyState({ icon, title, description, action }: EmptySt
         </div>
       )}
       <div className="space-y-1">
-        <p className="text-[15px] leading-6 font-bold text-ink-800">{title}</p>
+        <p className="text-[15px] leading-6 font-semibold text-ink-800">{title}</p>
         {description && <p className="text-meta">{description}</p>}
       </div>
       {action}

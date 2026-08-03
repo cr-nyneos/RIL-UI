@@ -444,7 +444,7 @@ export default function LineChart({
         {active && (
           <>
             <div className={TT_HEAD}>
-              <span className={TT_DOT} style={{ color: '#2a78d6' }} />
+              <span className={TT_DOT} style={{ color: '#4f9bff' }} />
               {active.month} · {periodLabel}
             </div>
             <div className={TT_VALUE}>

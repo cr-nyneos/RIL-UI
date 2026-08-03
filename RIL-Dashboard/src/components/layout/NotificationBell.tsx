@@ -74,9 +74,9 @@ export default function NotificationBell() {
           open ? 'bg-[var(--color-surface-selected)]' : 'hover:bg-[var(--color-surface-hover)]'
         }`}
       >
-        <Bell size={18} className={open ? 'text-brand-700' : 'text-ink-600'} />
+        <Bell size={20} className={open ? 'text-brand-700' : 'text-ink-600'} />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] leading-none font-bold text-white">
+          <span className="absolute -top-0.5 -right-0.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] leading-none font-semibold text-white">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -90,7 +90,7 @@ export default function NotificationBell() {
           <div className="flex items-center justify-between bg-[var(--color-surface-selected)] px-4 py-3">
             <span className="flex items-center gap-2.5">
               <Bell size={17} strokeWidth={2.2} className="text-brand-700" />
-              <span className="text-[15px] leading-5 font-bold text-ink-900">Notifications</span>
+              <span className="text-[15px] leading-5 font-semibold text-ink-900">Notifications</span>
             </span>
             {unreadCount > 0 && (
               <span className="text-[12px] leading-4 font-semibold text-brand-700">{unreadCount} unread</span>
@@ -119,7 +119,7 @@ export default function NotificationBell() {
                     <span className="flex items-start justify-between gap-2">
                       <span
                         className={`truncate text-[13.5px] leading-5 ${
-                          notification.read ? 'font-medium text-ink-700' : 'font-bold text-ink-900'
+                          notification.read ? 'font-medium text-ink-700' : 'font-semibold text-ink-900'
                         }`}
                       >
                         {notification.title}

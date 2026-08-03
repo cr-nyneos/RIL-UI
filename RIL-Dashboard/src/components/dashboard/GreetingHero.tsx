@@ -27,7 +27,7 @@ export default function GreetingHero() {
     <div className="dash-hero relative overflow-hidden px-6 py-7 sm:px-9 sm:py-8">
       <div className="relative flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
         <div className="min-w-0">
-          <span className="dash-hero-eyebrow inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] leading-4 font-bold tracking-[0.14em] uppercase">
+          <span className="dash-hero-eyebrow inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] leading-4 font-semibold tracking-[0.14em] uppercase">
             <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#7FB2FF]" />
             Vendor Management
           </span>
@@ -49,7 +49,7 @@ export default function GreetingHero() {
               className="dash-hero-chip flex h-12 items-center gap-2.5 rounded-[var(--radius-md)] px-3.5 text-[12.5px] font-semibold text-[#A9C2F0]"
             >
               <span className={`h-2 w-2 flex-none rounded-full ${TONE_DOT[s.tone]}`} />
-              <span className="text-[17px] leading-5 font-bold tabular-nums text-white">{s.count}</span>
+              <span className="text-[17px] leading-5 font-semibold tabular-nums text-white">{s.count}</span>
               {s.label}
             </Link>
           ))}

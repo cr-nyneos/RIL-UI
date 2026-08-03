@@ -88,7 +88,7 @@ export default function DecisionPreview({ decision }: { decision: PendingDecisio
               className="flex items-center justify-between gap-3 border-b border-[var(--color-glass-hairline)] px-5 py-2.5 last:border-b-0"
             >
               <div className="min-w-0">
-                <div className="truncate text-[13px] leading-5 font-bold text-ink-900">{approval.gate}</div>
+                <div className="truncate text-[13px] leading-5 font-semibold text-ink-900">{approval.gate}</div>
                 <div className="text-meta truncate">{approval.owner}</div>
               </div>
               <span className="text-meta flex-none tabular-nums">{approval.at ? formatDate(approval.at) : '—'}</span>
@@ -100,7 +100,7 @@ export default function DecisionPreview({ decision }: { decision: PendingDecisio
               className="flex items-center justify-between gap-3 border-b border-[var(--color-glass-hairline)] px-5 py-2.5 last:border-b-0"
             >
               <div className="min-w-0">
-                <div className="truncate text-[13px] leading-5 font-bold text-ink-800">{next.gate}</div>
+                <div className="truncate text-[13px] leading-5 font-semibold text-ink-800">{next.gate}</div>
                 <div className="text-meta truncate">
                   {next.owner} · {next.role}
                 </div>

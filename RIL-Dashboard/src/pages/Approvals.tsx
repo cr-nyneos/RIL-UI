@@ -21,7 +21,6 @@ import { ORDER_PLANTS } from '../lib/mockData/orders';
 import type { DecisionAction, DecisionSubmission, DecisionTrack, PendingDecision } from '../lib/types/approvals';
 import DecisionItem from './approvals/DecisionItem';
 import DecisionModal from './approvals/DecisionModal';
-import QueueContext from './approvals/QueueContext';
 
 type QueueFilter = 'all' | 'mine' | 'team' | 'urgent';
 type TrackFilter = 'all' | DecisionTrack;
@@ -99,7 +98,7 @@ function FeedSkeleton() {
 }
 
 export default function Approvals() {
-  const { decisions, records, summary } = useApprovals();
+  const { decisions, summary } = useApprovals();
   const { notify } = useNotifications();
 
   const [query, setQuery] = useState('');
@@ -275,7 +274,7 @@ export default function Approvals() {
             )}
         </div>
 
-        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]">
+        <div className="grid items-start gap-4">
           <div key={`${queue}-${track}-${plant}`} className="animate-fade-fast flex min-w-0 flex-col gap-6">
             {loading ? (
               <FeedSkeleton />
@@ -288,7 +287,7 @@ export default function Approvals() {
                   bodyTone="subtle"
                   bodyClassName="flex flex-col gap-3"
                   meta={
-                    <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
+                    <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-semibold text-brand-700 tabular-nums">
                       {group.items.length}
                     </span>
                   }
@@ -314,10 +313,6 @@ export default function Approvals() {
               </Section>
             )}
           </div>
-
-          <aside className="flex min-w-0 flex-col gap-4 xl:sticky xl:top-0 xl:self-start">
-            <QueueContext decisions={scoped} records={records} />
-          </aside>
         </div>
       </div>
 

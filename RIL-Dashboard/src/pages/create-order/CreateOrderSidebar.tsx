@@ -97,7 +97,7 @@ export default function CreateOrderSidebar({
                 const owner = stakeholders[role];
                 return (
                   <div key={role} className="glass-inset flex items-center gap-3 p-3">
-                    <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-bold text-white">
+                    <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-semibold text-white">
                       {owner ? initials(owner.name) : role.slice(0, 2).toUpperCase()}
                     </span>
                     <span className="min-w-0 flex-1">

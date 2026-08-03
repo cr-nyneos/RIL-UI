@@ -206,7 +206,7 @@ export default function Insights() {
       header: 'Title',
       sortable: true,
       render: (opportunity) => (
-        <span className="truncate text-[14px] leading-5 font-bold text-ink-900" title={opportunity.title}>
+        <span className="truncate text-[14px] leading-5 font-semibold text-ink-900" title={opportunity.title}>
           {opportunity.title}
         </span>
       ),

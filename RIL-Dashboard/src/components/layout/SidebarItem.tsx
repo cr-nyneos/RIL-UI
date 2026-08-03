@@ -41,7 +41,7 @@ export default function SidebarItem({ to, icon: Icon, label, collapsed, disabled
       {isActive && <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />}
       {Icon ? (
         <Icon
-          size={20}
+          size={24}
           strokeWidth={2.1}
           className={`flex-none transition-colors duration-180 ${
             isActive

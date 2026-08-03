@@ -124,7 +124,7 @@ export default function Tabs({
               isActive
                 ? `${variant === 'segmented' || bar ? 'bg-brand-600 text-white' : 'text-brand-700'} ${
                     bar ? 'border-brand-600' : ''
-                  } font-bold`
+                  } font-semibold`
                 : `font-semibold ${
                     bar
                       ? 'border-transparent bg-[var(--color-brand-soft2)] text-ink-700 hover:bg-[var(--color-surface-hover)] hover:text-brand-700'
@@ -135,7 +135,7 @@ export default function Tabs({
             <span>{tab.label}</span>
             {tab.count !== undefined && (
               isActive && (bar || variant === 'segmented') ? (
-                <span className="inline-flex items-center rounded-[var(--radius-sm)] border border-white/30 bg-white/20 px-1.5 py-0.5 text-[11px] leading-[14px] font-bold text-white tabular-nums">
+                <span className="inline-flex items-center rounded-[var(--radius-sm)] border border-white/30 bg-white/20 px-1.5 py-0.5 text-[11px] leading-[14px] font-semibold text-white tabular-nums">
                   {tab.count}
                 </span>
               ) : (

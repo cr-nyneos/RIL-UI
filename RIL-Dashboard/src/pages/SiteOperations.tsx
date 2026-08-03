@@ -18,7 +18,6 @@ import { MOVEMENT_STATUS_ORDER } from '../lib/mockData/siteOps';
 import { ORDER_PLANTS } from '../lib/mockData/orders';
 import { useSiteOperations } from '../lib/siteOpsStore';
 import type { ManpowerRecord, Movement, MovementStatus } from '../lib/types/siteOps';
-import { ManpowerContext, MovementContext } from './site-operations/ContextPanel';
 import ManpowerFeed from './site-operations/ManpowerFeed';
 import MovementJourney from './site-operations/MovementJourney';
 
@@ -224,7 +223,7 @@ export default function SiteOperations() {
           />
         </SectionCard>
 
-        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]">
+        <div className="grid items-start gap-4">
           <div key={tab} className="animate-fade-fast flex min-w-0 flex-col gap-6">
             {tab === 'movements' ? (
               grouped.length ? (
@@ -236,7 +235,7 @@ export default function SiteOperations() {
                     bodyTone="subtle"
                     bodyClassName="flex flex-col gap-3"
                     meta={
-                      <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
+                      <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-semibold text-brand-700 tabular-nums">
                         {group.items.length}
                       </span>
                     }
@@ -271,14 +270,6 @@ export default function SiteOperations() {
               />
             )}
           </div>
-
-          <aside className="flex min-w-0 flex-col gap-4 xl:sticky xl:top-0 xl:self-start">
-            {tab === 'movements' ? (
-              <MovementContext movements={filteredMovements} averageDwellMinutes={summary.averageDwellMinutes} />
-            ) : (
-              <ManpowerContext records={filteredManpower} />
-            )}
-          </aside>
         </div>
       </div>
 

@@ -31,7 +31,7 @@ export default function SummaryStrip({ items, onSelect, className = '' }: Summar
         const content = (
           <>
             <span className="text-kpi-label uppercase">{item.label}</span>
-            <span className="text-[22px] leading-7 font-bold tabular-nums" style={{ color }}>
+            <span className="text-[22px] leading-7 font-semibold tabular-nums" style={{ color }}>
               {item.value}
             </span>
             {item.active && (

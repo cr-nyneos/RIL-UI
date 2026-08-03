@@ -195,7 +195,7 @@ export default function Orders() {
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
-          <div className="truncate text-[14px] leading-5 font-bold text-ink-900">{order.id}</div>
+          <div className="truncate text-[14px] leading-5 font-semibold text-ink-900">{order.id}</div>
           <div className="text-meta truncate">{order.po}</div>
         </div>
       ),
@@ -283,7 +283,7 @@ export default function Orders() {
       align: 'right',
       sortable: true,
       render: (order) => (
-        <span className="text-[14px] leading-5 font-bold tabular-nums text-ink-800">
+        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-800">
           {formatValue(order.valueCr)}
         </span>
       ),

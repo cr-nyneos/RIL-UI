@@ -30,7 +30,7 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
             ) : (
               <span
                 aria-current={last ? 'page' : undefined}
-                className={`text-[14px] leading-5 ${last ? 'font-bold text-ink-900' : 'font-semibold text-ink-600'}`}
+                className={`text-[14px] leading-5 ${last ? 'font-semibold text-ink-900' : 'font-semibold text-ink-600'}`}
               >
                 {item.label}
               </span>

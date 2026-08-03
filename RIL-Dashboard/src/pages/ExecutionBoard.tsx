@@ -210,7 +210,7 @@ function WorkflowRail({ item }: { item: BoardOrder }) {
               </button>
               <span
                 className={`max-w-full truncate text-center text-[12px] leading-4 ${
-                  current ? 'font-bold' : 'font-semibold text-ink-600'
+                  current ? 'font-semibold' : 'font-semibold text-ink-600'
                 }`}
                 style={current ? { color: blockedCurrent ? 'var(--color-danger)' : 'var(--color-brand-700)' } : undefined}
               >
@@ -244,7 +244,7 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="text-[17px] leading-6 font-bold text-brand-700">{item.order.id}</span>
+            <span className="text-[17px] leading-6 font-semibold text-brand-700">{item.order.id}</span>
             <Badge tone={priorityTone(item.priority)} size="xs" shape="square">
               {item.priority}
             </Badge>
@@ -259,14 +259,14 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
 
         <div className="flex shrink-0 gap-7 text-right">
           <div>
-            <div className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">Expected</div>
+            <div className="text-[11px] leading-4 font-semibold tracking-[0.07em] text-ink-500 uppercase">Expected</div>
             <div className="mt-1 text-[14px] leading-5 font-semibold tabular-nums text-ink-900">{formatDate(item.order.expected)}</div>
             <div className="text-[13px] leading-5 font-medium text-ink-500">
               {formatRelative(item.order.expected, TODAY, item.status === 'completed')}
             </div>
           </div>
           <div>
-            <div className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">Current Stage</div>
+            <div className="text-[11px] leading-4 font-semibold tracking-[0.07em] text-ink-500 uppercase">Current Stage</div>
             <div className="mt-1 flex items-center justify-end gap-1.5 text-[14px] leading-5 font-semibold text-ink-900">
               <StatusIcon size={15} strokeWidth={2.4} style={{ color: meta.accent }} />
               <span className="truncate">{item.gate.label}</span>
@@ -430,7 +430,7 @@ export default function ExecutionBoard() {
             </>
           }
           meta={
-            <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-bold text-brand-700 tabular-nums">
+            <span className="rounded-[var(--radius-sm)] bg-[var(--color-surface-selected)] px-2 py-0.5 text-[12px] font-semibold text-brand-700 tabular-nums">
               {filtered.length}
             </span>
           }

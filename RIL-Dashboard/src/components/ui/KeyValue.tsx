@@ -30,7 +30,7 @@ export default function KeyValue({ items, columns = 4, className = '', size = 'm
     ? 'text-[14px] leading-5 font-semibold text-[var(--color-ink-600)]'
     : 'text-meta';
   const valueClass = large
-    ? 'text-[18px] leading-7 font-bold text-[var(--color-ink-900)] mt-1 tabular-nums break-words'
+    ? 'text-[18px] leading-7 font-semibold text-[var(--color-ink-900)] mt-1 tabular-nums break-words'
     : 'text-body-strong mt-0.5 tabular-nums break-words';
 
   return (

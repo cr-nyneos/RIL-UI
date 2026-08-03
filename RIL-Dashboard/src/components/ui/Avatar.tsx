@@ -22,7 +22,7 @@ function monogram(name: string): string {
 }
 
 export default function Avatar({ name, src, size = 'md', className = '' }: AvatarProps) {
-  const classes = `flex flex-none items-center justify-center overflow-hidden rounded-[var(--radius-md)] font-bold ${SIZE[size]} ${className}`;
+  const classes = `flex flex-none items-center justify-center overflow-hidden rounded-[var(--radius-md)] font-semibold ${SIZE[size]} ${className}`;
 
   if (src) {
     return <img src={src} alt="" aria-hidden className={`${classes} object-contain`} />;

@@ -28,7 +28,7 @@ export default function DeliveriesTab({ detail, totals }: DeliveriesTabProps) {
           ) : (
             <ChevronRight size={14} strokeWidth={2.6} className="flex-none text-ink-400" />
           )}
-          <span className="truncate text-[14px] leading-5 font-bold text-ink-900">{shipment.id}</span>
+          <span className="truncate text-[14px] leading-5 font-semibold text-ink-900">{shipment.id}</span>
         </div>
       ),
     },

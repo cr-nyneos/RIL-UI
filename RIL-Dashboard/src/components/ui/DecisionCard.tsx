@@ -119,7 +119,7 @@ export default function DecisionCard({
                 {status.label}
               </Badge>
             ) : (
-              <span className="text-[12px] leading-5 font-bold tabular-nums" style={{ color: tokens.text }}>
+              <span className="text-[12px] leading-5 font-semibold tabular-nums" style={{ color: tokens.text }}>
                 {due}
               </span>
             )}
@@ -136,7 +136,7 @@ export default function DecisionCard({
           </div>
         </div>
 
-        <p className="min-w-0 text-[14px] leading-6 font-bold text-ink-900">{question}</p>
+        <p className="min-w-0 text-[14px] leading-6 font-semibold text-ink-900">{question}</p>
 
         <JourneyRail stages={stages} size="sm" showTimes={false} />
       </div>
@@ -149,7 +149,7 @@ export default function DecisionCard({
             <div key={fact.label} className="min-w-0">
               <dt className="text-table-head">{fact.label}</dt>
               <dd
-                className="mt-1 text-[13px] leading-5 font-bold tabular-nums"
+                className="mt-1 text-[13px] leading-5 font-semibold tabular-nums"
                 style={{ color: fact.tone ? toneToken(fact.tone).text : 'var(--color-ink-900)' }}
               >
                 {fact.value}

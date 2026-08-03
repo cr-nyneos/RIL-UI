@@ -15,11 +15,11 @@ import {
   MONTHLY_DELIVERIES_ACTUAL,
   MONTHLY_DELIVERIES_PLANNED,
   PLANTS,
-  PLANT_BREAKDOWN,
   type PlantBreakdown,
 } from '../lib/mockData/dashboard';
 import { formatCurrency } from '../lib/format';
 import {
+  breakdownFor,
   computeFilteredTotals,
   computeFilteredStatusDistribution,
   computeFilteredPlantSegments,
@@ -63,9 +63,15 @@ export default function Dashboard() {
   const [period, setPeriod] = useState<PeriodFilter>('6m');
   const [page, setPage] = useState(1);
 
-  const totals = useMemo(() => computeFilteredTotals(plant, contractType), [plant, contractType]);
-  const statusData = useMemo(() => computeFilteredStatusDistribution(plant, contractType), [plant, contractType]);
-  const plantData = useMemo(() => computeFilteredPlantSegments(plant, contractType), [plant, contractType]);
+  const totals = useMemo(() => computeFilteredTotals(plant, contractType, period), [plant, contractType, period]);
+  const statusData = useMemo(
+    () => computeFilteredStatusDistribution(plant, contractType, period),
+    [plant, contractType, period],
+  );
+  const plantData = useMemo(
+    () => computeFilteredPlantSegments(plant, contractType, period),
+    [plant, contractType, period],
+  );
 
   const actual = useMemo(
     () => (period === '3m' ? MONTHLY_DELIVERIES_ACTUAL.slice(-3) : MONTHLY_DELIVERIES_ACTUAL),
@@ -134,10 +140,10 @@ export default function Dashboard() {
     }));
   }, [statusData]);
 
-  const plantRows = useMemo(
-    () => (plant === 'all' ? PLANT_BREAKDOWN : PLANT_BREAKDOWN.filter((row) => row.id === plant)),
-    [plant],
-  );
+  const plantRows = useMemo(() => {
+    const source = breakdownFor(period);
+    return plant === 'all' ? source : source.filter((row) => row.id === plant);
+  }, [plant, period]);
 
   const pageCount = Math.max(1, Math.ceil(plantRows.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
@@ -211,18 +217,18 @@ export default function Dashboard() {
         {/* Position + pipeline composition */}
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="tsy-card h-125 overflow-auto p-6">
-            <h3 className="tsy-title mb-6 text-xl font-semibold">{positionGroup.header}</h3>
+            <h3 className="tsy-title mb-6 text-[28px] font-semibold">{positionGroup.header}</h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {positionGroup.data.map((item) => (
                 <div key={item.title} className="tsy-section p-2">
-                  <div className="tsy-title text-[28px] font-bold">{item.value}</div>
+                  <div className="tsy-title text-[28px] font-semibold">{item.value}</div>
                   <p className="text-xl font-medium uppercase">{item.title}</p>
                 </div>
               ))}
             </div>
           </div>
           <div className="tsy-card p-6 xl:col-span-2">
-            <h3 className="tsy-title mb-6 text-xl font-semibold">Orders by Status (Active)</h3>
+            <h3 className="tsy-title mb-6 text-[28px] font-semibold">Orders by Status (Active)</h3>
             <PieChart
               data={statusData}
               unit=""
@@ -240,7 +246,7 @@ export default function Dashboard() {
         {/* By status / by plant */}
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           <div className="tsy-card space-y-6 p-2">
-            <h3 className="tsy-title pl-4 text-xl font-semibold">By Status</h3>
+            <h3 className="tsy-title pl-4 text-[28px] font-semibold">By Status</h3>
             <PieChart
               data={statusData}
               unit=""
@@ -262,14 +268,14 @@ export default function Dashboard() {
             />
           </div>
           <div className="tsy-card space-y-6 p-2">
-            <h3 className="tsy-title pl-4 text-xl font-semibold">By Plant</h3>
+            <h3 className="tsy-title pl-4 text-[28px] font-semibold">By Plant</h3>
             <BarChart data={plantData} unit="" valuePrefix="" shareLabel="Share of active orders" showTrend={false} />
           </div>
         </div>
 
         {/* Plant-wise breakdown */}
         <div>
-          <h3 className="tsy-title mb-6 text-xl font-semibold">Plant-wise Order & Payment Breakdown</h3>
+          <h3 className="tsy-title mb-6 text-[28px] font-semibold">Plant-wise Order & Payment Breakdown</h3>
           <div className="tsy-card overflow-hidden">
             <DataTable
               columns={plantColumns}
@@ -292,7 +298,7 @@ export default function Dashboard() {
 
         {/* Delivery trend */}
         <div>
-          <h3 className="tsy-title mb-6 text-xl font-semibold">Monthly Deliveries — Planned vs. Actual</h3>
+          <h3 className="tsy-title mb-6 text-[28px] font-semibold">Monthly Deliveries — Planned vs. Actual</h3>
           <div className="tsy-card h-105 w-full p-4">
             <LineChart
               data={actual}

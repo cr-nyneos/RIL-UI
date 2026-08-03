@@ -85,7 +85,7 @@ export default function DataTable<T>({
     <div className={surface ? 'glass-raised overflow-hidden' : 'overflow-hidden'}>
       <div
         className={`overflow-x-auto overflow-y-visible ${
-          surface || !bordered ? '' : 'rounded-lg border border-(--color-border)'
+          surface || !bordered ? '' : 'rounded-lg border border-table-border'
         }`}
       >
         <table className="min-w-full table-auto border-collapse" style={{ minWidth, width: '100%' }}>
@@ -140,7 +140,7 @@ export default function DataTable<T>({
                         {column.header}
                       </span>
                       {column.sortable && (
-                        <span className="ml-1 text-xs text-brand-700">
+                        <span className="ml-1 text-xs">
                           {active && sort.dir === 'asc' ? (
                             '▲'
                           ) : active && sort.dir === 'desc' ? (
@@ -189,7 +189,7 @@ export default function DataTable<T>({
                           return (
                             <td
                               key={column.key}
-                              className={`${cellPadding} ${ALIGN[align]} border-b border-[var(--color-border)] text-sm font-normal text-ink-700`}
+                              className={`${cellPadding} ${ALIGN[align]} border-b border-table-border text-sm font-normal text-ink-700`}
                             >
                               <div className="min-w-0 max-w-full">
                                 {column.render
@@ -205,7 +205,7 @@ export default function DataTable<T>({
                         <tr>
                           <td
                             colSpan={columns.length}
-                            className="border-b border-[var(--color-border)] px-6 py-6"
+                            className="border-b border-table-border px-6 py-6"
                             style={{ background: 'var(--color-surface-subtle)' }}
                           >
                             {renderExpanded(row)}

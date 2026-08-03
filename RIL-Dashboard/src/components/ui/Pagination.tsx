@@ -124,7 +124,7 @@ export default function Pagination({
               size="sm"
               aria-current={n === page ? 'page' : undefined}
               onClick={() => onPageChange(n)}
-              className={`text-[13px] font-bold tabular-nums ${n === page ? 'bg-[var(--color-surface-selected)] text-brand-700' : ''}`}
+              className={`text-[13px] font-semibold tabular-nums ${n === page ? 'bg-[var(--color-surface-selected)] text-brand-700' : ''}`}
             >
               {n}
             </Button>

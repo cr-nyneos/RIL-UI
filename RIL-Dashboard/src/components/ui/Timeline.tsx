@@ -145,7 +145,7 @@ export default function Timeline({ nodes, renderAction, className = '' }: Timeli
             <div className="min-w-0">
               <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5">
                 <div className="flex min-w-0 items-center gap-2.5">
-                  <h3 className="text-section-title truncate">{node.label}</h3>
+                  <h3 className="text-body-strong truncate">{node.label}</h3>
                   <span
                     className="text-badge inline-flex flex-none items-center rounded-[var(--radius-sm)] border px-1.5 py-0.5"
                     style={{ color: tokens.text, background: tokens.soft, borderColor: tokens.border }}

@@ -65,14 +65,14 @@ function ExpandedManpower({ record }: { record: ManpowerRecord }) {
       />
 
       <div>
-        <div className="mb-3 text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">
+        <div className="mb-3 text-[11px] leading-4 font-semibold tracking-[0.07em] text-ink-500 uppercase">
           Trade Composition
         </div>
         <div className="grid gap-3">
           {record.trades.map((trade) => (
             <div key={trade.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5">
               <span className="truncate text-[14px] leading-5 font-semibold text-ink-700">{trade.label}</span>
-              <span className="text-[14px] leading-5 font-bold text-ink-900 tabular-nums">{trade.count}</span>
+              <span className="text-[14px] leading-5 font-semibold text-ink-900 tabular-nums">{trade.count}</span>
               <ProgressMeter value={Math.round((trade.count / peak) * 100)} className="col-span-2" />
             </div>
           ))}
@@ -100,7 +100,7 @@ export default function ManpowerFeed({ records, expandedId, onToggle }: Manpower
       sortable: true,
       render: (record) => (
         <div className="min-w-0">
-          <div className="truncate text-[14px] leading-5 font-bold text-ink-900">{record.vendor}</div>
+          <div className="truncate text-[14px] leading-5 font-semibold text-ink-900">{record.vendor}</div>
           <div className="mt-0.5 truncate text-[13px] leading-5 font-medium text-ink-500">
             {record.plant} · {record.zone}
           </div>
@@ -113,7 +113,7 @@ export default function ManpowerFeed({ records, expandedId, onToggle }: Manpower
       width: '110px',
       sortable: true,
       render: (record) => (
-        <span className="text-[17px] leading-6 font-bold text-ink-900 tabular-nums">{record.current}</span>
+        <span className="text-[17px] leading-6 font-semibold text-ink-900 tabular-nums">{record.current}</span>
       ),
     },
     {

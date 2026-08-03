@@ -217,7 +217,7 @@ export default function Notifications() {
         <span className="flex min-w-0 flex-col">
           <span
             className={`truncate text-[14px] leading-5 ${
-              notification.read ? 'font-medium text-ink-700' : 'font-bold text-ink-900'
+              notification.read ? 'font-medium text-ink-700' : 'font-semibold text-ink-900'
             }`}
             title={notification.title}
           >

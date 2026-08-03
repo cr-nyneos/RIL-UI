@@ -86,7 +86,7 @@ export default function OrdersTab({ snapshot }: OrdersTabProps) {
         return (
           <span className="text-body tabular-nums">
             {expected.label}
-            <span className={`ml-2 text-meta ${expected.overdue ? 'font-bold' : ''}`}>{expected.relative}</span>
+            <span className={`ml-2 text-meta ${expected.overdue ? 'font-semibold' : ''}`}>{expected.relative}</span>
           </span>
         );
       },

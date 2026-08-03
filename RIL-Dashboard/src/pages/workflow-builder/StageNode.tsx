@@ -73,7 +73,7 @@ export function StageNode({ data, selected }: NodeProps<Node<StageNodeData>>) {
         </span>
 
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[16px] leading-6 font-bold text-ink-900" title={data.name}>
+          <p className="truncate text-[16px] leading-6 font-semibold text-ink-900" title={data.name}>
             {data.name}
           </p>
           <p className="truncate text-[14px] leading-5 font-semibold text-ink-600" title={data.role}>
@@ -111,7 +111,7 @@ export function TerminalNode({ data }: NodeProps<Node<TerminalNodeData>>) {
     >
       {data.kind === 'finish' && <Handle type="target" position={Position.Left} style={HANDLE_STYLE} />}
       <Icon size={15} strokeWidth={2.4} />
-      <span className="text-[14px] leading-5 font-bold tracking-[0.04em] uppercase">{data.label}</span>
+      <span className="text-[14px] leading-5 font-semibold tracking-[0.04em] uppercase">{data.label}</span>
       {data.kind === 'start' && <Handle type="source" position={Position.Right} style={HANDLE_STYLE} />}
     </div>
   );

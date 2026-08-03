@@ -45,7 +45,7 @@ export default function DocumentsTab({ documents, setDocuments, meaningfulChange
         <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-surface-selected)] text-brand-700">
           <CloudUpload size={24} strokeWidth={2.2} />
         </span>
-        <span className="text-section-title">{dragging ? 'Drop to upload dispatch package' : 'Drag and drop dispatch package'}</span>
+        <span className="text-body-strong">{dragging ? 'Drop to upload dispatch package' : 'Drag and drop dispatch package'}</span>
       </label>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {REQUIRED_DOCUMENTS.map((document) => {

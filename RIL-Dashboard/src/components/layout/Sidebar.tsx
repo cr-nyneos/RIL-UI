@@ -35,7 +35,7 @@ export default function Sidebar({ collapsed }: SidebarProps) {
     >
       <nav className="scrollbar-subtle mt-[86px] flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden px-2.5 pb-4">
         {!collapsed && (
-          <span className="mt-1 mb-2.5 px-3 text-[12px] font-bold tracking-widest text-sidebar-group-label uppercase">
+          <span className="mt-1 mb-2.5 px-3 text-[12px] font-semibold tracking-widest text-sidebar-group-label uppercase">
             Operations
           </span>
         )}
@@ -57,7 +57,7 @@ export default function Sidebar({ collapsed }: SidebarProps) {
         <div className="surface-rail-divider mt-5 mb-4 h-px flex-none" />
 
         {!collapsed && (
-          <span className="mb-2.5 px-3 text-[12px] font-bold tracking-widest text-sidebar-group-label uppercase">
+          <span className="mb-2.5 px-3 text-[12px] font-semibold tracking-widest text-sidebar-group-label uppercase">
             Administration
           </span>
         )}

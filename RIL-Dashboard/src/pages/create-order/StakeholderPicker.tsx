@@ -42,7 +42,7 @@ export default function StakeholderPicker({ role, selected, onSelect }: Stakehol
                 active ? 'ring-2 ring-[var(--color-brand-600)]' : ''
               }`}
             >
-              <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-bold text-white">
+              <span className="glass-ring flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-[12px] font-semibold text-white">
                 {initials(stakeholder.name)}
               </span>
               <span className="min-w-0 flex-1">

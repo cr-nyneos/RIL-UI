@@ -21,7 +21,7 @@ export default function PanelRow({ primary, secondary, trailing, tone }: PanelRo
         />
       )}
       <div className="min-w-0 flex-1">
-        <div className="truncate text-[13px] leading-5 font-bold text-ink-900 tabular-nums">{primary}</div>
+        <div className="truncate text-[13px] leading-5 font-semibold text-ink-900 tabular-nums">{primary}</div>
         <div className="text-meta truncate">{secondary}</div>
       </div>
       {trailing && <div className="text-meta flex-none pt-0.5 tabular-nums">{trailing}</div>}

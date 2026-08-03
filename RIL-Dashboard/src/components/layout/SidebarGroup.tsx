@@ -60,7 +60,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
               <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />
             )}
             <Icon
-              size={20}
+              size={24}
               strokeWidth={2.1}
               className={`flex-none transition-colors duration-180 ${
                 inGroup ? 'text-sidebar-active-icon' : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'
@@ -80,7 +80,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
             }}
           >
             <div className="surface-rail-panel min-w-[210px] p-2">
-              <span className="block px-3 pt-1 pb-2 text-[11px] font-bold tracking-widest text-sidebar-group-label uppercase">
+              <span className="block px-3 pt-1 pb-2 text-[11px] font-semibold tracking-widest text-sidebar-group-label uppercase">
                 {label}
               </span>
               <div className="flex flex-col gap-0.5">
@@ -114,7 +114,7 @@ export default function SidebarGroup({ icon: Icon, label, items, collapsed }: Si
             <span className="sidebar-item-indicator absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r-[var(--radius-sm)]" />
           )}
           <Icon
-            size={22}
+            size={24}
             strokeWidth={2.1}
             className={`flex-none transition-colors duration-180 ${
               inGroup && !open ? 'text-sidebar-active-icon' : 'text-sidebar-icon group-hover:text-sidebar-hover-ink'

@@ -51,7 +51,7 @@ export default function StatCard({
 
       <div key={value} className="animate-fade flex items-baseline gap-2.5 px-4 pt-5">
         <span
-          className="kpi-value text-[30px] leading-9 font-bold tabular-nums tracking-tight"
+          className="kpi-value text-[30px] leading-9 font-semibold tabular-nums tracking-tight"
           style={{ color: accentText } as CSSProperties}
         >
           {value}

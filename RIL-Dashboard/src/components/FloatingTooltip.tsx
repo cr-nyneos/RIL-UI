@@ -27,7 +27,7 @@ const MARGIN = 12; // keep at least this far from the viewport edges
 /** Shared tooltip-content classes so every chart's tooltip body matches. */
 export const TT_HEAD = 'flex items-center gap-2 text-[13px] font-semibold text-ink-900';
 export const TT_DOT = 'h-2 w-2 rounded-[var(--radius-sm)] bg-current';
-export const TT_VALUE = 'mt-1.5 text-[20px] leading-[1.15] font-bold tabular-nums text-ink-900';
+export const TT_VALUE = 'mt-1.5 text-[20px] leading-[1.15] font-semibold tabular-nums text-ink-900';
 export const TT_ROW = 'mt-1.5 flex items-center justify-between gap-4 text-[12px] text-ink-500';
 export const TT_TREND = 'inline-flex items-center gap-1 font-semibold [font-variant-numeric:tabular-nums]';
 export const trendColor = (trend: number) => (trend >= 0 ? 'text-success' : 'text-danger');

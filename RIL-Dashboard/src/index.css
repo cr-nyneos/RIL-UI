@@ -26,10 +26,11 @@
   --color-surface-selected: #D9EDF8;
 
   /* Table banding — brand-tinted head, visibly tinted alternate row */
-  --color-surface-tablehead: #E7F4FB;
+  --color-surface-tablehead: #F6F6F6;
   --color-table-row: #FFFFFF;
-  --color-table-row-alt: #D9EDF8;
-  --color-table-row-hover: #C4E4F4;
+  --color-table-row-alt: #C5EEFF;
+  --color-table-row-hover: #A0E3FF;
+  --color-table-border: #CCCCCCAD;
 
  
   --color-surface-rail: #0C7BAB;
@@ -54,18 +55,18 @@
   --color-violet-500: #0C7BAB;
 
   /* Data hues — categorical encoding only (charts), never decoration */
-  --color-data-blue: #0C7BAB;
-  --color-data-terracotta: #C2643F;
-  --color-data-emerald: #0E9F6E;
-  --color-data-amber: #C77C09;
-  --color-data-rose: #B4527A;
+  --color-data-blue: #1496CD;
+  --color-data-terracotta: #F2622E;
+  --color-data-emerald: #10B981;
+  --color-data-amber: #F59E0B;
+  --color-data-rose: #E0538A;
 
   /* Semantic */
   --color-success: #067647;
   --color-success-soft: #ECFDF3;
   --color-warning: #B54708;
   --color-warning-soft: #FFFAEB;
-  --color-danger: #B42318;
+  --color-danger: #EA3449;
   --color-danger-soft: #FEF3F2;
   --color-info: #0C7BAB;
   --color-info-soft: #E7F4FB;
@@ -78,9 +79,9 @@
 
   /* Ink scale — charcoal black → warm slate. Blue is reserved for headings
      and brand accents; body copy, labels and table text stay charcoal. */
-  --color-ink-900: #22262C;
-  --color-ink-800: #22262C;
-  --color-ink-700: #22262C;
+  --color-ink-900: #323232;
+  --color-ink-800: #323232;
+  --color-ink-700: #323232;
   --color-ink-600: #5F656E;
   --color-ink-500: #7B818A;
   --color-ink-400: #9BA1AA;
@@ -118,17 +119,17 @@
   --color-kpi-azure: #005E88;
   --color-kpi-indigo: #00496B;
   --color-kpi-brand-fill: #0C7BAB;
-  --color-kpi-brand-text: #22262C;
+  --color-kpi-brand-text: #323232;
   --color-kpi-cyan-fill: #94A3B8;
-  --color-kpi-cyan-text: #22262C;
-  --color-kpi-danger-fill: #B42318;
-  --color-kpi-danger-text: #B42318;
+  --color-kpi-cyan-text: #323232;
+  --color-kpi-danger-fill: #EA3449;
+  --color-kpi-danger-text: #EA3449;
   --color-kpi-warning-fill: #B54708;
   --color-kpi-warning-text: #B54708;
   --color-kpi-violet-fill: #94A3B8;
-  --color-kpi-violet-text: #22262C;
+  --color-kpi-violet-text: #323232;
   --color-kpi-neutral-fill: #94A3B8;
-  --color-kpi-neutral-text: #22262C;
+  --color-kpi-neutral-text: #323232;
   --color-kpi-neutral-icon: #5F656E;
 
   /* Chip backgrounds */
@@ -269,8 +270,8 @@
 /* Semantic type scale — components never hand-roll a size/color     */
 /* ---------------------------------------------------------------- */
 @utility text-card-title {
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 28px;
+  line-height: 36px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--color-ink-900);
@@ -286,7 +287,7 @@
 @utility text-eyebrow {
   font-size: 12px;
   line-height: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--color-ink-700);
 }
@@ -302,7 +303,7 @@
 @utility text-kpi-label {
   font-size: 12.5px;
   line-height: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.07em;
   color: var(--color-ink-700);
 }
@@ -324,8 +325,8 @@
 }
 
 @utility text-section-title {
-  font-size: 17px;
-  line-height: 25px;
+  font-size: 28px;
+  line-height: 36px;
   font-weight: 700;
   letter-spacing: -0.005em;
   color: var(--color-ink-900);
@@ -348,7 +349,7 @@
 @utility text-table-head {
   font-size: 12px;
   line-height: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-ink-700);
@@ -588,7 +589,7 @@
   background: var(--color-brand-soft2);
   border-color: var(--color-border-strong);
   color: var(--color-brand-800);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dash-chart-stage {
@@ -946,7 +947,7 @@
 /* ---------------------------------------------------------------- */
 .dt-head {
   background: var(--color-surface-tablehead);
-  border-bottom: 1px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-table-border);
 }
 
 /* Zebra body rows — tinted / white pair, themed per section via .tsy */
@@ -1082,7 +1083,7 @@
 /* Scoped to .tsy so the rail and every other page stay untouched.    */
 /* ---------------------------------------------------------------- */
 .tsy {
-  --tsy-primary: #0F82B4;
+  --tsy-primary: #1496CD;
   --tsy-primary-lt: #005E88;
   --tsy-primary-hover: #005E88f7;
   --tsy-primary-sm: #7FCBFF;
@@ -1092,8 +1093,8 @@
   --tsy-border: #ccccccad;
   --tsy-surface: #FFFFFF;
   --tsy-surface-dark: #F1F2F3;
-  --tsy-text: #393e46e7;
-  --tsy-red: #CA3838;
+  --tsy-text: #323232;
+  --tsy-red: #EA3449;
 
   /* Re-point the design-system tokens the shared primitives consume, so
      Select / Tabs / Button / DataTable render in Cimplr's palette without
@@ -1125,7 +1126,7 @@
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: var(--tsy-text);
+  color: #393e46e7;
 }
 
 .tsy-page-head {
@@ -1152,7 +1153,7 @@
   border-color: var(--tsy-primary);
   background: var(--tsy-primary);
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
 }
 .tsy-btn:hover {
@@ -1212,8 +1213,8 @@
 }
 
 .tsy .dt-head {
-  background: var(--tsy-primary-xl);
-  border-bottom-color: var(--tsy-primary-md);
+  background: var(--color-surface-tablehead);
+  border-bottom-color: var(--color-table-border);
 }
 
 .tsy .dt-tr { background: var(--tsy-surface); }

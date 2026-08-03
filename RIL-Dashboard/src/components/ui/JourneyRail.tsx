@@ -24,11 +24,11 @@ const ACCENT: Record<JourneyStageState, string> = {
 };
 
 const LABEL: Record<JourneyStageState, string> = {
-  complete: 'font-bold text-ink-900',
-  current: 'font-bold text-ink-900',
-  upcoming: 'font-bold text-ink-700',
-  blocked: 'font-bold text-danger',
-  delayed: 'font-bold text-warning',
+  complete: 'font-semibold text-ink-900',
+  current: 'font-semibold text-ink-900',
+  upcoming: 'font-semibold text-ink-700',
+  blocked: 'font-semibold text-danger',
+  delayed: 'font-semibold text-warning',
 };
 
 /** The connector into a node is drawn from the state of the node behind it. */
@@ -116,7 +116,7 @@ export default function JourneyRail({ stages, size = 'md', showTimes = true, cla
             </span>
 
             {showTimes && (
-              <span className="text-[11px] leading-4 font-bold text-ink-900 tabular-nums">
+              <span className="text-[11px] leading-4 font-semibold text-ink-900 tabular-nums">
                 {stage.at ? formatTime(stage.at) : ' '}
               </span>
             )}

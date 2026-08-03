@@ -273,7 +273,7 @@ export default function PieChart({
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-500">
                   {center.fullLabel}
                 </div>
-                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-ink-900">
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-semibold tracking-[-0.03em] text-ink-900">
                   {valuePrefix}
                   {center.value}
                   {unit}
@@ -303,7 +303,7 @@ export default function PieChart({
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-500">
                   {totalLabel}
                 </div>
-                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-bold tracking-[-0.03em] text-ink-900">
+                <div className="mt-1.5 mb-0.5 font-display text-[clamp(30px,5vw,40px)] leading-none font-semibold tracking-[-0.03em] text-ink-900">
                   {valuePrefix}
                   <AnimatedNumber value={total} />
                   {unit}

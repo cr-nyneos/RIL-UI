@@ -100,7 +100,7 @@ export default function DecisionModal({ decision, action, submitting, onClose, o
         />
 
         <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-4 py-3">
-          <p className="text-[13px] leading-5 font-bold text-ink-900">{decision.question}</p>
+          <p className="text-[13px] leading-5 font-semibold text-ink-900">{decision.question}</p>
           <p className="text-meta mt-1">{PROMPT[action]}</p>
         </div>
 

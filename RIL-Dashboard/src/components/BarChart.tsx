@@ -62,7 +62,7 @@ function SegmentTooltip({ tip, valuePrefix, unit }: { tip: SegmentTip | null; va
           transition={{ duration: 0.12, ease: 'easeOut' }}
         >
           <div className="text-[11px] leading-tight font-medium text-ink-500">{tip.label}</div>
-          <div className="text-[14px] leading-tight font-bold tabular-nums text-ink-900">
+          <div className="text-[14px] leading-tight font-semibold tabular-nums text-ink-900">
             {valuePrefix}
             {tip.value}
             {unit}
@@ -150,7 +150,7 @@ function Bar({
       onMouseLeave={handleLeave}
     >
       <motion.div
-        className="relative mb-3 font-display text-[clamp(15px,2vw,19px)] font-bold tracking-[-0.02em] text-text-0"
+        className="relative mb-3 font-display text-[clamp(15px,2vw,19px)] font-semibold tracking-[-0.02em] text-text-0"
         animate={{ y: hot ? -4 : 0, scale: hot ? 1.07 : 1, filter: hot ? 'brightness(1.18)' : 'brightness(1)' }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{ textShadow: hot ? `0 0 20px ${datum.glow}` : '0 0 12px #00000066' }}

@@ -45,7 +45,7 @@ export default function StepNavigation<K extends string>({
           >
             {active && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-brand-600" />}
             <span
-              className={`flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] border text-[13px] font-bold tabular-nums ${
+              className={`flex h-8 w-8 flex-none items-center justify-center rounded-[var(--radius-sm)] border text-[13px] font-semibold tabular-nums ${
                 active
                   ? 'border-brand-600 bg-brand-600 text-white'
                   : done

@@ -21,27 +21,27 @@ const TOKENS: Record<Tone, ToneTokens> = {
     border: 'rgba(79,70,229,0.20)',
   },
   success: {
-    text: 'var(--color-success)',
+    text: '#166534',
     fill: 'var(--color-success)',
-    soft: 'rgba(16,185,129,0.09)',
+    soft: '#DCFCE7',
     border: 'rgba(16,185,129,0.18)',
   },
   warning: {
-    text: 'var(--color-kpi-warning-text)',
+    text: '#92400E',
     fill: 'var(--color-warning)',
-    soft: 'rgba(234,166,64,0.10)',
+    soft: '#FEF3C7',
     border: 'rgba(234,166,64,0.20)',
   },
   danger: {
     text: 'var(--color-kpi-danger-text)',
     fill: 'var(--color-danger)',
-    soft: 'rgba(244,63,94,0.09)',
+    soft: '#FEE2E2',
     border: 'rgba(244,63,94,0.18)',
   },
   neutral: {
     text: 'var(--color-ink-700)',
     fill: 'var(--color-ink-400)',
-    soft: 'var(--color-chip-neutral)',
+    soft: '#F3F4F6',
     border: 'var(--color-glass-hairline-deep)',
   },
   violet: {

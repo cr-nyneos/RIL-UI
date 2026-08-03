@@ -459,7 +459,7 @@ export default function DispatchWorkspace() {
           <GlassCard className="w-full max-w-[460px] p-5 shadow-[0_12px_32px_-8px_rgba(23,37,84,0.24)]">
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
-                <div className="text-section-title">Unsaved changes detected.</div>
+                <div className="text-body-strong">Unsaved changes detected.</div>
                 <div className="mt-2 text-subtitle">Save the draft or stay on this workflow.</div>
               </div>
               <Button variant="icon" size="sm" aria-label="Close dialog" icon={<X size={15} strokeWidth={2.4} />} onClick={() => setShowLeaveDialog(false)} />

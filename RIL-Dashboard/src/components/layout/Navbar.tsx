@@ -39,7 +39,7 @@ const NavItems: React.FC<{
           }`}
         >
           <item.icon
-            size={18}
+            size={20}
             className={`transition-colors ${
               isActive ? 'text-brand-600' : 'text-ink-600 group-hover:text-brand-600'
             }`}
@@ -147,11 +147,11 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
       <div className="relative z-[51] flex items-center">
         <div className="flex items-center gap-2.5 mr-3">
           <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[var(--radius-md)] bg-brand-600 text-white">
-            <Warehouse size={21} strokeWidth={2.2} />
+            <Warehouse size={23} strokeWidth={2.2} />
           </span>
           {!sidebarCollapsed && (
             <span className="flex min-w-0 flex-col">
-              <span className="truncate text-[18px] leading-6 font-bold tracking-tight text-ink-900">
+              <span className="truncate text-[18px] leading-6 font-semibold tracking-tight text-ink-900">
                 NyneOS
               </span>
               <span className="truncate text-[11px] leading-4 font-semibold tracking-[0.06em] text-ink-600 uppercase">
@@ -166,9 +166,9 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
           aria-label="Toggle sidebar"
         >
           {sidebarCollapsed ? (
-            <Menu size={24} className="text-brand-600" />
+            <Menu size={26} className="text-brand-600" />
           ) : (
-            <X size={24} className="text-brand-600" />
+            <X size={26} className="text-brand-600" />
           )}
         </button>
       </div>
@@ -185,7 +185,7 @@ export default function Navbar({ sidebarCollapsed, onToggleSidebar }: NavbarProp
             className="flex items-center space-x-2 cursor-pointer hover:bg-[var(--color-surface-hover)] px-3 py-2 rounded-full transition-colors"
           >
             <div className="w-8 h-8 bg-[var(--color-surface-selected)] rounded-full flex items-center justify-center">
-              <User size={16} className="text-brand-600" />
+              <User size={18} className="text-brand-600" />
             </div>
           </div>
           <UserDropdown isOpen={isUserDetailsVisible} onLogout={handleLogout} />

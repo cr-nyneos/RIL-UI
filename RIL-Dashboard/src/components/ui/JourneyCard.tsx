@@ -138,7 +138,7 @@ export default function JourneyCard({
         <dl className="grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
           {facts.map((fact) => (
             <div key={fact.label} className="min-w-0">
-              <dt className="text-[11px] leading-4 font-bold tracking-[0.07em] text-ink-500 uppercase">{fact.label}</dt>
+              <dt className="text-[11px] leading-4 font-semibold tracking-[0.07em] text-ink-500 uppercase">{fact.label}</dt>
               <dd className="mt-1 text-[14px] leading-5 font-semibold text-ink-900 tabular-nums">{fact.value}</dd>
             </div>
           ))}

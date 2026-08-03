@@ -336,7 +336,7 @@ export default function RecordMovement() {
 
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-4 py-3">
                   <span className="text-body-strong">Net weight</span>
-                  <span className="text-[16px] font-bold text-ink-900 tabular-nums">
+                  <span className="text-[16px] font-semibold text-ink-900 tabular-nums">
                     {net === null ? '—' : `${net.toLocaleString('en-IN')} kg`}
                   </span>
                 </div>

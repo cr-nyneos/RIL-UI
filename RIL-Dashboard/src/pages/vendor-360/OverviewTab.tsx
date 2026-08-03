@@ -39,8 +39,8 @@ export default function OverviewTab({ snapshot }: OverviewTabProps) {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <div className="flex items-baseline justify-between gap-3">
-              <span className="text-[17px] leading-6 font-bold text-[var(--color-ink-900)]">Health Score</span>
-              <span className="text-[17px] leading-6 font-bold tabular-nums text-[var(--color-ink-900)]">
+              <span className="text-[17px] leading-6 font-semibold text-[var(--color-ink-900)]">Health Score</span>
+              <span className="text-[17px] leading-6 font-semibold tabular-nums text-[var(--color-ink-900)]">
                 {health}%
               </span>
             </div>
@@ -50,8 +50,8 @@ export default function OverviewTab({ snapshot }: OverviewTabProps) {
           </div>
           <div>
             <div className="flex items-baseline justify-between gap-3">
-              <span className="text-[17px] leading-6 font-bold text-[var(--color-ink-900)]">Compliance</span>
-              <span className="text-[17px] leading-6 font-bold tabular-nums text-[var(--color-ink-900)]">
+              <span className="text-[17px] leading-6 font-semibold text-[var(--color-ink-900)]">Compliance</span>
+              <span className="text-[17px] leading-6 font-semibold tabular-nums text-[var(--color-ink-900)]">
                 {vendor.compliance}%
               </span>
             </div>
