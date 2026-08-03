@@ -113,7 +113,7 @@ export default function DataTable<T>({
                     }
                     className={`dt-head ${cellPadding} ${ALIGN[align]} ${
                       stickyHead ? 'sticky top-0 z-10' : ''
-                    } select-none text-sm font-semibold tracking-wider text-ink-700 uppercase`}
+                    } select-none text-sm font-semibold tracking-wider text-table-head-text uppercase`}
                   >
                     <div
                       className={`flex items-center gap-1 ${
@@ -189,7 +189,7 @@ export default function DataTable<T>({
                           return (
                             <td
                               key={column.key}
-                              className={`${cellPadding} ${ALIGN[align]} border-b border-table-border text-[15px] font-normal text-ink-700`}
+                              className={`${cellPadding} ${ALIGN[align]} border-b border-table-border align-middle text-sm font-normal whitespace-nowrap text-table-cell-text`}
                             >
                               <div className="min-w-0 max-w-full">
                                 {column.render

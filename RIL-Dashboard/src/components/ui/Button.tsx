@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, ComponentType, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'icon' | 'link';
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 type LinkLike = typeof Link;
 
@@ -22,12 +22,14 @@ const SIZE: Record<ButtonSize, string> = {
   sm: 'h-9 px-3 text-[13px]',
   md: 'h-10 px-3.5 text-[14px]',
   lg: 'h-11 px-5 text-[14px]',
+  xl: 'h-12 px-6 text-[15px]',
 };
 
 const ICON_SIZE: Record<ButtonSize, string> = {
   sm: 'h-9 w-9',
   md: 'h-10 w-10',
   lg: 'h-11 w-11',
+  xl: 'h-12 w-12',
 };
 
 const VARIANT: Record<ButtonVariant, string> = {

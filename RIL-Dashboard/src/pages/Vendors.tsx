@@ -166,15 +166,16 @@ export default function Vendors() {
     {
       key: 'vendor',
       header: 'Vendor',
+      width: '260px',
       sortable: true,
       render: (vendor) => (
         <div className="flex min-w-0 items-center gap-3">
           <Avatar name={vendor.name} size="md" />
           <div className="min-w-0">
-            <div className="truncate text-[16px] leading-6 font-semibold text-ink-900" title={vendor.name}>
+            <div className="truncate text-sm leading-5 font-normal text-table-cell-text" title={vendor.name}>
               {vendor.name}
             </div>
-            <div className="text-meta truncate">{vendor.category}</div>
+            <div className="truncate text-[13px] leading-5 font-normal text-ink-500">{vendor.category}</div>
           </div>
         </div>
       ),
@@ -193,7 +194,7 @@ export default function Vendors() {
       align: 'right',
       sortable: true,
       render: (vendor) => (
-        <span className="text-[15px] leading-6 font-semibold tabular-nums text-ink-800">
+        <span className="text-sm leading-5 font-normal tabular-nums text-table-cell-text">
           {orderCounts[vendor.name] ?? 0}
         </span>
       ),
@@ -218,7 +219,7 @@ export default function Vendors() {
       width: '100px',
       sortable: true,
       render: (vendor) => (
-        <span className="flex items-center gap-1.5 text-[15px] leading-6 font-semibold text-ink-700">
+        <span className="flex items-center gap-1.5 text-sm leading-5 font-normal text-table-cell-text">
           <span
             className="h-1.5 w-1.5 flex-none rounded-full"
             style={{ background: RISK_COLOR[vendor.risk] }}
@@ -233,7 +234,7 @@ export default function Vendors() {
       width: '130px',
       sortable: true,
       render: (vendor) => (
-        <span className="truncate text-[15px] leading-6 font-semibold text-ink-800">
+        <span className="truncate text-sm leading-5 font-normal text-table-cell-text">
           {formatDate(vendor.lastActivity)}
         </span>
       ),

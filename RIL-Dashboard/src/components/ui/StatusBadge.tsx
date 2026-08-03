@@ -38,7 +38,7 @@ interface StatusBadgeProps {
   className?: string;
 }
 
-export default function StatusBadge({ status, size = 'md', wrap = false, className = '' }: StatusBadgeProps) {
+export default function StatusBadge({ status, size = 'sm', wrap = false, className = '' }: StatusBadgeProps) {
   const tone = getStatusTone(status);
 
   return (

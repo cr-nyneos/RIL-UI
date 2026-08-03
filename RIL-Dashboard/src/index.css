@@ -31,6 +31,9 @@
   --color-table-row-alt: #C5EEFF;
   --color-table-row-hover: #A0E3FF;
   --color-table-border: #CCCCCCAD;
+  --color-table-head-surface: #F6F6F6;
+  --color-table-head-text: #374151;
+  --color-table-cell-text: #393E46E7;
 
  
   --color-surface-rail: #0C7BAB;
@@ -947,8 +950,8 @@
 /* Data table — header, rows and footer read as one object           */
 /* ---------------------------------------------------------------- */
 .dt-head {
-  background: var(--color-surface-tablehead);
-  border-bottom: 2px solid var(--color-border-strong);
+  background: var(--color-table-head-surface);
+  border-bottom: 1px solid var(--color-table-border);
 }
 
 /* Zebra body rows — tinted / white pair, themed per section via .tsy */
@@ -1214,7 +1217,7 @@
 }
 
 .tsy .dt-head {
-  background: var(--color-surface-tablehead);
+  background: var(--color-table-head-surface);
   border-bottom-color: var(--color-table-border);
 }
 

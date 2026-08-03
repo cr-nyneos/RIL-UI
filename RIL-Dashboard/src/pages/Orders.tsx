@@ -195,8 +195,8 @@ export default function Orders() {
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
-          <div className="truncate text-[14px] leading-5 font-semibold text-ink-900">{order.id}</div>
-          <div className="text-meta truncate">{order.po}</div>
+          <div className="truncate text-sm leading-5 font-normal text-table-cell-text">{order.id}</div>
+          <div className="truncate text-[13px] leading-5 font-normal text-ink-500">{order.po}</div>
         </div>
       ),
     },
@@ -206,10 +206,10 @@ export default function Orders() {
       sortable: true,
       render: (order) => (
         <div className="min-w-0">
-          <div className="truncate text-[14px] leading-5 font-semibold text-ink-800" title={order.vendor}>
+          <div className="truncate text-sm leading-5 font-normal text-table-cell-text" title={order.vendor}>
             {order.vendor}
           </div>
-          <div className="text-meta truncate">{order.plant}</div>
+          <div className="truncate text-[13px] leading-5 font-normal text-ink-500">{order.plant}</div>
         </div>
       ),
     },
@@ -254,9 +254,9 @@ export default function Orders() {
         const expected = formatExpected(order.expected, order.progress >= 100);
         return (
           <div className="min-w-0">
-            <div className="truncate text-[14px] leading-5 font-semibold text-ink-800">{expected.label}</div>
+            <div className="truncate text-sm leading-5 font-normal text-table-cell-text">{expected.label}</div>
             <div
-              className="truncate text-[12px] leading-[18px] font-medium"
+              className="truncate text-[13px] leading-5 font-normal"
               style={{ color: expected.overdue ? 'var(--color-danger)' : 'var(--color-ink-500)' }}
             >
               {expected.relative}
@@ -283,7 +283,7 @@ export default function Orders() {
       align: 'right',
       sortable: true,
       render: (order) => (
-        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-800">
+        <span className="text-sm leading-5 font-normal tabular-nums text-table-cell-text">
           {formatValue(order.valueCr)}
         </span>
       ),
@@ -306,7 +306,8 @@ export default function Orders() {
             actions={
               <Button
                 variant="primary"
-                icon={<ClipboardPlus size={16} strokeWidth={2.2} />}
+                size="xl"
+                icon={<ClipboardPlus size={18} strokeWidth={2.2} />}
                 className="cursor-pointer"
                 onClick={() => navigate('/orders/create')}
               >
