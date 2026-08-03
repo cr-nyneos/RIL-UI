@@ -111,44 +111,44 @@ function compare(a: Invoice, b: Invoice, key: string): number {
 }
 
 /** The five closure steps, sized by how much of the filtered book has cleared each one. */
-function PaymentPipeline({ invoices }: { invoices: Invoice[] }) {
-  return (
-    <ol className="grid grid-cols-1 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
-      {PIPELINE.map((stage, index) => {
-        const cleared = invoices.filter(stage.match);
-        const valueCr = cleared.reduce((total, invoice) => total + invoice.amountCr, 0);
-        const reached = cleared.length > 0;
+// function PaymentPipeline({ invoices }: { invoices: Invoice[] }) {
+//   return (
+//     <ol className="grid grid-cols-1 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
+//       {PIPELINE.map((stage, index) => {
+//         const cleared = invoices.filter(stage.match);
+//         const valueCr = cleared.reduce((total, invoice) => total + invoice.amountCr, 0);
+//         const reached = cleared.length > 0;
 
-        return (
-          <li key={stage.key} className="relative flex min-w-0 flex-col gap-2 px-1">
-            {index < PIPELINE.length - 1 && (
-              <span
-                aria-hidden
-                className="absolute top-[7px] right-0 left-[calc(50%+14px)] hidden border-t-2 lg:block"
-                style={{ borderColor: reached ? 'var(--color-brand-500)' : 'var(--color-border)' }}
-              />
-            )}
+//         return (
+//           <li key={stage.key} className="relative flex min-w-0 flex-col gap-2 px-1">
+//             {index < PIPELINE.length - 1 && (
+//               <span
+//                 aria-hidden
+//                 className="absolute top-[7px] right-0 left-[calc(50%+14px)] hidden border-t-2 lg:block"
+//                 style={{ borderColor: reached ? 'var(--color-brand-500)' : 'var(--color-border)' }}
+//               />
+//             )}
 
-            <span
-              aria-hidden
-              className="relative z-1 h-3.5 w-3.5 flex-none rounded-full border-2"
-              style={{
-                borderColor: reached ? 'var(--color-brand-600)' : 'var(--color-border-strong)',
-                background: reached ? 'var(--color-brand-600)' : 'var(--color-surface-section)',
-              }}
-            />
+//             <span
+//               aria-hidden
+//               className="relative z-1 h-3.5 w-3.5 flex-none rounded-full border-2"
+//               style={{
+//                 borderColor: reached ? 'var(--color-brand-600)' : 'var(--color-border-strong)',
+//                 background: reached ? 'var(--color-brand-600)' : 'var(--color-surface-section)',
+//               }}
+//             />
 
-            <span className="truncate text-[13px] leading-5 font-semibold text-ink-800" title={stage.label}>
-              {stage.label}
-            </span>
-            <span className="text-[24px] leading-8 font-semibold tabular-nums text-ink-900">{cleared.length}</span>
-            <span className="text-meta tabular-nums">{formatCurrency(valueCr)}</span>
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
+//             <span className="truncate text-[13px] leading-5 font-semibold text-ink-800" title={stage.label}>
+//               {stage.label}
+//             </span>
+//             <span className="text-[24px] leading-8 font-semibold tabular-nums text-ink-900">{cleared.length}</span>
+//             <span className="text-meta tabular-nums">{formatCurrency(valueCr)}</span>
+//           </li>
+//         );
+//       })}
+//     </ol>
+//   );
+// }
 
 export default function Finance() {
   const navigate = useNavigate();
@@ -456,7 +456,7 @@ export default function Finance() {
           />
         </div>
 
-        <SectionCard
+        {/* <SectionCard
           title="Payment Pipeline"
           className="animate-rise"
           style={{ animationDelay: '150ms' }}
@@ -464,7 +464,7 @@ export default function Finance() {
           bodyClassName="px-5 py-6"
         >
           <PaymentPipeline invoices={rows} />
-        </SectionCard>
+        </SectionCard> */}
       </div>
     </AppShell>
   );

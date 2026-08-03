@@ -42,7 +42,7 @@ const GROUPS: { key: PendingDecision['urgency']; label: string; description: str
 
 const ACTION_TOAST: Record<DecisionAction, (decision: PendingDecision, submission: DecisionSubmission) => string> = {
   approve: (decision) => `${decision.gateLabel} approved on ${decision.order.id}. Next gate unlocked.`,
-  reject: (decision) => `${decision.gateLabel} returned to ${decision.owner.name} on ${decision.order.id}.`,
+  reject: (decision) => `${decision.gateLabel} rejected on ${decision.order.id}. Returned to ${decision.owner.name}.`,
   escalate: (decision) => `${decision.gateLabel} escalated on ${decision.order.id}.`,
   delegate: (decision, submission) => `${decision.gateLabel} delegated to ${submission.delegateTo}.`,
 };

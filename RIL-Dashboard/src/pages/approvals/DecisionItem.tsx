@@ -88,7 +88,7 @@ export default function DecisionItem({ decision, expanded, onToggle, onAct, styl
             onClick={() => onAct(decision, 'reject')}
             className="cursor-pointer bg-[var(--color-surface-section)]"
           >
-            Return
+            Reject
           </Button>
           <Button
             variant="secondary"

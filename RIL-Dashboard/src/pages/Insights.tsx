@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Lightbulb, Plus, RotateCcw } from 'lucide-react';
+import { Lightbulb, RotateCcw } from 'lucide-react';
 
 import AppShell from '../components/layout/AppShell';
 import PageHeader from '../components/ui/PageHeader';
@@ -296,16 +296,6 @@ export default function Insights() {
               { label: 'Insights', to: '/insights' },
               { label: 'Digitization Opportunity Tracker' },
             ]}
-            actions={
-              <Button
-                variant="primary"
-                icon={<Plus size={16} strokeWidth={2.2} />}
-                className="cursor-pointer"
-                onClick={() => setAddOpen(true)}
-              >
-                Add Opportunity
-              </Button>
-            }
           />
         </div>
 

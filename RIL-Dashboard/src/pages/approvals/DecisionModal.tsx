@@ -11,14 +11,14 @@ import type { DecisionAction, DecisionSubmission, PendingDecision } from '../../
 
 const TITLE: Record<DecisionAction, string> = {
   approve: 'Approve Decision',
-  reject: 'Return For Rework',
+  reject: 'Reject Decision',
   escalate: 'Escalate Decision',
   delegate: 'Delegate Decision',
 };
 
 const CONFIRM: Record<DecisionAction, string> = {
   approve: 'Approve And Close Gate',
-  reject: 'Return To Owner',
+  reject: 'Reject And Return To Owner',
   escalate: 'Raise Escalation',
   delegate: 'Assign Reviewer',
 };

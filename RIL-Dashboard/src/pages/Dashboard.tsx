@@ -201,7 +201,7 @@ export default function Dashboard() {
             />
           </div>
           <div className="flex items-end justify-end">
-            <Button as={Link} to="/orders/create" variant="primary" size="md" className="tsy-btn" icon={<Plus size={16} />}>
+            <Button as={Link} to="/orders/create" variant="primary" size="lg" className="tsy-btn" icon={<Plus size={16} />}>
               Create Order
             </Button>
           </div>

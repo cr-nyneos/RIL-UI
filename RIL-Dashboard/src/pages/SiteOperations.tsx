@@ -149,6 +149,7 @@ export default function SiteOperations() {
             actions={
               <Button
                 variant="primary"
+                size="lg"
                 icon={<ClipboardPlus size={16} strokeWidth={2.3} />}
                 onClick={() => navigate('/site-operations/new')}
                 className="cursor-pointer"
