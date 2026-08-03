@@ -13,7 +13,7 @@ interface ProgressMeterProps {
 const FILL: Record<ProgressTone, string> = {
   neutral: 'var(--color-brand-600)',
   danger: 'var(--color-danger)',
-  warning: 'var(--color-warning)',
+  warning: 'var(--color-warning-bright)',
   success: 'var(--color-success)',
 };
 

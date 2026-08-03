@@ -26,7 +26,7 @@
   --color-surface-selected: #D9EDF8;
 
   /* Table banding — brand-tinted head, visibly tinted alternate row */
-  --color-surface-tablehead: #F6F6F6;
+  --color-surface-tablehead: #E8EBF0;
   --color-table-row: #FFFFFF;
   --color-table-row-alt: #C5EEFF;
   --color-table-row-hover: #A0E3FF;
@@ -66,6 +66,7 @@
   --color-success-soft: #ECFDF3;
   --color-warning: #B54708;
   --color-warning-soft: #FFFAEB;
+  --color-warning-bright: #F2C10E;
   --color-danger: #EA3449;
   --color-danger-soft: #FEF3F2;
   --color-info: #0C7BAB;
@@ -947,7 +948,7 @@
 /* ---------------------------------------------------------------- */
 .dt-head {
   background: var(--color-surface-tablehead);
-  border-bottom: 1px solid var(--color-table-border);
+  border-bottom: 2px solid var(--color-border-strong);
 }
 
 /* Zebra body rows — tinted / white pair, themed per section via .tsy */

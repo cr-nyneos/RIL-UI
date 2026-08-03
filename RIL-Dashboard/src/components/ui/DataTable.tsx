@@ -189,7 +189,7 @@ export default function DataTable<T>({
                           return (
                             <td
                               key={column.key}
-                              className={`${cellPadding} ${ALIGN[align]} border-b border-table-border text-sm font-normal text-ink-700`}
+                              className={`${cellPadding} ${ALIGN[align]} border-b border-table-border text-[15px] font-normal text-ink-700`}
                             >
                               <div className="min-w-0 max-w-full">
                                 {column.render

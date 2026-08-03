@@ -10,7 +10,6 @@ import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import KpiGroupCard, { type KpiGroup } from '../components/dashboard/KpiGroupCard';
 import StatusBadge from '../components/ui/StatusBadge';
-import SectionCard from '../components/ui/SectionCard';
 import DataTable, { type Column, type SortState } from '../components/ui/DataTable';
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
@@ -59,22 +58,6 @@ const SCF_TONE: Record<ScfStatus, 'success' | 'neutral'> = {
   Discounted: 'success',
   'Not Eligible': 'neutral',
 };
-
-const PIPELINE: { key: string; label: string; match: (invoice: Invoice) => boolean }[] = [
-  { key: 'invoice', label: 'Invoice', match: () => true },
-  {
-    key: 'matching',
-    label: 'Matching',
-    match: (invoice) => invoice.invoiceStatus === 'Matched' || invoice.invoiceStatus === 'Approved',
-  },
-  { key: 'governance', label: 'Governance Approval', match: (invoice) => invoice.invoiceStatus === 'Approved' },
-  { key: 'scf', label: 'SCF', match: (invoice) => invoice.scfStatus === 'Discounted' },
-  {
-    key: 'released',
-    label: 'Payment Released',
-    match: (invoice) => invoice.paymentStatus === 'Released' || invoice.paymentStatus === 'Paid',
-  },
-];
 
 function matches(invoice: Invoice, filters: FinanceFilters): boolean {
   const query = filters.query.trim().toLowerCase();

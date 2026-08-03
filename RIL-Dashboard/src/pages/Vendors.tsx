@@ -58,7 +58,7 @@ const RISK_OPTIONS = [
 
 const RISK_COLOR: Record<VendorRisk, string> = {
   Low: 'var(--color-ink-400)',
-  Medium: 'var(--color-warning)',
+  Medium: 'var(--color-warning-bright)',
   High: 'var(--color-danger)',
 };
 
@@ -81,13 +81,13 @@ function PlantCell({ plants }: { plants: Vendor['plants'] }) {
   return (
     <div className="flex min-w-0 flex-wrap items-center gap-1">
       {shown.map((plant) => (
-        <Badge key={plant} size="xs" tone="neutral">
+        <Badge key={plant} size="sm" tone="neutral">
           {plant}
         </Badge>
       ))}
       {rest > 0 && (
         <span title={plants.slice(2).join(', ')}>
-          <Badge size="xs" tone="neutral">
+          <Badge size="sm" tone="neutral">
             +{rest}
           </Badge>
         </span>
@@ -171,7 +171,7 @@ export default function Vendors() {
         <div className="flex min-w-0 items-center gap-3">
           <Avatar name={vendor.name} size="md" />
           <div className="min-w-0">
-            <div className="truncate text-[14px] leading-5 font-semibold text-ink-900" title={vendor.name}>
+            <div className="truncate text-[16px] leading-6 font-semibold text-ink-900" title={vendor.name}>
               {vendor.name}
             </div>
             <div className="text-meta truncate">{vendor.category}</div>
@@ -193,7 +193,7 @@ export default function Vendors() {
       align: 'right',
       sortable: true,
       render: (vendor) => (
-        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-800">
+        <span className="text-[15px] leading-6 font-semibold tabular-nums text-ink-800">
           {orderCounts[vendor.name] ?? 0}
         </span>
       ),
@@ -218,7 +218,7 @@ export default function Vendors() {
       width: '100px',
       sortable: true,
       render: (vendor) => (
-        <span className="flex items-center gap-1.5 text-[13px] leading-5 font-semibold text-ink-700">
+        <span className="flex items-center gap-1.5 text-[15px] leading-6 font-semibold text-ink-700">
           <span
             className="h-1.5 w-1.5 flex-none rounded-full"
             style={{ background: RISK_COLOR[vendor.risk] }}
@@ -233,7 +233,7 @@ export default function Vendors() {
       width: '130px',
       sortable: true,
       render: (vendor) => (
-        <span className="truncate text-[14px] leading-5 font-semibold text-ink-800">
+        <span className="truncate text-[15px] leading-6 font-semibold text-ink-800">
           {formatDate(vendor.lastActivity)}
         </span>
       ),

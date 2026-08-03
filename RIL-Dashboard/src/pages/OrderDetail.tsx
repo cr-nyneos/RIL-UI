@@ -140,18 +140,6 @@ export default function OrderDetail() {
               <TypeBadge type={order.type} />
               <Button
                 variant="secondary"
-                icon={<PackagePlus size={16} strokeWidth={2.2} />}
-                className="cursor-pointer"
-                onClick={() =>
-                  navigate(`/orders/${order.id}/gates/delivery`, {
-                    state: { from: `/orders/${order.id}?tab=timeline`, fromLabel: 'Order' },
-                  })
-                }
-              >
-                Log Shipment
-              </Button>
-              <Button
-                variant="secondary"
                 icon={<ClipboardCheck size={16} strokeWidth={2.2} />}
                 className="cursor-pointer"
                 onClick={() =>
@@ -161,6 +149,18 @@ export default function OrderDetail() {
                 }
               >
                 Record Inspection
+              </Button>
+              <Button
+                variant="secondary"
+                icon={<PackagePlus size={16} strokeWidth={2.2} />}
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate(`/orders/${order.id}/gates/delivery`, {
+                    state: { from: `/orders/${order.id}?tab=timeline`, fromLabel: 'Order' },
+                  })
+                }
+              >
+                Log Shipment
               </Button>
               <Button
                 variant="icon"

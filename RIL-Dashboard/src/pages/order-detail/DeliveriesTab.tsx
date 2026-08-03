@@ -114,7 +114,7 @@ export default function DeliveriesTab({ detail, totals }: DeliveriesTabProps) {
 
   return (
     <>
-      <div className="border-b border-[var(--color-border)]">
+      <div className="border-b-2 border-[var(--color-border-strong)] bg-[var(--color-surface-section)]">
         <SummaryStrip
           items={[
             { key: 'ordered', label: 'Ordered', value: totals.ordered },
@@ -125,6 +125,10 @@ export default function DeliveriesTab({ detail, totals }: DeliveriesTabProps) {
           ]}
         />
       </div>
+
+      <h4 className="text-table-head border-b border-[var(--color-border)] bg-[var(--color-surface-header)] px-6 py-3">
+        Shipments
+      </h4>
 
       <DataTable
         surface={false}
