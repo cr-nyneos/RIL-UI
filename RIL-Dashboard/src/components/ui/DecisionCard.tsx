@@ -115,7 +115,7 @@ export default function DecisionCard({
 
           <div className="flex flex-none items-center gap-2.5">
             {status ? (
-              <Badge tone={status.tone} size="sm" shape="square">
+              <Badge tone={status.tone} size="md" shape="square">
                 {status.label}
               </Badge>
             ) : (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export type ProgressTone = 'neutral' | 'danger';
+export type ProgressTone = 'neutral' | 'danger' | 'warning' | 'success';
 
 interface ProgressMeterProps {
   value: number;
@@ -13,6 +13,8 @@ interface ProgressMeterProps {
 const FILL: Record<ProgressTone, string> = {
   neutral: 'var(--color-brand-600)',
   danger: 'var(--color-danger)',
+  warning: 'var(--color-warning)',
+  success: 'var(--color-success)',
 };
 
 export default function ProgressMeter({

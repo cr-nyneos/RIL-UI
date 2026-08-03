@@ -17,7 +17,7 @@ interface BadgeProps {
 const SIZE: Record<NonNullable<BadgeProps['size']>, string> = {
   xs: 'px-2 py-0.5 text-[11px] leading-4',
   sm: 'px-2 py-1 text-[12px] leading-4',
-  md: 'px-2 py-1 text-[12px] leading-4',
+  md: 'px-3 py-1.5 text-[13px] leading-5',
 };
 
 export default function Badge({

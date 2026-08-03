@@ -10,8 +10,7 @@ import Button from '../components/ui/Button';
 import KpiGroupCard, { type KpiGroup } from '../components/dashboard/KpiGroupCard';
 import Avatar from '../components/ui/Avatar';
 import Badge from '../components/ui/Badge';
-import StatusBadge from '../components/ui/StatusBadge';
-import ProgressMeter from '../components/ui/ProgressMeter';
+import ProgressMeter, { type ProgressTone } from '../components/ui/ProgressMeter';
 import DataTable, { type Column, type SortState } from '../components/ui/DataTable';
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
@@ -62,6 +61,17 @@ const RISK_COLOR: Record<VendorRisk, string> = {
   Medium: 'var(--color-warning)',
   High: 'var(--color-danger)',
 };
+
+const RISK_METER: Record<VendorRisk, ProgressTone> = {
+  Low: 'success',
+  Medium: 'warning',
+  High: 'danger',
+};
+
+function complianceTone(vendor: Vendor): ProgressTone {
+  if (vendor.complianceState === 'Expired' || vendor.complianceState === 'Expiring') return 'danger';
+  return RISK_METER[vendor.risk];
+}
 
 /** Two chips plus an overflow count keeps a five-plant vendor on one line. */
 function PlantCell({ plants }: { plants: Vendor['plants'] }) {
@@ -197,7 +207,7 @@ export default function Vendors() {
         <ProgressMeter
           value={vendor.compliance}
           showLabel
-          tone={vendor.compliance < 70 ? 'danger' : 'neutral'}
+          tone={complianceTone(vendor)}
           delay={80}
         />
       ),
@@ -216,12 +226,6 @@ export default function Vendors() {
           {vendor.risk}
         </span>
       ),
-    },
-    {
-      key: 'status',
-      header: 'Status',
-      width: '130px',
-      render: (vendor) => <StatusBadge status={vendor.status} />,
     },
     {
       key: 'activity',
@@ -375,7 +379,7 @@ export default function Vendors() {
               setSort(next);
             }}
             stagger={staggerRows}
-            minWidth="1180px"
+            minWidth="1050px"
             bodyKey={`${filters.query}-${filters.plant}-${filters.category}-${filters.status}-${filters.compliance}-${filters.risk}-${sort.key}-${sort.dir}-${page}`}
             emptyState={
               <EmptyState
