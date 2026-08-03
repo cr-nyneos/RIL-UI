@@ -11,7 +11,7 @@ import {
   type NodeChange,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { CheckCircle2, Download, Plus, Save, Send } from 'lucide-react';
+import { CheckCircle2, Plus, Save, Send } from 'lucide-react';
 
 import AppShell from '../components/layout/AppShell';
 import PageHeader from '../components/ui/PageHeader';
@@ -273,16 +273,6 @@ export default function WorkflowBuilder() {
       module: 'Execution',
       to: '/workflow-builder',
     });
-  };
-
-  const exportWorkflow = () => {
-    const blob = new Blob([JSON.stringify(workflow, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `${activeKey}-workflow.json`;
-    anchor.click();
-    URL.revokeObjectURL(url);
   };
 
   return (
