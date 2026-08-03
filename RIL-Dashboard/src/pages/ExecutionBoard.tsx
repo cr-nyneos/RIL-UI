@@ -283,15 +283,7 @@ function ExecutionCard({ item }: { item: BoardOrder }) {
 
       {/* Footer: blocking reason (or status) + action, full width */}
       <div
-        className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-md)] border px-4 py-3"
-        style={{
-          background: needsAttention
-            ? item.status === 'blocked'
-              ? 'var(--color-danger-soft)'
-              : 'var(--color-warning-soft)'
-            : 'var(--color-brand-soft2)',
-          borderColor: needsAttention ? meta.accent : 'var(--color-border)',
-        }}
+        className="flex flex-wrap items-center justify-between gap-3 px-1 py-1"
       >
         <div className="flex min-w-0 items-center gap-2">
           {needsAttention && <StatusIcon size={15} strokeWidth={2.4} className="flex-none" style={{ color: meta.accent }} />}
