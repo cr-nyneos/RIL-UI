@@ -1,6 +1,7 @@
-import { CalendarDays, FileCheck2, FileText, IndianRupee, ClipboardList } from 'lucide-react';
+import { FileCheck2, FileText, IndianRupee, ClipboardList } from 'lucide-react';
 
 import CardHeader from '../../components/ui/CardHeader';
+import DatePicker from '../../components/ui/DatePicker';
 import GlassCard from '../../components/ui/GlassCard';
 import InsightCard from '../../components/ui/InsightCard';
 import Select from '../../components/ui/Select';
@@ -101,7 +102,7 @@ export default function DetailsTab({
         <TextField label="PO Number" value={poNumber} onChange={setField('poNumber', setPoNumber)} error={touched.poNumber && !required(poNumber) ? 'Required' : false} placeholder="PO-RIL-88342" leadingIcon={<FileText size={17} strokeWidth={2.2} />} />
         <TextField label="Contract Number" value={contractNumber} onChange={setField('contractNumber', setContractNumber)} error={touched.contractNumber && !required(contractNumber) ? 'Required' : false} placeholder="CTR-RIL-2026-118" leadingIcon={<FileCheck2 size={17} strokeWidth={2.2} />} />
         <TextField label="Order Value" value={orderValue} onChange={setField('orderValue', setOrderValue)} error={touched.orderValue && !required(orderValue) ? 'Required' : false} placeholder="3.2 Cr" leadingIcon={<IndianRupee size={17} strokeWidth={2.2} />} />
-        <TextField label="Completion Date" value={completionDate} onChange={setField('completionDate', setCompletionDate)} error={touched.completionDate && !required(completionDate) ? 'Required' : false} type="date" leadingIcon={<CalendarDays size={17} strokeWidth={2.2} />} />
+        <DatePicker label="Completion Date" value={completionDate} onChange={setField('completionDate', setCompletionDate)} error={touched.completionDate && !required(completionDate) ? 'Required' : false} />
         <TextField label="Description" value={description} onChange={(value) => { setDescription(value); meaningfulChange(); }} placeholder="Order scope" className="lg:col-span-2" />
       </div>
     </GlassCard>

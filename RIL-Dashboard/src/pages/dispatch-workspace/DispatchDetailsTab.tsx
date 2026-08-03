@@ -1,6 +1,7 @@
-import { Boxes, CalendarDays, PackageCheck, Scale, Truck } from 'lucide-react';
+import { Boxes, PackageCheck, Scale, Truck } from 'lucide-react';
 
 import CardHeader from '../../components/ui/CardHeader';
+import DatePicker from '../../components/ui/DatePicker';
 import GlassCard from '../../components/ui/GlassCard';
 import Select from '../../components/ui/Select';
 import TextField from '../../components/ui/TextField';
@@ -65,8 +66,8 @@ export default function DispatchDetailsTab({
           <label className="mb-2.5 block text-body-strong">Shipment Type</label>
           <Select value={shipmentType} onChange={setSelectField('shipmentType', setShipmentType)} options={SHIPMENT_TYPE_OPTIONS} ariaLabel="Shipment type" className="w-full" />
         </div>
-        <TextField label="Dispatch Date" value={dispatchDate} onChange={setField('dispatchDate', setDispatchDate)} error={touched.dispatchDate && !required(dispatchDate) ? 'Required' : false} type="date" leadingIcon={<CalendarDays size={17} strokeWidth={2.2} />} />
-        <TextField label="Expected Arrival" value={expectedArrival} onChange={setField('expectedArrival', setExpectedArrival)} error={touched.expectedArrival && !required(expectedArrival) ? 'Required' : false} type="date" leadingIcon={<CalendarDays size={17} strokeWidth={2.2} />} />
+        <DatePicker label="Dispatch Date" value={dispatchDate} onChange={setField('dispatchDate', setDispatchDate)} error={touched.dispatchDate && !required(dispatchDate) ? 'Required' : false} />
+        <DatePicker label="Expected Arrival" value={expectedArrival} onChange={setField('expectedArrival', setExpectedArrival)} error={touched.expectedArrival && !required(expectedArrival) ? 'Required' : false} />
         <TextField label="Number of Packages" value={packages} onChange={setField('packages', setPackages)} error={touched.packages && !required(packages) ? 'Required' : false} placeholder="24" leadingIcon={<Boxes size={17} strokeWidth={2.2} />} />
         <TextField label="Weight" value={weight} onChange={setField('weight', setWeight)} error={touched.weight && !required(weight) ? 'Required' : false} placeholder="12.4 MT" leadingIcon={<Scale size={17} strokeWidth={2.2} />} />
         <TextField label="Package Description" value={packageDescription} onChange={(value) => { setPackageDescription(value); meaningfulChange(); }} placeholder="Crated pump assemblies" leadingIcon={<PackageCheck size={17} strokeWidth={2.2} />} />
