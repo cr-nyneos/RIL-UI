@@ -211,7 +211,7 @@ export default function Finance() {
       width: '160px',
       sortable: true,
       render: (invoice) => (
-        <span className="truncate text-[14px] leading-5 font-semibold text-ink-900" title={invoice.invoiceNo}>
+        <span className="truncate text-sm leading-5 font-normal text-table-cell-text" title={invoice.invoiceNo}>
           {invoice.invoiceNo}
         </span>
       ),
@@ -221,7 +221,7 @@ export default function Finance() {
       header: 'Vendor',
       sortable: true,
       render: (invoice) => (
-        <span className="truncate text-[14px] leading-5 font-semibold text-ink-800" title={invoice.vendor}>
+        <span className="truncate text-sm leading-5 font-normal text-table-cell-text" title={invoice.vendor}>
           {invoice.vendor}
         </span>
       ),
@@ -231,7 +231,9 @@ export default function Finance() {
       header: 'Order',
       width: '120px',
       sortable: true,
-      render: (invoice) => <span className="text-[14px] leading-5 font-semibold text-ink-700">{invoice.orderId}</span>,
+      render: (invoice) => (
+        <span className="text-sm leading-5 font-normal text-table-cell-text">{invoice.orderId}</span>
+      ),
     },
     {
       key: 'plant',
@@ -251,7 +253,7 @@ export default function Finance() {
       align: 'right',
       sortable: true,
       render: (invoice) => (
-        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-900">
+        <span className="text-sm leading-5 font-normal tabular-nums text-table-cell-text">
           {formatCurrency(invoice.amountCr)}
         </span>
       ),
@@ -262,7 +264,7 @@ export default function Finance() {
       width: '130px',
       sortable: true,
       render: (invoice) => (
-        <span className="text-[14px] leading-5 font-semibold tabular-nums text-ink-800">
+        <span className="text-sm leading-5 font-normal tabular-nums text-table-cell-text">
           {formatDate(invoice.dueDate)}
         </span>
       ),
