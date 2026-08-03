@@ -107,6 +107,81 @@ export const WORKFLOW_ROLES: WorkflowRole[] = [
 
 export const ROLE_NAMES = WORKFLOW_ROLES.map((role) => role.role);
 
+export const STAGE_LIBRARY: Array<Pick<WorkflowStage, 'id' | 'name' | 'role' | 'slaHours' | 'documents' | 'escalation'>> = [
+  {
+    id: 'security-clearance',
+    name: 'Security Clearance',
+    role: 'Security Officer',
+    slaHours: 2,
+    documents: ['Gate Pass'],
+    escalation: 'Notify supervisor',
+  },
+  {
+    id: 'document-verification',
+    name: 'Document Verification',
+    role: 'Document Controller',
+    slaHours: 4,
+    documents: ['Tax Invoice', 'E-Way Bill'],
+    escalation: 'Notify supervisor',
+  },
+  {
+    id: 'gate-in',
+    name: 'Material Gate-In',
+    role: 'Gate Supervisor',
+    slaHours: 3,
+    documents: ['Weighment Slip'],
+    escalation: 'Escalate to plant head',
+  },
+  {
+    id: 'weighment',
+    name: 'Weighment',
+    role: 'Gate Supervisor',
+    slaHours: 2,
+    documents: ['Weighment Slip'],
+    escalation: 'Notify supervisor',
+  },
+  {
+    id: 'qc',
+    name: 'QC Inspection',
+    role: 'Quality Inspector',
+    slaHours: 12,
+    documents: ['Test Certificate', 'QC Report'],
+    escalation: 'Escalate to plant head',
+  },
+  {
+    id: 'unloading',
+    name: 'Unloading',
+    role: 'Site Coordinator',
+    slaHours: 4,
+    documents: ['Delivery Challan'],
+    escalation: 'Notify supervisor',
+  },
+  {
+    id: 'delivery',
+    name: 'Delivery',
+    role: 'Site Coordinator',
+    slaHours: 8,
+    documents: ['Delivery Challan'],
+    escalation: 'Notify supervisor',
+  },
+  {
+    id: 'governance',
+    name: 'Governance Approval',
+    role: 'Governance Lead',
+    slaHours: 24,
+    documents: [],
+    escalation: 'Escalate to governance',
+  },
+  {
+    id: 'payment',
+    name: 'Payment Release',
+    role: 'Finance Controller',
+    slaHours: 48,
+    documents: ['Tax Invoice'],
+    escalation: 'Escalate to governance',
+  },
+];
+
 const MANUFACTURED_STAGES: WorkflowStage[] = [
   {
     id: 'security-clearance',
@@ -132,7 +207,7 @@ const MANUFACTURED_STAGES: WorkflowStage[] = [
   },
   {
     id: 'gate-in',
-    name: 'Gate-In',
+    name: 'Material Gate-In',
     role: 'Gate Supervisor',
     dependency: 'document-verification',
     slaHours: 3,
@@ -143,7 +218,7 @@ const MANUFACTURED_STAGES: WorkflowStage[] = [
   },
   {
     id: 'qc',
-    name: 'QC',
+    name: 'QC Inspection',
     role: 'Quality Inspector',
     dependency: 'gate-in',
     slaHours: 12,
@@ -165,7 +240,7 @@ const MANUFACTURED_STAGES: WorkflowStage[] = [
   },
   {
     id: 'governance',
-    name: 'Governance',
+    name: 'Governance Approval',
     role: 'Governance Lead',
     dependency: 'delivery',
     slaHours: 24,
@@ -176,7 +251,7 @@ const MANUFACTURED_STAGES: WorkflowStage[] = [
   },
   {
     id: 'payment',
-    name: 'Payment',
+    name: 'Payment Release',
     role: 'Finance Controller',
     dependency: 'governance',
     slaHours: 48,
@@ -212,7 +287,7 @@ const MATERIAL_STAGES: WorkflowStage[] = [
   },
   {
     id: 'gate-in',
-    name: 'Gate-In',
+    name: 'Material Gate-In',
     role: 'Gate Supervisor',
     dependency: 'document-verification',
     slaHours: 2,
@@ -223,7 +298,7 @@ const MATERIAL_STAGES: WorkflowStage[] = [
   },
   {
     id: 'qc',
-    name: 'QC',
+    name: 'QC Inspection',
     role: 'Quality Inspector',
     dependency: 'gate-in',
     slaHours: 6,
@@ -245,7 +320,7 @@ const MATERIAL_STAGES: WorkflowStage[] = [
   },
   {
     id: 'governance',
-    name: 'Governance',
+    name: 'Governance Approval',
     role: 'Governance Lead',
     dependency: 'delivery',
     slaHours: 18,
@@ -256,7 +331,7 @@ const MATERIAL_STAGES: WorkflowStage[] = [
   },
   {
     id: 'payment',
-    name: 'Payment',
+    name: 'Payment Release',
     role: 'Finance Controller',
     dependency: 'governance',
     slaHours: 36,

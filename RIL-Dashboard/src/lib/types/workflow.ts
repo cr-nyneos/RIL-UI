@@ -12,6 +12,8 @@ export interface WorkflowStage {
   documents: string[];
   autoUnlock: string;
   mandatory: boolean;
+  notification?: string;
+  enabled?: boolean;
 }
 
 export interface WorkflowRules {

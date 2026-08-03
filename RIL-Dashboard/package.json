@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-select": "^2.3.7",
     "@tailwindcss/vite": "^4.3.3",
+    "@xyflow/react": "^12.11.2",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.26.0",
     "react": "^19.2.7",
