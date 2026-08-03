@@ -2,9 +2,12 @@ import { CalendarDays, FileCheck2, FileText, IndianRupee, ClipboardList } from '
 
 import CardHeader from '../../components/ui/CardHeader';
 import GlassCard from '../../components/ui/GlassCard';
+import InsightCard from '../../components/ui/InsightCard';
 import Select from '../../components/ui/Select';
 import TextField from '../../components/ui/TextField';
 import { CONTRACT_OPTIONS, PLANT_OPTIONS, PRIORITY_OPTIONS, STEP_COPY, VENDOR_OPTIONS } from './constants';
+import { getPlantInsight, getVendorInsight } from './predictiveInsights';
+import type { PredictiveInsight } from './predictiveInsights';
 import { required } from './utils';
 import type { FieldKey, Priority } from './types';
 import type { ContractType } from '../../lib/types/order';
@@ -32,6 +35,8 @@ interface DetailsTabProps {
   setCompletionDate: (value: string) => void;
   setDescription: (value: string) => void;
   meaningfulChange: () => void;
+  dismissedInsightKeys: string[];
+  dismissInsight: (key: string) => void;
 }
 
 export default function DetailsTab({
@@ -57,7 +62,13 @@ export default function DetailsTab({
   setCompletionDate,
   setDescription,
   meaningfulChange,
+  dismissedInsightKeys,
+  dismissInsight,
 }: DetailsTabProps) {
+  const insights = [getVendorInsight(vendor), getPlantInsight(plant)].filter(
+    (item): item is PredictiveInsight => Boolean(item) && !dismissedInsightKeys.includes(item!.key),
+  );
+
   return (
     <GlassCard key="details" className="animate-rise p-5" style={{ animationDelay: '80ms' }}>
       <CardHeader icon={ClipboardList} {...STEP_COPY.details} />
@@ -70,6 +81,15 @@ export default function DetailsTab({
           <label className="mb-2.5 block text-body-strong">Plant</label>
           <Select value={plant} onChange={setField('plant', setPlant)} options={PLANT_OPTIONS} ariaLabel="Plant" className="w-full" />
         </div>
+        {insights.map((item) => (
+          <InsightCard
+            key={item.key}
+            title={item.title}
+            body={item.body}
+            onDismiss={() => dismissInsight(item.key)}
+            className="lg:col-span-2"
+          />
+        ))}
         <div>
           <label className="mb-2.5 block text-body-strong">Contract Type</label>
           <Select value={contractType} onChange={setSelectField('contractType', setContractType)} options={CONTRACT_OPTIONS} ariaLabel="Contract type" className="w-full" />

@@ -19,6 +19,9 @@ export const VENDOR_OPTIONS = [
   { value: 'Supreme Petrochem', label: 'Supreme Petrochem' },
   { value: 'Praj Industries', label: 'Praj Industries' },
   { value: 'TEMA India', label: 'TEMA India' },
+  { value: 'Tata Projects', label: 'Tata Projects' },
+  { value: 'Siemens Energy India', label: 'Siemens Energy India' },
+  { value: 'Flowserve India', label: 'Flowserve India' },
 ];
 
 export const PLANT_OPTIONS = [
@@ -28,6 +31,7 @@ export const PLANT_OPTIONS = [
   { value: 'Hyderabad', label: 'Hyderabad' },
   { value: 'Nagpur', label: 'Nagpur' },
   { value: 'Surat', label: 'Surat' },
+  { value: 'Hazira', label: 'Hazira' },
 ];
 
 export const CONTRACT_OPTIONS: Array<{ value: ContractType; label: ContractType }> = [

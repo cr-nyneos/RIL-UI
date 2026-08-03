@@ -25,6 +25,7 @@ import TimelineTab from './order-detail/TimelineTab';
 
 import { formatCurrency, formatDate } from '../lib/format';
 import { useOrderDetail } from '../lib/orderDetailStore';
+import type { Order as OrderModel } from '../lib/types/order';
 import type { DeliveryTotals, OrderDetail as OrderDetailModel } from '../lib/types/orderDetail';
 
 type OrderTab =
@@ -69,11 +70,13 @@ function exceptionText(totals: DeliveryTotals) {
 
 function renderTab(
   tab: OrderTab,
-  orderId: string,
+  order: OrderModel,
   detail: OrderDetailModel,
   totals: DeliveryTotals,
   notify: (message: string) => void,
 ) {
+  const orderId = order.id;
+
   switch (tab) {
     case 'deliveries':
       return <DeliveriesTab detail={detail} totals={totals} />;
@@ -84,7 +87,7 @@ function renderTab(
     case 'finance':
       return <FinanceTab detail={detail} />;
     case 'completion':
-      return <CompletionFileTab detail={detail} />;
+      return <CompletionFileTab order={order} detail={detail} onNotify={notify} />;
     case 'activity':
       return <ActivityTab detail={detail} />;
     case 'timeline':
@@ -223,7 +226,7 @@ export default function OrderDetail() {
               variant="attached"
             />
           </header>
-          <div>{renderTab(activeTab, order.id, detail, totals, setToast)}</div>
+          <div>{renderTab(activeTab, order, detail, totals, setToast)}</div>
         </section>
       </div>
 

@@ -48,6 +48,11 @@ export default function CreateOrder() {
   const [isDirty, setIsDirty] = useState(false);
   const [showLeaveDialog, setShowLeaveDialog] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [dismissedInsightKeys, setDismissedInsightKeys] = useState<string[]>([]);
+
+  const dismissInsight = (key: string) => {
+    setDismissedInsightKeys((current) => (current.includes(key) ? current : [...current, key]));
+  };
 
   const workflow = WORKFLOWS[contractType];
   const assignedCount = ROLE_ORDER.filter((role) => stakeholders[role]).length;
@@ -249,6 +254,8 @@ export default function CreateOrder() {
           setCompletionDate={setCompletionDate}
           setDescription={setDescription}
           meaningfulChange={meaningfulChange}
+          dismissedInsightKeys={dismissedInsightKeys}
+          dismissInsight={dismissInsight}
         />
       );
     }
