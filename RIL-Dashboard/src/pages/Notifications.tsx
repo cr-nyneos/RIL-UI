@@ -294,7 +294,7 @@ export default function Notifications() {
             setRead(notification.id, !notification.read);
           }}
         >
-          {notification.read ? <Mail size={16} strokeWidth={2.2} /> : <MailOpen size={16} strokeWidth={2.2} />}
+          {notification.read ? <MailOpen size={16} strokeWidth={2.2} /> : <Mail size={16} strokeWidth={2.2} />}
         </Button>
       ),
     },

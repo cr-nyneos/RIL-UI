@@ -279,11 +279,12 @@ export default function Approvals() {
             {loading ? (
               <FeedSkeleton />
             ) : grouped.length ? (
-              grouped.map((group) => (
+              grouped.map((group, groupIndex) => (
                 <SectionCard
                   key={group.key}
                   title={group.label}
                   collapsible
+                  defaultOpen={groupIndex === 0}
                   bodyTone="subtle"
                   bodyClassName="flex flex-col gap-3"
                   meta={

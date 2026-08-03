@@ -227,11 +227,12 @@ export default function SiteOperations() {
           <div key={tab} className="animate-fade-fast flex min-w-0 flex-col gap-6">
             {tab === 'movements' ? (
               grouped.length ? (
-                grouped.map((group) => (
+                grouped.map((group, groupIndex) => (
                   <SectionCard
                     key={group.key}
                     title={group.label}
                     collapsible
+                    defaultOpen={groupIndex === 0}
                     bodyTone="subtle"
                     bodyClassName="flex flex-col gap-3"
                     meta={

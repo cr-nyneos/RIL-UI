@@ -22,20 +22,20 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: str
   return (
     <div
       role="status"
-      className={`glass-raised pointer-events-auto flex w-[340px] items-start gap-3 py-3 pr-3 pl-3.5 shadow-[0_10px_28px_-14px_rgba(11,23,53,0.45)] ${
+      className={`glass-raised pointer-events-auto flex w-[420px] items-start gap-3.5 py-4 pr-4 pl-4 shadow-[0_10px_28px_-14px_rgba(11,23,53,0.45)] ${
         toast.leaving ? 'animate-toast-out' : 'animate-toast-in'
       }`}
     >
       <span
-        className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full"
+        className="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-full"
         style={{ background: tone.soft, color: tone.color }}
       >
-        <Icon size={15} strokeWidth={2.3} />
+        <Icon size={19} strokeWidth={2.3} />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-[13.5px] leading-5 font-semibold text-ink-900">{toast.message}</p>
+        <p className="text-[15.5px] leading-6 font-semibold text-ink-900">{toast.message}</p>
         {toast.description && (
-          <p className="mt-0.5 text-[12.5px] leading-[18px] text-ink-600">{toast.description}</p>
+          <p className="mt-1 text-[14px] leading-5 text-ink-600">{toast.description}</p>
         )}
       </div>
       <button
@@ -44,7 +44,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: str
         onClick={() => onDismiss(toast.id)}
         className="mt-0.5 flex-none cursor-pointer text-ink-400 transition-colors duration-150 hover:text-ink-900"
       >
-        <X size={15} strokeWidth={2.4} />
+        <X size={18} strokeWidth={2.4} />
       </button>
     </div>
   );
