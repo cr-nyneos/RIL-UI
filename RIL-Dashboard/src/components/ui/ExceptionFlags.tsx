@@ -29,7 +29,7 @@ const LABEL: Record<ExceptionType, string> = {
   blocked: 'Blocked',
 };
 
-const DANGER = { color: '#EA3449', background: 'rgba(244,63,94,0.09)' };
+const DANGER = { color: '#DC0000', background: 'rgba(244,63,94,0.09)' };
 const WARNING = { color: '#B45309', background: 'rgba(234,166,64,0.10)' };
 
 const TONE: Record<ExceptionType, { color: string; background: string }> = {

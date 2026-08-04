@@ -56,9 +56,9 @@ export default function LoadingScreen2({ onComplete }: LoadingScreen2Props) {
 
         .loading2-screen {
           background:
-            radial-gradient(circle at 86% 14%, rgba(59, 130, 246, .18), transparent 34%),
-            radial-gradient(circle at 12% 82%, rgba(139, 92, 246, .12), transparent 36%),
-            linear-gradient(180deg, #08111f 0%, #0f172a 35%, #132238 65%, #172554 100%);
+            radial-gradient(circle at 86% 14%, rgba(25, 174, 255, .18), transparent 34%),
+            radial-gradient(circle at 12% 82%, rgba(25, 174, 255, .12), transparent 36%),
+            linear-gradient(180deg, #001126 0%, #001f4d 35%, #002a66 65%, #003380 100%);
         }
 
         .loading2-grid {

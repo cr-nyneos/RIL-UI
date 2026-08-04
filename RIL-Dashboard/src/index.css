@@ -36,8 +36,8 @@
   --color-table-cell-text: #393E46E7;
 
  
-  --color-surface-rail: #0C7BAB;
-  --color-surface-rail-deep: #005E88;
+  --color-surface-rail: #19AEFF;
+  --color-surface-rail-deep: #003380;
   --color-surface-rail-mark: rgba(255, 255, 255, 0.045);
   --color-surface-rail-nest: rgba(255, 255, 255, 0.035);
   --color-rail-border: rgba(255, 255, 255, 0.18);
@@ -47,15 +47,15 @@
   /* Brand — single primary indigo. Active nav, primary buttons, selected
      states, focus. Cobalt sits underneath it as the pressed tone. */
   --color-brand-800: #00496B;
-  --color-brand-700: #005E88;
-  --color-brand-600: #0C7BAB;
+  --color-brand-700: #003380;
+  --color-brand-600: #19AEFF;
   --color-brand-500: #3596C2;
   --color-brand-soft2: #E7F4FB;
 
   /* Retained aliases — resolved to the single brand so no second accent survives */
-  --color-aqua-400: #0C7BAB;
-  --color-liquid-blue-500: #0C7BAB;
-  --color-violet-500: #0C7BAB;
+  --color-aqua-400: #19AEFF;
+  --color-liquid-blue-500: #19AEFF;
+  --color-violet-500: #19AEFF;
 
   /* Data hues — categorical encoding only (charts), never decoration */
   --color-data-blue: #1496CD;
@@ -70,15 +70,15 @@
   --color-warning: #B54708;
   --color-warning-soft: #FFFAEB;
   --color-warning-bright: #F2C10E;
-  --color-danger: #EA3449;
+  --color-danger: #DC0000;
   --color-danger-soft: #FEF3F2;
-  --color-info: #0C7BAB;
+  --color-info: #19AEFF;
   --color-info-soft: #E7F4FB;
 
   /* Legacy accent aliases — collapsed onto brand / neutral */
-  --color-cyan: #005E88;
+  --color-cyan: #003380;
   --color-cyan-soft: #E7F4FB;
-  --color-violet: #005E88;
+  --color-violet: #003380;
   --color-violet-soft: #E7F4FB;
 
   /* Ink scale — charcoal black → warm slate. Blue is reserved for headings
@@ -110,8 +110,8 @@
   --radius-3xl: 10px;
 
   --gradient-liquid: var(--color-brand-600);
-  --wash-brand-hover: rgba(12, 123, 171, 0.07);
-  --wash-brand-active: rgba(12, 123, 171, 0.13);
+  --wash-brand-hover: rgba(25, 174, 255, 0.07);
+  --wash-brand-active: rgba(25, 174, 255, 0.13);
 
   /* Elevation — thin border does the work, shadow only confirms the plane.
      Shadows are tinted navy so they sit inside the blue atmosphere. */
@@ -119,15 +119,15 @@
   --shadow-glass-hover: 0 1px 3px rgba(23, 37, 84, 0.08);
 
   /* KPI tokens — value text stays neutral; colour reserved for exceptions */
-  --color-kpi-cobalt: #0C7BAB;
-  --color-kpi-azure: #005E88;
+  --color-kpi-cobalt: #19AEFF;
+  --color-kpi-azure: #003380;
   --color-kpi-indigo: #00496B;
-  --color-kpi-brand-fill: #0C7BAB;
+  --color-kpi-brand-fill: #19AEFF;
   --color-kpi-brand-text: #323232;
   --color-kpi-cyan-fill: #94A3B8;
   --color-kpi-cyan-text: #323232;
-  --color-kpi-danger-fill: #EA3449;
-  --color-kpi-danger-text: #EA3449;
+  --color-kpi-danger-fill: #DC0000;
+  --color-kpi-danger-text: #DC0000;
   --color-kpi-warning-fill: #B54708;
   --color-kpi-warning-text: #B54708;
   --color-kpi-violet-fill: #94A3B8;
@@ -485,7 +485,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-brand-600) 0%, #005E88 42%, rgba(12, 123, 171, 0) 100%);
+  background: linear-gradient(90deg, var(--color-brand-600) 0%, #003380 42%, rgba(25, 174, 255, 0) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -507,8 +507,8 @@
   border-radius: var(--radius-lg);
   background-color: #EDF4FF;
   background-image:
-    radial-gradient(36rem 18rem at 94% -60%, rgba(12, 123, 171, 0.20) 0%, rgba(12, 123, 171, 0) 70%),
-    radial-gradient(30rem 16rem at 2% 140%, rgba(0, 94, 136, 0.16) 0%, rgba(0, 94, 136, 0) 72%),
+    radial-gradient(36rem 18rem at 94% -60%, rgba(25, 174, 255, 0.20) 0%, rgba(25, 174, 255, 0) 70%),
+    radial-gradient(30rem 16rem at 2% 140%, rgba(0, 51, 128, 0.16) 0%, rgba(0, 51, 128, 0) 72%),
     linear-gradient(116deg, #E6F0FF 0%, #F4F8FF 56%, #E9EFFF 100%);
   box-shadow:
     0 1px 2px rgba(23, 37, 84, 0.05),
@@ -1016,12 +1016,12 @@
 /* StageRail — current-segment marker + inline tooltip               */
 /* ---------------------------------------------------------------- */
 @keyframes gate-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(12, 123, 171, 0.28); }
-  70%, 100% { box-shadow: 0 0 0 4px rgba(12, 123, 171, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(25, 174, 255, 0.28); }
+  70%, 100% { box-shadow: 0 0 0 4px rgba(25, 174, 255, 0); }
 }
 @keyframes gate-pulse-danger {
-  0%   { box-shadow: 0 0 0 0 rgba(180, 35, 24, 0.28); }
-  70%, 100% { box-shadow: 0 0 0 4px rgba(180, 35, 24, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(220, 0, 0, 0.28); }
+  70%, 100% { box-shadow: 0 0 0 4px rgba(220, 0, 0, 0); }
 }
 .gate-pulse { animation: gate-pulse 2.4s ease-in-out infinite; }
 .gate-pulse-danger { animation: gate-pulse-danger 2.4s ease-in-out infinite; }
@@ -1079,7 +1079,7 @@
 .focus-bloom:focus {
   outline: none;
   border-color: var(--color-brand-600);
-  box-shadow: 0 0 0 3px rgba(12, 123, 171, 0.16);
+  box-shadow: 0 0 0 3px rgba(25, 174, 255, 0.16);
 }
 
 /* ---------------------------------------------------------------- */
@@ -1088,8 +1088,8 @@
 /* ---------------------------------------------------------------- */
 .tsy {
   --tsy-primary: #1496CD;
-  --tsy-primary-lt: #005E88;
-  --tsy-primary-hover: #005E88f7;
+  --tsy-primary-lt: #003380;
+  --tsy-primary-hover: #003380f7;
   --tsy-primary-sm: #7FCBFF;
   --tsy-primary-md: #A0E3FF;
   --tsy-primary-lg: #C5EEFF;
@@ -1098,7 +1098,7 @@
   --tsy-surface: #FFFFFF;
   --tsy-surface-dark: #F1F2F3;
   --tsy-text: #323232;
-  --tsy-red: #EA3449;
+  --tsy-red: #DC0000;
 
   /* Re-point the design-system tokens the shared primitives consume, so
      Select / Tabs / Button / DataTable render in Cimplr's palette without
