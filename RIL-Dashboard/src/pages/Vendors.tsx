@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Building2, RotateCcw } from 'lucide-react';
+import { ArrowUpRight, Building2, RotateCcw, UserPlus } from 'lucide-react';
 
 import AppShell from '../components/layout/AppShell';
 import PageHeader from '../components/ui/PageHeader';
@@ -16,7 +16,8 @@ import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
 
 import { ORDER_PLANTS } from '../lib/mockData/orders';
-import { VENDORS, VENDOR_CATEGORIES } from '../lib/mockData/vendors';
+import { VENDOR_CATEGORIES } from '../lib/mockData/vendors';
+import { getVendors } from '../lib/vendorStore';
 import { formatDate } from '../lib/format';
 import type { Vendor, VendorRisk } from '../lib/types/vendor';
 import {
@@ -108,7 +109,7 @@ export default function Vendors() {
   const orderCounts = useMemo(() => activeOrderCounts(), []);
 
   const rows = useMemo(() => {
-    const filtered = VENDORS.filter((vendor) => matchesVendorFilters(vendor, filters));
+    const filtered = getVendors().filter((vendor) => matchesVendorFilters(vendor, filters));
     return [...filtered].sort((a, b) => {
       const result = compareVendors(a, b, sort.key, orderCounts);
       return sort.dir === 'asc' ? result : -result;
@@ -275,6 +276,17 @@ export default function Vendors() {
               { label: 'Vendors', to: '/vendors' },
               { label: 'Directory' },
             ]}
+            actions={
+              <Button
+                variant="primary"
+                size="lg"
+                icon={<UserPlus size={16} strokeWidth={2.3} />}
+                className="cursor-pointer"
+                onClick={() => navigate('/vendors/onboard')}
+              >
+                Onboard Vendor
+              </Button>
+            }
           />
         </div>
 

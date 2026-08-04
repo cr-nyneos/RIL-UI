@@ -24,6 +24,7 @@ import RecordMovement from '../pages/RecordMovement';
 import SiteOperations from '../pages/SiteOperations';
 import Vendors from '../pages/Vendors';
 import Vendor360 from '../pages/Vendor360';
+import OnboardVendor from '../pages/OnboardVendor';
 import Finance from '../pages/Finance';
 import WorkflowBuilder from '../pages/WorkflowBuilder';
 import Notifications from '../pages/Notifications';
@@ -50,6 +51,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: '/orders/:id', label: 'Order Detail', element: <OrderDetail /> },
   { path: '/approvals', label: 'Approvals', icon: ShieldCheck, element: <Approvals />, nav: true },
   { path: '/vendors', label: 'Vendors', icon: Building2, element: <Vendors />, nav: true },
+  { path: '/vendors/onboard', label: 'Onboard Vendor', element: <OnboardVendor /> },
   { path: '/vendors/:id', label: 'Vendor 360', element: <Vendor360 /> },
   { path: '/finance', label: 'Finance', icon: Wallet, element: <Finance />, nav: true },
   { path: '/workflow-builder', label: 'Workflow Builder', icon: Workflow, element: <WorkflowBuilder />, nav: true },

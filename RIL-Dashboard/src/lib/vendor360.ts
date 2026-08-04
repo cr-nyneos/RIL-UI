@@ -7,8 +7,7 @@ import { orderDetailFor } from './orderDetailStore';
 import { getOrders } from './orderStore';
 import { useApprovals } from './approvalsStore';
 import { dwellMinutes, isOnSite, useSiteOperations } from './siteOpsStore';
-import { VENDORS } from './mockData/vendors';
-import { VENDOR_PROFILES } from './mockData/vendorProfiles';
+import { getVendorProfile, getVendors } from './vendorStore';
 import { TODAY } from './mockData/orders';
 import type { PendingDecision } from './types/approvals';
 import type { Order } from './types/order';
@@ -117,7 +116,7 @@ function healthScore(
 }
 
 export function getVendor(id: string | undefined): Vendor | undefined {
-  return id ? VENDORS.find((vendor) => vendor.id === id) : undefined;
+  return id ? getVendors().find((vendor) => vendor.id === id) : undefined;
 }
 
 export function useVendor360(id: string | undefined): VendorSnapshot | null {
@@ -125,7 +124,7 @@ export function useVendor360(id: string | undefined): VendorSnapshot | null {
   const { movements: allMovements, manpower: allManpower, clock } = useSiteOperations();
 
   const vendor = getVendor(id);
-  const profile = id ? VENDOR_PROFILES[id] : undefined;
+  const profile = id ? getVendorProfile(id) : undefined;
   if (!vendor || !profile) return null;
 
   const orders = getOrders().filter((order) => order.vendor === vendor.name);
