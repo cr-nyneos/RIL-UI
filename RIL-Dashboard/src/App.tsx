@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 import Demo from './pages/Demo';
 import RouteStub from './pages/RouteStub';
@@ -36,6 +37,7 @@ function App() {
           }}
         />
       )}
+      <Analytics />
     </>
   );
 }
